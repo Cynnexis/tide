@@ -1,8 +1,8 @@
-# Tide
+# 🌊 Tide
 
 Tide is an application that helps reduce panic attacks with a simple breathing exercise.
 
-## Goals
+## 🎯 Goals
 
 Panic attacks can happen anywhere, at anytime.
 In a world where we have access to a limitless number of digital resources at the tip of our fingers, we can reduce those attacks through different ways (apps, videos, etc.).
@@ -12,15 +12,15 @@ Those useful resources should always be available for people traversing those de
 Hence, I initiated **Tide**, a very simple app that help the user to calm themselves down by timing the breath in and breath out, and imitating the diaphragm dilatation, while being **free with no advertisements**.
 As a result, anyone can have this application and use it with no stress of being disturbed by one of this awful and distressful ad.
 
-## Getting Started
+## 🔌 Getting Started
 
 The following instructions will get you a copy of the source code, and help you execute it.
 
-### Requirements
+### 📦 Requirements
 
 This project requires [Flutter][flutter-install], SDK version: minimum 2.3.0.
 
-### Installation
+### ⚒️ Installation
 
 The first thing to do is to download the project, either by [downloading the ZIP file][tide-zip] and extract it somewhere in your machine, or by cloning the project with `git clone https://github.com/Cynnexis/tide.git`. The following steps will assume that the current directory is the project root.
 
@@ -31,17 +31,17 @@ The first thing to do is to download the project, either by [downloading the ZIP
 
 The app should be running now.
 
-## Build With
+## 🏗️ Build With
 
 * [Dart][dart]
 * [Flutter][flutter]
 * [Android Studio][android-studio]
 
-## Contributing
+## 🤝 Contributing
 
 Contribution is not permitted yet, but will soon be available! Stay tuned 😉
 
-## License
+## 📄 License
 
 This project is under the GNU Affero General Public License v3. Please see the [LICENSE][license] file for more detail (it's a really fascinating story written in there!).
 
