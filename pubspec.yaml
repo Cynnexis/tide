@@ -23,6 +23,7 @@ dependencies:
   shared_preferences: ^2.0.6
   synchronized: ^3.0.0
   tuple: ^2.0.0
+  url_launcher: ^6.0.9
 
 
 dev_dependencies:
@@ -44,6 +45,8 @@ flutter:
     - assets/images/tide.png
     - assets/images/tide_foreground.png
     - assets/images/tide_background.png
+    - assets/images/github.png
+    - assets/images/github-light.png
 
   fonts:
     - family: Courgette

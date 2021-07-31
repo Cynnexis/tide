@@ -64,5 +64,13 @@
   "exitConfirmation": "Press the back button again to exit.",
   "@exitConfirmation": {
     "description": "Tell the user to push the back button twice."
+  },
+  "startButton": "Start",
+  "@startButton": {
+    "description": "The start button text."
+  },
+  "copiedToClipboard": "Copied to clipboard",
+  "@copiedToClipboard": {
+    "description": "Tells the user that the data has been saved in the clipboard."
   }
 }

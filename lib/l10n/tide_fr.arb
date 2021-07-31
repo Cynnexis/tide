@@ -13,5 +13,7 @@
   "systemLanguage": "Langue système",
   "langSetting": "Langue",
   "langSettingExplanation": "La langue de l'application.",
-  "exitConfirmation": "Appuyez à nouveau sur la touche retour pour quitter."
+  "exitConfirmation": "Appuyez à nouveau sur la touche retour pour quitter.",
+  "startButton": "Démarrer",
+  "copiedToClipboard": "Copié dans le presse-papier"
 }

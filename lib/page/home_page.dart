@@ -1,11 +1,16 @@
 import 'dart:async';
+import 'dart:developer' as dev;
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 import 'package:tide/constants.dart';
 import 'package:tide/page/settings_page.dart';
 import 'package:tide/theme.dart';
 import 'package:tide/widget/breathing_bubble.dart';
+import 'package:url_launcher/url_launcher.dart' as url;
 
 class HomePage extends StatefulWidget {
   static const routeName = '/';
@@ -24,14 +29,6 @@ class _HomePageState extends State<HomePage>
   /// `false` indicates to display the button, while `true` will show the
   /// [BreathingBubble] widget.
   bool _isBreathing = false;
-
-  /// This Stream indicates when the breathing exercise begins.
-  ///
-  /// When the application starts, the [_isBreathing] is set to false and this
-  /// [Completer] is not completed, meaning that the start button will be
-  /// displayed.
-  StreamController<bool> _transitionFromStartToBreath =
-      StreamController<bool>();
 
   /// [SnackBar] that will be displayed when the user wants to quit the
   /// application.
@@ -175,10 +172,10 @@ class _HomePageState extends State<HomePage>
                               child: SizedBox(
                                 width: _animation.value,
                                 height: _animation.value,
-                                child: const Center(
+                                child: Center(
                                   child: Text(
-                                    "Start",
-                                    style: TextStyle(
+                                    TideLocalizations.of(context)!.startButton,
+                                    style: const TextStyle(
                                       color: TideTheme.primaryColor,
                                       fontFamily: TideTheme.homeFontFamily,
                                       fontSize: 26,
@@ -209,6 +206,29 @@ class _HomePageState extends State<HomePage>
   }
 
   void aboutApp(BuildContext context) {
+    const double iconSize = 32;
+
+    /// Open the given URL using the associated application (defaults to web
+    /// browser).
+    Future<void> openUrl(String stringUrl) async {
+      if (await url.canLaunch(stringUrl)) {
+        await url.launch(stringUrl);
+      } else if (kDebugMode) {
+        dev.log("Couldn't launch URL: $stringUrl", name: "aboutApp.canLaunch");
+      }
+    }
+
+    /// Copy the given URL to the clipboard.
+    Future<void> copyUrl(String stringUrl) async {
+      try {
+        await Clipboard.setData(ClipboardData(text: stringUrl));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(TideLocalizations.of(context)!.copiedToClipboard)));
+      } catch (e) {
+        if (kDebugMode) rethrow;
+      }
+    }
+
     showAboutDialog(
       context: context,
       applicationName: TideLocalizations.of(context)!.appName,
@@ -224,6 +244,39 @@ class _HomePageState extends State<HomePage>
         ),
       ),
       applicationVersion: appVersion,
+      children: <Widget>[
+        RichText(
+            text: const TextSpan(
+                text:
+                    "Tide is an application that helps reduce panic attacks with a simple breathing exercise.\n\n",
+                children: <InlineSpan>[
+              TextSpan(
+                  text:
+                      "It helps users to calm themselves down by timing the breath in and breath out, and imitating the diaphragm dilatation, while being "),
+              TextSpan(
+                  text: "free with no advertisements",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              TextSpan(text: ".")
+            ])),
+        ListTile(
+          leading: Image(
+            image: AssetImage(
+                "assets/images/github${TideTheme.getSystemBrightness(context) == Brightness.dark ? "-light" : ''}.png"),
+            width: iconSize,
+            height: iconSize,
+          ),
+          title: RichText(
+              text: TextSpan(
+                  text: gitRepoURL,
+                  style: const TextStyle(
+                    color: TideTheme.primaryColor,
+                    decoration: TextDecoration.underline,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => openUrl(gitRepoURL))),
+          onLongPress: () => copyUrl(gitRepoURL),
+        ),
+      ],
     );
   }
 }
