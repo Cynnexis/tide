@@ -19,7 +19,6 @@
   "@settings": {
     "description": "The settings page name."
   },
-
   "breathingExerciseSetting": "Breathing Exercise",
   "@breathingExerciseSetting": {
     "description": "Setting group name."
@@ -46,7 +45,6 @@
       "holdingBreathDuration": {}
     }
   },
-
   "interfaceSettings": "Interface",
   "@interfaceSettings": {
     "description": "Setting group name."

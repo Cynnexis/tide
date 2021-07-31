@@ -1,0 +1,16 @@
+{
+  "appName": "Tide",
+  "breathIn": "Inspirez",
+  "holdBreath": "Maintenez",
+  "breathOut": "Expirez",
+  "settings": "Paramètres",
+  "breathingExerciseSetting": "Exercise de respiration",
+  "breathingDurationSetting": "Durée de respiration",
+  "breathingDurationSettingExplanation": "Durée pour l'inspiration et l'expiration.\nValeur actuelle : {breathingDuration}",
+  "holdingDurationSetting": "Durée pour retenir sa respiration",
+  "holdingDurationSettingExplanation": "Temps pour retenir son souffle.\nValeur actuelle : {holdingBreathDuration}",
+  "interfaceSettings": "Interface",
+  "systemLanguage": "Langue système",
+  "langSetting": "Langue",
+  "langSettingExplanation": "La langue de l'application."
+}
