@@ -1,0 +1,18 @@
+{
+  "appName": "Tide",
+  "@appName": {
+    "description": "Short application name."
+  },
+  "breathIn": "Breath in",
+  "@breathIn": {
+    "description": "Tell the user to breath in. The string must be as short as possible, without containing any punctuation (if possible)."
+  },
+  "holdBreath": "Hold",
+  "@holdBreath": {
+    "description": "Tell the user to hold their breath. The string must be as short as possible, without containing any punctuation (if possible)."
+  },
+  "breathOut": "Breath out",
+  "@breathOut": {
+    "description": "Tell the user to breath out. The string must be as short as possible, without containing any punctuation (if possible)."
+  }
+}

@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.tide.tide">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
    <application
         android:label="Tide"
         android:icon="@mipmap/ic_launcher">
