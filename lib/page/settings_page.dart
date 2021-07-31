@@ -52,9 +52,11 @@ class _SettingsPageState extends State<SettingsPage> {
               title: TideLocalizations.of(context)!.breathingExerciseSetting,
               children: <Widget>[
                 SliderSettingsTile(
-                  title: TideLocalizations.of(context)!.breathingDurationSetting,
-                  subtitle:
-                  TideLocalizations.of(context)!.breathingDurationSettingExplanation(TideSettings.instanceSync.breathingDuration),
+                  title:
+                      TideLocalizations.of(context)!.breathingDurationSetting,
+                  subtitle: TideLocalizations.of(context)!
+                      .breathingDurationSettingExplanation(durationToSeconds(
+                          TideSettings.instanceSync.breathingDuration)),
                   settingKey: "breathingDurationSeconds",
                   min: 1,
                   max: 20,
@@ -63,13 +65,15 @@ class _SettingsPageState extends State<SettingsPage> {
                           .instanceSync.breathingDuration.inMilliseconds /
                       1000,
                   leading: const Icon(Icons.timer),
-                  onChange: (value) => setState(() => TideSettings.instanceSync.breathingDuration =
-                        Duration(milliseconds: (value * 1000).floor())),
+                  onChange: (value) => setState(() =>
+                      TideSettings.instanceSync.breathingDuration =
+                          Duration(milliseconds: (value * 1000).floor())),
                 ),
                 SliderSettingsTile(
                   title: TideLocalizations.of(context)!.holdingDurationSetting,
-                  subtitle:
-                  TideLocalizations.of(context)!.holdingDurationSettingExplanation(TideSettings.instanceSync.holdingBreathDuration),
+                  subtitle: TideLocalizations.of(context)!
+                      .holdingDurationSettingExplanation(durationToSeconds(
+                          TideSettings.instanceSync.holdingBreathDuration)),
                   settingKey: "holdingBreathDurationSeconds",
                   min: 1,
                   max: 20,
@@ -78,8 +82,9 @@ class _SettingsPageState extends State<SettingsPage> {
                           .instanceSync.holdingBreathDuration.inMilliseconds /
                       1000.0,
                   leading: const Icon(Icons.timelapse_rounded),
-                  onChange: (value) => setState(() => TideSettings.instanceSync.holdingBreathDuration =
-                      Duration(milliseconds: (value * 1000).floor())),
+                  onChange: (value) => setState(() =>
+                      TideSettings.instanceSync.holdingBreathDuration =
+                          Duration(milliseconds: (value * 1000).floor())),
                 ),
               ],
             ),
@@ -171,5 +176,26 @@ class _SettingsPageState extends State<SettingsPage> {
           name: "onLanguageListChanged",
           zone: Zone.current);
     }
+  }
+
+  String durationToSeconds(Duration duration) {
+    String content = '';
+    if (duration.isNegative) {
+      content = '-';
+    }
+
+    int seconds = (duration.inMilliseconds / 1000.0).floor();
+    content += "$seconds";
+
+    int milliseconds = duration.inMilliseconds - seconds * 1000;
+    if (milliseconds > 0) {
+      String ms = "${milliseconds}";
+      // Remove trailing 0
+      ms = ms.replaceFirst(RegExp("0+\$"), '');
+      content += ".$ms";
+    }
+
+    content += 's';
+    return content;
   }
 }

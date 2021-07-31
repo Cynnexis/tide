@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 import 'package:tide/constants.dart';
@@ -22,6 +24,14 @@ class _HomePageState extends State<HomePage>
   /// `false` indicates to display the button, while `true` will show the
   /// [BreathingBubble] widget.
   bool _isBreathing = false;
+
+  /// This Stream indicates when the breathing exercise begins.
+  ///
+  /// When the application starts, the [_isBreathing] is set to false and this
+  /// [Completer] is not completed, meaning that the start button will be
+  /// displayed.
+  StreamController<bool> _transitionFromStartToBreath =
+      StreamController<bool>();
 
   /// [SnackBar] that will be displayed when the user wants to quit the
   /// application.
@@ -141,35 +151,45 @@ class _HomePageState extends State<HomePage>
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Builder(builder: (context) {
-                // Display the [BreathingBubble] widget if [_isBreathing] is true
-                if (_isBreathing) {
-                  return const BreathingBubble();
-                } else {
-                  // Else, display the "Start" button
-                  return ClipOval(
-                    child: Material(
-                      color: Colors.white, // Button color
-                      child: InkWell(
-                        splashColor: Colors.grey, // Splash color
-                        onTap: () => setState(() => _isBreathing = true),
-                        child: SizedBox(
-                          width: _animation.value,
-                          height: _animation.value,
-                          child: const Center(
-                            child: Text(
-                              "Start",
-                              style: TextStyle(
-                                color: TideTheme.primaryColor,
-                                fontFamily: TideTheme.homeFontFamily,
-                                fontSize: 26,
+                return AnimatedSwitcher(
+                  duration: const Duration(seconds: 2),
+                  // Curves inspired from https://github.com/flutter/flutter/issues/26119#issuecomment-451656779 by [marcoms](https://github.com/marcoms)
+                  switchInCurve: const Interval(
+                    0.3,
+                    1,
+                    curve: Curves.linear,
+                  ),
+                  switchOutCurve: const Interval(
+                    0.7,
+                    1,
+                    curve: Curves.linear,
+                  ),
+                  child: _isBreathing
+                      ? const BreathingBubble()
+                      : ClipOval(
+                          child: Material(
+                            color: Colors.white, // Button color
+                            child: InkWell(
+                              splashColor: Colors.white70, // Splash color
+                              onTap: () => setState(() => _isBreathing = true),
+                              child: SizedBox(
+                                width: _animation.value,
+                                height: _animation.value,
+                                child: const Center(
+                                  child: Text(
+                                    "Start",
+                                    style: TextStyle(
+                                      color: TideTheme.primaryColor,
+                                      fontFamily: TideTheme.homeFontFamily,
+                                      fontSize: 26,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                  );
-                }
+                );
               }),
             ],
           ),
