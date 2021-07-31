@@ -4,8 +4,8 @@ import 'dart:developer' as dev;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:tide/settings.dart';
 import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
+import 'package:tide/settings.dart';
 import 'package:tide/theme.dart';
 
 /// Widget that represents a circle that grow and shrink to represents the
@@ -99,7 +99,7 @@ class _BreathingBubbleState extends State<BreathingBubble>
                 key: ValueKey<String>(text),
                 style: const TextStyle(
                   color: TideTheme.primaryColor,
-                  fontFamily: "Courgette",
+                  fontFamily: TideTheme.homeFontFamily,
                   fontSize: 18,
                 ),
               ),

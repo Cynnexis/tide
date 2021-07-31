@@ -15,6 +15,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
+  /// Indicates if the [BreathingBubble] should be displayed on the screen, or
+  /// the button "Start" instead.
+  ///
+  /// `false` indicates to display the button, while `true` will show the
+  /// [BreathingBubble] widget.
+  bool _isBreathing = false;
+
   @override
   void initState() {
     super.initState();
@@ -38,35 +45,105 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        textTheme: TideTheme.light.appBarTheme.textTheme?.apply(bodyColor: Colors.white) ?? TideTheme.light.primaryTextTheme.apply(bodyColor: Colors.white),
-        iconTheme: const IconThemeData(color: Colors.white),
-        leading: IconButton(
-          onPressed: () => aboutApp(context),
-          icon: TideTheme.getLogoImage(imageProvider: TideTheme.logo),
-          tooltip: TideLocalizations.of(context)!.appName,
-        ),
-        title: Text(
-          TideLocalizations.of(context)!.appName,
-          style: const TextStyle(fontFamily: "Courgette", fontSize: 26),
-        ),
-        centerTitle: true,
-        actions: <Widget>[
-          IconButton(
-            onPressed: () => pushSettings(),
-            icon: const Icon(Icons.settings),
+    // Create a snack bar for [WillPopScope]
+    SnackBar snackBar = SnackBar(
+      // backgroundColor: TideTheme.getSystem(context).backgroundColor,
+      backgroundColor: Colors.white,
+      behavior: SnackBarBehavior.floating,
+      elevation: 6,
+      content: Row(
+        children: <Widget>[
+          Icon(Icons.exit_to_app, color: TideTheme.light.iconTheme.color),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              TideLocalizations.of(context)!.exitConfirmation,
+              // style: TextStyle(color: TideTheme.getFontColor(context)),
+            ),
           ),
         ],
-        elevation: 0,
       ),
-      backgroundColor: TideTheme.primaryColor,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            BreathingBubble(),
+      duration: const Duration(seconds: 4),
+    );
+
+    return WillPopScope(
+      onWillPop: () {
+        // If the user was in breathing mode, return to the screen where the "Start" button was shown, and do NOT pop the current route.
+        if (_isBreathing) {
+          setState(() => _isBreathing = false);
+          // Show a Snackbar
+          ScaffoldMessenger.of(context).removeCurrentSnackBar();
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          return Future<bool>.value(false);
+        } else {
+          // If not in breathing mode, quit
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          return Future<bool>.value(true);
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          textTheme: TideTheme.light.appBarTheme.textTheme
+                  ?.apply(bodyColor: Colors.white) ??
+              TideTheme.light.primaryTextTheme.apply(bodyColor: Colors.white),
+          iconTheme: const IconThemeData(color: Colors.white),
+          leading: IconButton(
+            onPressed: () => aboutApp(context),
+            icon: TideTheme.getLogoImage(imageProvider: TideTheme.logo),
+            tooltip: TideLocalizations.of(context)!.appName,
+          ),
+          title: Text(
+            TideLocalizations.of(context)!.appName,
+            style: const TextStyle(
+                fontFamily: TideTheme.homeFontFamily, fontSize: 26),
+          ),
+          centerTitle: true,
+          actions: <Widget>[
+            IconButton(
+              onPressed: () => pushSettings(),
+              icon: const Icon(Icons.settings),
+            ),
           ],
+          elevation: 0,
+        ),
+        backgroundColor: TideTheme.primaryColor,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Builder(builder: (context) {
+                // Display the [BreathingBubble] widget if [_isBreathing] is true
+                if (_isBreathing) {
+                  return const BreathingBubble();
+                } else {
+                  // Else, display the "Start" button
+                  return ClipOval(
+                    child: Material(
+                      color: Colors.white, // Button color
+                      child: InkWell(
+                        splashColor: Colors.grey, // Splash color
+                        onTap: () => setState(() => _isBreathing = true),
+                        child: const SizedBox(
+                          width: 200,
+                          height: 200,
+                          child: Center(
+                            child: Text(
+                              "Start",
+                              style: TextStyle(
+                                color: TideTheme.primaryColor,
+                                fontFamily: TideTheme.homeFontFamily,
+                                fontSize: 26,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }
+              }),
+            ],
+          ),
         ),
       ),
     );

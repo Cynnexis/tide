@@ -3,10 +3,10 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:logging/logging.dart';
 import 'package:tide/settings.dart';
-import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 import 'package:tide/utility/iso_lang_mapping.dart';
 
 class SettingsPage extends StatefulWidget {

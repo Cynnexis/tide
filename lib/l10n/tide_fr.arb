@@ -12,5 +12,6 @@
   "interfaceSettings": "Interface",
   "systemLanguage": "Langue système",
   "langSetting": "Langue",
-  "langSettingExplanation": "La langue de l'application."
+  "langSettingExplanation": "La langue de l'application.",
+  "exitConfirmation": "Appuyez à nouveau sur la touche retour pour quitter."
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:synchronized/synchronized.dart';
-import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 
 /// Please use [instance] to initialize if it is not already done the singleton
 /// (async getter), or use [instanceSync] if you are sure that the singleton is

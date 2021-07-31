@@ -1,10 +1,11 @@
 import 'dart:async';
-import 'dart:io' as io;
 import 'dart:developer' as dev;
+import 'dart:io' as io;
 
 import 'package:args/args.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +16,6 @@ import 'package:tide/page/settings_page.dart';
 import 'package:tide/settings.dart';
 import 'package:tide/theme.dart';
 import 'package:tide/utility/extension/locale_parser.dart';
-import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 
 void main([List<String> args = const <String>[]]) async {
   Locale? defaultLocale;

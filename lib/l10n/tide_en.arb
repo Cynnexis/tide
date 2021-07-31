@@ -60,5 +60,9 @@
   "langSettingExplanation": "The language of the application.",
   "@langSettingExplanation": {
     "description": "Setting explanation."
+  },
+  "exitConfirmation": "Press the back button again to exit.",
+  "@exitConfirmation": {
+    "description": "Tell the user to push the back button twice."
   }
 }

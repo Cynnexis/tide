@@ -9,6 +9,8 @@ class TideTheme {
   static const Color defaultDarkBackgroundColor = Color(0xFF2E2E2E);
   static const Color defaultLightBackgroundColor = Color(0xFFFAFAFA);
 
+  static const String homeFontFamily = 'Courgette';
+
   static ThemeData getTheme([Brightness brightness = Brightness.light]) {
     ThemeData themeData = ThemeData(
       primarySwatch: primarySwatch,
