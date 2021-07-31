@@ -40,19 +40,27 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        textTheme: TideTheme.light.appBarTheme.textTheme?.apply(bodyColor: Colors.white) ?? TideTheme.light.primaryTextTheme.apply(bodyColor: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         leading: IconButton(
           onPressed: () => aboutApp(context),
           icon: TideTheme.getLogoImage(imageProvider: TideTheme.logo),
           tooltip: TideLocalizations.of(context)!.appName,
         ),
-        title: Text(TideLocalizations.of(context)!.appName),
+        title: Text(
+          TideLocalizations.of(context)!.appName,
+          style: const TextStyle(fontFamily: "Courgette", fontSize: 26),
+        ),
+        centerTitle: true,
         actions: <Widget>[
           IconButton(
             onPressed: () => pushSettings(),
             icon: const Icon(Icons.settings),
           ),
         ],
+        elevation: 0,
       ),
+      backgroundColor: TideTheme.primaryColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -138,6 +138,7 @@ class _TideAppState extends State<TideApp> {
                     settings: settings);
             }
           },
+          debugShowCheckedModeBanner: false,
         );
       }),
     );

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 class TideTheme {
   static const MaterialColor primarySwatch = Colors.cyan;
-  static const Color primaryColor = Color(0xFF00ACC1); // Colors.cyan[600]
+  static const Color primaryColor = Color(0xff9dc4ff); // Colors.cyan[600]
   static const Color accentColor = Colors.lightBlueAccent;
 
   static const Color defaultDarkBackgroundColor = Color(0xFF2E2E2E);
@@ -82,6 +82,8 @@ class TideTheme {
 
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
+      statusBarBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.light,
       systemNavigationBarColor: primaryColor,
     ));
   }
