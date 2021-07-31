@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 import 'package:tide/constants.dart';
+import 'package:tide/page/settings_page.dart';
 import 'package:tide/theme.dart';
 import 'package:tide/widget/breathing_bubble.dart';
 
@@ -45,6 +46,12 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           tooltip: TideLocalizations.of(context)!.appName,
         ),
         title: Text(TideLocalizations.of(context)!.appName),
+        actions: <Widget>[
+          IconButton(
+            onPressed: () => pushSettings(),
+            icon: const Icon(Icons.settings),
+          ),
+        ],
       ),
       body: Center(
         child: Column(
@@ -55,6 +62,11 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         ),
       ),
     );
+  }
+
+  void pushSettings() async {
+    await Navigator.pushNamed(context, SettingsPage.routeName);
+    setState(() {});
   }
 
   void aboutApp(BuildContext context) {

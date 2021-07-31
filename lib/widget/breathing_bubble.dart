@@ -24,7 +24,6 @@ class _BreathingBubbleState extends State<BreathingBubble>
   late AnimationController _animationController;
   late Animation<double> _animation;
   AnimationStatus _animationStatus = AnimationStatus.dismissed;
-  static const _holdBreathDuration = Duration(seconds: 1, milliseconds: 500);
 
   @override
   void initState() {
@@ -32,7 +31,7 @@ class _BreathingBubbleState extends State<BreathingBubble>
     TideSettings.instanceSync.addListener(_updateAnimationController);
 
     _animationController = AnimationController(
-      duration: const Duration(seconds: 5),
+      duration: TideSettings.instanceSync.breathingDuration,
       vsync: this,
     );
 
@@ -152,14 +151,14 @@ class _BreathingBubbleState extends State<BreathingBubble>
     if (widget.controller == null ||
         widget.controller!.status == BreathingBubbleStatus.playing) {
       if (status == AnimationStatus.completed) {
-        Future.delayed(_holdBreathDuration, () {
+        Future.delayed(TideSettings.instanceSync.holdingBreathDuration, () {
           if (widget.controller == null ||
               widget.controller!.status == BreathingBubbleStatus.playing) {
             _animationController.reverse();
           }
         });
       } else if (status == AnimationStatus.dismissed) {
-        Future.delayed(_holdBreathDuration, () {
+        Future.delayed(TideSettings.instanceSync.holdingBreathDuration, () {
           if (widget.controller == null ||
               widget.controller!.status == BreathingBubbleStatus.playing) {
             _animationController.forward();
@@ -176,7 +175,7 @@ class _BreathingBubbleState extends State<BreathingBubble>
 
   /// Update the animation duration according to the settings.
   void _updateAnimationController() {
-    _animationController.duration = const Duration(seconds: 5);
+    _animationController.duration = TideSettings.instanceSync.breathingDuration;
   }
 }
 

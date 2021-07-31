@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:tide/constants.dart';
 import 'package:tide/page/home_page.dart';
+import 'package:tide/page/settings_page.dart';
 import 'package:tide/settings.dart';
 import 'package:tide/theme.dart';
 import 'package:tide/utility/extension/locale_parser.dart';
@@ -131,6 +132,10 @@ class _TideAppState extends State<TideApp> {
               case '/index':
                 return MaterialPageRoute(
                     builder: (context) => const HomePage(), settings: settings);
+              case SettingsPage.routeName:
+                return MaterialPageRoute(
+                    builder: (context) => const SettingsPage(),
+                    settings: settings);
             }
           },
         );

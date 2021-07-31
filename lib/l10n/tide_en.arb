@@ -14,5 +14,53 @@
   "breathOut": "Breath out",
   "@breathOut": {
     "description": "Tell the user to breath out. The string must be as short as possible, without containing any punctuation (if possible)."
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "The settings page name."
+  },
+
+  "breathingExerciseSetting": "Breathing Exercise",
+  "@breathingExerciseSetting": {
+    "description": "Setting group name."
+  },
+  "breathingDurationSetting": "Breathing duration",
+  "@breathingDurationSetting": {
+    "description": "Setting name."
+  },
+  "breathingDurationSettingExplanation": "Duration to breath in, and to breath out.\nActual value: {breathingDuration}",
+  "@breathingDurationSettingExplanation": {
+    "description": "Setting explanation.",
+    "placeholders": {
+      "breathingDuration": {}
+    }
+  },
+  "holdingDurationSetting": "Holding duration",
+  "@holdingDurationSetting": {
+    "description": "Setting name."
+  },
+  "holdingDurationSettingExplanation": "Time to hold your breath.\nActual value: {holdingBreathDuration}",
+  "@holdingDurationSettingExplanation": {
+    "description": "Setting explanation.",
+    "placeholders": {
+      "holdingBreathDuration": {}
+    }
+  },
+
+  "interfaceSettings": "Interface",
+  "@interfaceSettings": {
+    "description": "Setting group name."
+  },
+  "systemLanguage": "System language",
+  "@systemLanguage": {
+    "description": "The default language option."
+  },
+  "langSetting": "Language",
+  "@langSetting": {
+    "description": "Setting name."
+  },
+  "langSettingExplanation": "The language of the application.",
+  "@langSettingExplanation": {
+    "description": "Setting explanation."
   }
 }
