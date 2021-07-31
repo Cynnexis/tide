@@ -41,10 +41,14 @@ The app should be running now.
 
 Contribution is not permitted yet, but will soon be available! Stay tuned 😉
 
+## License
+
+This project is under the GNU Affero General Public License v3. Please see the [LICENSE][license] file for more detail (it's a really fascinating story written in there!).
+
 [flutter-install]: https://flutter.dev/docs/get-started/install
 [tide-zip]: https://github.com/Cynnexis/tide/archive/master.zip
 [flutter]: https://flutter.dev/
 [dart]: https://dart.dev/
 [android-studio]: https://developer.android.com/studio
 [cynnexis]: https://github.com/Cynnexis
-[license]: https://github.com/Cynnexis/tide/blob/master/LICENSE.txt
+[license]: https://github.com/Cynnexis/tide/blob/master/LICENSE
