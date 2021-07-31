@@ -36,8 +36,8 @@ class _BreathingBubbleState extends State<BreathingBubble>
     );
 
     _animation = Tween<double>(
-      begin: 100,
-      end: 200,
+      begin: 200,
+      end: 300,
     ).animate(CurvedAnimation(
       parent: _animationController,
       curve: Curves.easeInOut,
@@ -55,6 +55,8 @@ class _BreathingBubbleState extends State<BreathingBubble>
   @override
   void dispose() {
     TideSettings.instanceSync.removeListener(_updateAnimationController);
+    _animationController.removeListener(_updateCircleSize);
+    _animationController.removeStatusListener(_animationControllerStatusListener);
     _animationController.dispose();
     if (widget.controller != null) {
       widget.controller!.removeListener(_breathingBubbleControllerListener);
@@ -100,7 +102,7 @@ class _BreathingBubbleState extends State<BreathingBubble>
                 style: const TextStyle(
                   color: TideTheme.primaryColor,
                   fontFamily: TideTheme.homeFontFamily,
-                  fontSize: 18,
+                  fontSize: 26,
                 ),
               ),
             );

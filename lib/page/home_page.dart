@@ -14,7 +14,8 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
+class _HomePageState extends State<HomePage>
+    with WidgetsBindingObserver, SingleTickerProviderStateMixin {
   /// Indicates if the [BreathingBubble] should be displayed on the screen, or
   /// the button "Start" instead.
   ///
@@ -22,16 +23,44 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   /// [BreathingBubble] widget.
   bool _isBreathing = false;
 
+  /// [SnackBar] that will be displayed when the user wants to quit the
+  /// application.
+  SnackBar? _exitSnackBar;
+
+  /// The animation controller for the start button
+  late AnimationController _animationController;
+
+  /// The animation for the start button
+  late Animation<double> _animation;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addObserver(this);
     didChangePlatformBrightness();
+
+    _animationController = AnimationController(
+      duration: const Duration(seconds: 1, milliseconds: 500),
+      vsync: this,
+    );
+
+    _animation = Tween<double>(
+      begin: 200,
+      end: 230,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOut,
+    ));
+    _animationController.addListener(_updateCircleSize);
+
+    _animationController.repeat(reverse: true);
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance!.removeObserver(this);
+    _animationController.dispose();
+    _animationController.removeListener(_updateCircleSize);
     super.dispose();
   }
 
@@ -45,8 +74,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    // Create a snack bar for [WillPopScope]
-    SnackBar snackBar = SnackBar(
+    // Create a snack bar for [WillPopScope] if it is not already created
+    _exitSnackBar ??= SnackBar(
       // backgroundColor: TideTheme.getSystem(context).backgroundColor,
       backgroundColor: Colors.white,
       behavior: SnackBarBehavior.floating,
@@ -73,7 +102,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           setState(() => _isBreathing = false);
           // Show a Snackbar
           ScaffoldMessenger.of(context).removeCurrentSnackBar();
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          ScaffoldMessenger.of(context).showSnackBar(_exitSnackBar!);
           return Future<bool>.value(false);
         } else {
           // If not in breathing mode, quit
@@ -123,10 +152,10 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                       child: InkWell(
                         splashColor: Colors.grey, // Splash color
                         onTap: () => setState(() => _isBreathing = true),
-                        child: const SizedBox(
-                          width: 200,
-                          height: 200,
-                          child: Center(
+                        child: SizedBox(
+                          width: _animation.value,
+                          height: _animation.value,
+                          child: const Center(
                             child: Text(
                               "Start",
                               style: TextStyle(
@@ -148,6 +177,11 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       ),
     );
   }
+
+  /// Update the size of the circle according to the animation value.
+  ///
+  /// Do **NOT** use this method to refresh the widget tree.
+  void _updateCircleSize() => setState(() {});
 
   void pushSettings() async {
     await Navigator.pushNamed(context, SettingsPage.routeName);
