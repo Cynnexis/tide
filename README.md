@@ -1,4 +1,6 @@
-# tide
+# Tide
+
+![Application Logo](assets/images/tide.png)
 
 Tide is an application that helps reduce panic attacks with a simple breathing exercise.
 
