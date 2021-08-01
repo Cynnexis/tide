@@ -1,6 +1,6 @@
 # 🌊 Tide - Breathing Exercise to Calm Yourself Down
 
-[![Tide CI/CD](https://github.com/Cynnexis/tide/actions/workflows/main.yml/badge.svg?event=check_run)](https://github.com/Cynnexis/tide/actions/workflows/main.yml)
+[![Tide CI/CD](https://github.com/Cynnexis/tide/actions/workflows/main.yml/badge.svg)](https://github.com/Cynnexis/tide/actions/workflows/main.yml)
 
 ![Tide Cover](assets/images/cover.png)
 
