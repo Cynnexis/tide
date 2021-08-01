@@ -84,13 +84,14 @@ jobs:
           rm -rf bin/
           mkdir bin/
           mv build/app/outputs/bundle/release/app*.aab build/app/outputs/flutter-apk/app*.apk bin/
+          ls -la bin/
       - name: Remove sensible files
         run: rm -f android/keystore.jks android/key.properties
       - name: Upload appbundle
         uses: actions/upload-artifact@v2
         with:
           name: Appbundle
-          path: bin/app.aab
+          path: bin/app-release.aab
           if-no-files-found: error
           retention-days: 30
       - name: Upload APK (generic)
@@ -158,8 +159,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/app.aab
-          asset_name: app.aab
+          asset_path: bin/app-release.aab
+          asset_name: app-release.aab
       - name: Upload APK (generic)
         uses: actions/upload-release-asset@v1.0.2
         env:
