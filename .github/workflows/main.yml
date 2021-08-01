@@ -26,7 +26,9 @@ jobs:
       - name: Check dart code format
         run: flutter format --output=none --set-exit-if-changed .
       - name: Generate documentation
-        run: dartdoc --no-show-progress --quiet --exclude dart:async,dart:collection,dart:convert,dart:core,dart:developer,dart:io,dart:isolate,dart:math,dart:typed_data,dart,dart:ffi,dart:html,dart:js,dart:ui,dart:js_util
+        run: |
+          flutter pub global activate dartdoc
+          dartdoc --exclude dart:async,dart:collection,dart:convert,dart:core,dart:developer,dart:io,dart:isolate,dart:math,dart:typed_data,dart,dart:ffi,dart:html,dart:js,dart:ui,dart:js_util
       - name: Deploy GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
