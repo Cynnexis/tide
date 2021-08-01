@@ -29,16 +29,10 @@ jobs:
         run: |
           flutter pub global activate dartdoc
           dartdoc --exclude dart:async,dart:collection,dart:convert,dart:core,dart:developer,dart:io,dart:isolate,dart:math,dart:typed_data,dart,dart:ffi,dart:html,dart:js,dart:ui,dart:js_util
-      - name: Set variables for JamesIves/github-pages-deploy-action
-        id: vars
-        run: |
-          GIT_BRANCH="${{ github.base_ref }}"
-          GIT_BRANCH="${GIT_BRANCH:-${GITHUB_REF#refs/*/}}"
-          echo ::set-output name=git_branch::${GIT_BRANCH}
       - name: Deploy GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
-          branch: ${{ steps.vars.outputs.git_branch }}
+          branch: gh-pages
           folder: doc/api
 
   release:
