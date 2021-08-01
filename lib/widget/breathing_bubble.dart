@@ -56,7 +56,8 @@ class _BreathingBubbleState extends State<BreathingBubble>
   void dispose() {
     TideSettings.instanceSync.removeListener(_updateAnimationController);
     _animationController.removeListener(_updateCircleSize);
-    _animationController.removeStatusListener(_animationControllerStatusListener);
+    _animationController
+        .removeStatusListener(_animationControllerStatusListener);
     _animationController.dispose();
     if (widget.controller != null) {
       widget.controller!.removeListener(_breathingBubbleControllerListener);

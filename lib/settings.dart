@@ -65,15 +65,17 @@ class TideSettings extends ChangeNotifier {
       Duration(milliseconds: getInt("breathingDurationMilliseconds", 7000)!);
 
   set breathingDuration(Duration value) {
-    _sharedPreferences.setInt("breathingDurationMilliseconds", value.inMilliseconds);
+    _sharedPreferences.setInt(
+        "breathingDurationMilliseconds", value.inMilliseconds);
     notifyListeners();
   }
 
-  Duration get holdingBreathDuration =>
-      Duration(milliseconds: getInt("holdingBreathDurationMilliseconds", 1500)!);
+  Duration get holdingBreathDuration => Duration(
+      milliseconds: getInt("holdingBreathDurationMilliseconds", 1500)!);
 
   set holdingBreathDuration(Duration value) {
-    _sharedPreferences.setInt("holdingBreathDurationMilliseconds", value.inMilliseconds);
+    _sharedPreferences.setInt(
+        "holdingBreathDurationMilliseconds", value.inMilliseconds);
     notifyListeners();
   }
 

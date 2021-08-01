@@ -2,8 +2,9 @@ name: tide
 description: Tide is an application that helps reduce panic attacks with a simple breathing exercise.
 publish_to: 'none'
 version: 1.0.0+1
-homepage: https://github.com/Cynnexis/Tide
-repository: https://github.com/Cynnexis/Tide
+homepage: https://github.com/Cynnexis/tide
+repository: https://github.com/Cynnexis/tide
+documentation: https://cynnexis.github.io/tide/
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

@@ -35,12 +35,14 @@ class TideTheme {
   /// Return the logo foreground of the application.
   ///
   /// See [getLogoImage] to get the logo as a widget.
-  static ImageProvider get logoForeground => const AssetImage("assets/images/tide_foreground.png");
+  static ImageProvider get logoForeground =>
+      const AssetImage("assets/images/tide_foreground.png");
 
   /// Return the logo background of the application.
   ///
   /// See [getLogoImage] to get the logo as a widget.
-  static ImageProvider get logoBackground => const AssetImage("assets/images/tide_background.png");
+  static ImageProvider get logoBackground =>
+      const AssetImage("assets/images/tide_background.png");
 
   /// Get the logo of the application as a widget.
   ///
@@ -51,7 +53,8 @@ class TideTheme {
   /// The image corners can be polished using [borderRadius]. You can set it to
   /// a radius number to be used as a metric for all corners, or give a
   /// [BorderRadius] instance.
-  static Widget getLogoImage({ImageProvider? imageProvider, dynamic borderRadius}) {
+  static Widget getLogoImage(
+      {ImageProvider? imageProvider, dynamic borderRadius}) {
     Image image = Image(image: imageProvider ?? TideTheme.logo);
     Widget child = image;
     if (borderRadius != null) {
