@@ -84,7 +84,6 @@ jobs:
           rm -rf bin/
           mkdir bin/
           mv build/app/outputs/bundle/release/app*.aab build/app/outputs/flutter-apk/app*.apk bin/
-          ls -la bin/
       - name: Remove sensible files
         run: rm -f android/keystore.jks android/key.properties
       - name: Upload appbundle
@@ -137,10 +136,12 @@ jobs:
       - name: Treat downloaded artifacts
         run: |
           # Move all artifacts to current dirtectory
+          sudo apt-get install -qqy tree
           cd bin
-          find -type f -exec mv -v {} . \;
+          tree
+          find . -type f -exec mv -v {} . \;
           # Remove all sub-directories
-          find -type d -exec rm -r {} \;
+          find . -type d -exec rmdir -v {} \;
           cd ..
       - name: Create a release for Tide
         id: create_release
