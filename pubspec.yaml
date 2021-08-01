@@ -2,6 +2,8 @@ name: tide
 description: Tide is an application that helps reduce panic attacks with a simple breathing exercise.
 publish_to: 'none'
 version: 1.0.0+1
+homepage: https://github.com/Cynnexis/Tide
+repository: https://github.com/Cynnexis/Tide
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -47,6 +49,8 @@ flutter:
     - assets/images/tide_background.png
     - assets/images/github.png
     - assets/images/github-light.png
+    - assets/licenses/Courgette-LICENSE.txt
+    - LICENSE
 
   fonts:
     - family: Courgette

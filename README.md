@@ -1,4 +1,6 @@
-# 🌊 Tide
+# 🌊 Tide - Breathing Exercise to Calm Yourself Down
+
+![Tide Cover](assets/images/cover.png)
 
 Tide is an application that helps reduce panic attacks with a simple breathing exercise.
 
@@ -22,7 +24,7 @@ This project requires [Flutter][flutter-install], SDK version: minimum 2.3.0.
 
 ### ⚒️ Installation
 
-The first thing to do is to download the project, either by [downloading the ZIP file][tide-zip] and extract it somewhere in your machine, or by cloning the project with `git clone https://github.com/Cynnexis/tide.git`. The following steps will assume that the current directory is the project root.
+The first thing to do is to download the project, either by [downloading the ZIP file][tide-zip] and extract it somewhere in your machine, or by cloning the project with `git clone https://github.com/Cynnexis/tide.git tide`. The following steps will assume that the current directory is the project root.
 
 1. `flutter create --no-overwrite .`
 2. `flutter pub get`

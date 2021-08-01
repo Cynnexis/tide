@@ -5,6 +5,7 @@ import 'dart:io' as io;
 import 'package:args/args.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:logging/logging.dart';
@@ -93,6 +94,18 @@ class TideApp extends StatefulWidget {
 }
 
 class _TideAppState extends State<TideApp> {
+  @override
+  void initState() {
+    LicenseRegistry.addLicense(() async* {
+      // Add Courgette font license
+      yield LicenseEntryWithLineBreaks(
+        <String>["Courgette font"],
+        await rootBundle.loadString("assets/licenses/Courgette-LICENSE.txt"),
+      );
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(

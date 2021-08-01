@@ -3,6 +3,14 @@
   "@appName": {
     "description": "Short application name."
   },
+  "longAppName": "Tide - Breathing Exercise to Calm Yourself Down",
+  "@longAppName": {
+    "description": "Long application name."
+  },
+  "appDescription": "Tide is an application that helps reduce panic attacks with a simple breathing exercise.\n\nIt helps users to calm themselves down by timing the breath in and breath out, and imitating the diaphragm dilatation, while being free with no advertisements.",
+  "@appDescription": {
+    "description": "The application description."
+  },
   "breathIn": "Breath in",
   "@breathIn": {
     "description": "Tell the user to breath in. The string must be as short as possible, without containing any punctuation (if possible)."

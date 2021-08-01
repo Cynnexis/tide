@@ -231,7 +231,7 @@ class _HomePageState extends State<HomePage>
 
     showAboutDialog(
       context: context,
-      applicationName: TideLocalizations.of(context)!.appName,
+      applicationName: TideLocalizations.of(context)!.longAppName,
       applicationIcon: ClipRRect(
         borderRadius: BorderRadius.circular(8.0),
         child: Container(
@@ -244,20 +244,9 @@ class _HomePageState extends State<HomePage>
         ),
       ),
       applicationVersion: appVersion,
+      applicationLegalese: '\u{a9} 2021 Tide',
       children: <Widget>[
-        RichText(
-            text: const TextSpan(
-                text:
-                    "Tide is an application that helps reduce panic attacks with a simple breathing exercise.\n\n",
-                children: <InlineSpan>[
-              TextSpan(
-                  text:
-                      "It helps users to calm themselves down by timing the breath in and breath out, and imitating the diaphragm dilatation, while being "),
-              TextSpan(
-                  text: "free with no advertisements",
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              TextSpan(text: ".")
-            ])),
+        Text(TideLocalizations.of(context)!.appDescription),
         ListTile(
           leading: Image(
             image: AssetImage(

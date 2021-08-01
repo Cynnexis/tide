@@ -1,5 +1,7 @@
 {
   "appName": "Tide",
+  "longAppName": "Tide - Exercice de respiration pour se calmer",
+  "appDescription": "Tide est une application qui permet de réduire les crises de panique grâce à un simple exercice de respiration.\n\nElle aide les utilisateurs à se calmer en synchronisant l'inspiration et l'expiration, et en imitant la dilatation du diaphragme, tout en étant gratuite et sans publicité.",
   "breathIn": "Inspirez",
   "holdBreath": "Maintenez",
   "breathOut": "Expirez",
