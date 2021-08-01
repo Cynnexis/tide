@@ -29,6 +29,13 @@ jobs:
         run: |
           flutter pub global activate dartdoc
           dartdoc --exclude dart:async,dart:collection,dart:convert,dart:core,dart:developer,dart:io,dart:isolate,dart:math,dart:typed_data,dart,dart:ffi,dart:html,dart:js,dart:ui,dart:js_util
+      - name: Set variables for JamesIves/github-pages-deploy-action
+        id: vars
+        run: |
+          echo "GITHUB_REF=${GITHUB_REF}"
+          echo "github.ref=${{ github.ref }}"
+          echo "github.head_ref=${{ github.head_ref }}"
+          echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
       - name: Deploy GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
