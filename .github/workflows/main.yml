@@ -8,7 +8,7 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-20.04
-    name: Check that the Dart source code is correctly formatted.
+    name: Analyze code and generate the documentation
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -23,10 +23,15 @@ jobs:
         run: flutter pub get
       - name: Analyze code
         run: flutter analyze --congratulate --no-pub --preamble --fatal-infos --fatal-warnings
-      - name: Run dart format
+      - name: Check dart code format
         run: flutter format --output=none --set-exit-if-changed .
-
-  # TODO: Generate the documentation
+      - name: Generate documentation
+        run: dartdoc --no-show-progress --quiet --exclude dart:async,dart:collection,dart:convert,dart:core,dart:developer,dart:io,dart:isolate,dart:math,dart:typed_data,dart,dart:ffi,dart:html,dart:js,dart:ui,dart:js_util
+      - name: Deploy GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+          with:
+            branch: ${{ github.base_ref }}
+            folder: doc/api
 
   release:
     runs-on: ubuntu-18.04
