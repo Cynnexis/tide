@@ -134,18 +134,12 @@ jobs:
         with:
           path: bin
       - name: Treat downloaded artifacts
-        env:
-          PS4: '$ '
         run: |
-          sudo apt-get install -qqy tree
-          tree bin/
-          set -x
           # Move all artifacts to current dirtectory
           cd bin
           find . -type f -exec mv -v {} . \;
-          tree
           # Remove all sub-directories
-          find . -type d -mindepth 1 -exec rmdir -v {} \;
+          find . -empty -type d -delete
           cd ..
       - name: Create a release for Tide
         id: create_release
