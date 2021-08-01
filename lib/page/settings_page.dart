@@ -189,7 +189,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     int milliseconds = duration.inMilliseconds - seconds * 1000;
     if (milliseconds > 0) {
-      String ms = "${milliseconds}";
+      String ms = "$milliseconds";
       // Remove trailing 0
       ms = ms.replaceFirst(RegExp("0+\$"), '');
       content += ".$ms";
