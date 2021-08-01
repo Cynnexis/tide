@@ -136,12 +136,10 @@ jobs:
       - name: Treat downloaded artifacts
         run: |
           # Move all artifacts to current dirtectory
-          sudo apt-get install -qqy tree
           cd bin
-          tree
           find . -type f -exec mv -v {} . \;
           # Remove all sub-directories
-          find . -type d -exec rmdir -v {} \;
+          find . -type d -mindepth 1 -exec rmdir -v {} \;
           cd ..
       - name: Create a release for Tide
         id: create_release
