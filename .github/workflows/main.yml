@@ -160,6 +160,7 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: bin/app-release.aab
           asset_name: app-release.aab
+          asset_content_type: application/octet-stream
       - name: Upload APK (generic)
         uses: actions/upload-release-asset@v1.0.2
         env:
@@ -168,6 +169,7 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: bin/app.apk
           asset_name: app.apk
+          asset_content_type: application/octet-stream
       - name: Upload APK (arm64)
         uses: actions/upload-release-asset@v1.0.2
         env:
@@ -176,6 +178,7 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: bin/app-arm64-v8a-release.apk
           asset_name: app-arm64-v8a-release.apk
+          asset_content_type: application/octet-stream
       - name: Upload APK (armeabi)
         uses: actions/upload-release-asset@v1.0.2
         env:
@@ -184,6 +187,7 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: bin/app-armeabi-v7a-release
           asset_name: app-armeabi-v7a-release
+          asset_content_type: application/octet-stream
       - name: Upload APK (x86_64)
         uses: actions/upload-release-asset@v1.0.2
         env:
@@ -192,3 +196,4 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: bin/app-x86_64-release.apk
           asset_name: app-x86_64-release.apk
+          asset_content_type: application/octet-stream
