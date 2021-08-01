@@ -29,9 +29,9 @@ jobs:
         run: dartdoc --no-show-progress --quiet --exclude dart:async,dart:collection,dart:convert,dart:core,dart:developer,dart:io,dart:isolate,dart:math,dart:typed_data,dart,dart:ffi,dart:html,dart:js,dart:ui,dart:js_util
       - name: Deploy GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.4
-          with:
-            branch: ${{ github.base_ref }}
-            folder: doc/api
+        with:
+          branch: ${{ github.base_ref }}
+          folder: doc/api
 
   release:
     runs-on: ubuntu-18.04
