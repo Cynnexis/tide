@@ -32,14 +32,13 @@ jobs:
       - name: Set variables for JamesIves/github-pages-deploy-action
         id: vars
         run: |
-          echo "GITHUB_REF=${GITHUB_REF}"
-          echo "github.ref=${{ github.ref }}"
-          echo "github.head_ref=${{ github.head_ref }}"
-          echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+          GIT_BRANCH="${{ github.base_ref }}"
+          GIT_BRANCH="${GIT_BRANCH:-${GITHUB_REF#refs/*/}}"
+          echo ::set-output name=git_branch::${GIT_BRANCH}
       - name: Deploy GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
-          branch: ${{ github.base_ref }}
+          branch: ${{ steps.vars.outputs.git_branch }}
           folder: doc/api
 
   release:
