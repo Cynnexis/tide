@@ -1,9 +1,14 @@
 name: Tide CI/CD
 
 on:
-  push:
   pull_request:
-    branches: [master]
+    branches:
+      - master
+      - 'cicd/**'
+  push:
+    branches:
+      - master
+      - 'cicd/**'
 
 jobs:
   lint:
