@@ -157,12 +157,17 @@ jobs:
         run: |
           # Install yq
           foundArch="$(uname -p)"
+          # List of possible values found here: https://stackoverflow.com/a/45125525/7347145
           case "foundArch" in
-            armhf) ARCH='arm' ;;
-            aarch64) ARCH='arm64' ;;
+            arm|armhf) ARCH='arm' ;;
+            arm64|aarch64|aarch64_be|armv8b|armv8l) ARCH='arm64' ;;
+            mips) ARCH='mips' ;;
+            mips64) ARCH='mips64' ;;
+            ppc64|ppcle|ppc64le) ARCH='ppc64' ;;
+            s390|s390x) ARCH='s390x' ;;
             x86_64) ARCH='amd64' ;;
-            x86) ARCH='386' ;;
-            *) echo "error: unsupported architecture: foundArch" >&2; exit 1 ;;
+            i386|i686|x86) ARCH='386' ;;
+            *) echo "error: unsupported architecture: $foundArch" >&2; exit 1 ;;
           esac
           curl -fsSL https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_${ARCH}.tar.gz | tar xz
           mv yq_linux_${ARCH} /usr/bin/yq
