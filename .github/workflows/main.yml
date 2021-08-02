@@ -136,20 +136,25 @@ jobs:
     needs: [lint, pages, build]
     if: github.event_name == 'push' && contains(github.ref, 'master') || contains(github.ref, 'cicd/')
     steps:
+      - name: Prepare workspace
+        run: mkdir -p /tmp/android-binaries
       - name: Download action artifacts
         id: download_artifacts
         uses: actions/download-artifact@v2.0.10
         with:
-          path: bin
+          path: /tmp/android-binaries
       - name: Treat downloaded artifacts
         run: |
+          # Save current directory
+          OLD_WD=$(pwd)
+
           # Move all artifacts to current dirtectory
-          cd bin
+          cd /tmp/android-binaries
           find . -type f -exec mv -v {} . \;
 
           # Remove all sub-directories
           find . -empty -type d -delete
-          cd ..
+          cd "$OLD_WD"
       - name: Checkout
         uses: actions/checkout@v2
       - name: Get current app version
@@ -194,7 +199,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/app-release.aab
+          asset_path: /tmp/android-binaries/app-release.aab
           asset_name: app-release.aab
           asset_content_type: application/octet-stream
       - name: Upload APK (generic)
@@ -203,7 +208,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/app.apk
+          asset_path: /tmp/android-binaries/app.apk
           asset_name: app.apk
           asset_content_type: application/octet-stream
       - name: Upload APK (arm64)
@@ -212,7 +217,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/app-arm64-v8a-release.apk
+          asset_path: /tmp/android-binaries/app-arm64-v8a-release.apk
           asset_name: app-arm64-v8a-release.apk
           asset_content_type: application/octet-stream
       - name: Upload APK (armeabi)
@@ -221,7 +226,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/app-armeabi-v7a-release.apk
+          asset_path: /tmp/android-binaries/app-armeabi-v7a-release.apk
           asset_name: app-armeabi-v7a-release.apk
           asset_content_type: application/octet-stream
       - name: Upload APK (x86_64)
@@ -230,6 +235,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/app-x86_64-release.apk
+          asset_path: /tmp/android-binaries/app-x86_64-release.apk
           asset_name: app-x86_64-release.apk
           asset_content_type: application/octet-stream
