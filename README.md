@@ -1,4 +1,4 @@
-# 🌊 Tide - Breathing Exercise to Calm Yourself Down
+# :ocean: Tide - Breathing Exercise to Calm Yourself Down
 
 [![Tide CI/CD](https://github.com/Cynnexis/tide/actions/workflows/main.yml/badge.svg)](https://github.com/Cynnexis/tide/actions/workflows/main.yml)
 
@@ -6,7 +6,7 @@
 
 Tide is an application that helps reduce panic attacks with a simple breathing exercise.
 
-## 🎯 Goals
+## :dart: Goals
 
 Panic attacks can happen anywhere, at anytime.
 In a world where we have access to a limitless number of digital resources at the tip of our fingers, we can reduce those attacks through different ways (apps, videos, etc.).
@@ -16,15 +16,15 @@ Those useful resources should always be available for people traversing those de
 Hence, I initiated **Tide**, a very simple app that help the user to calm themselves down by timing the breath in and breath out, and imitating the diaphragm dilatation, while being **free with no advertisements**.
 As a result, anyone can have this application and use it with no stress of being disturbed by one of this awful and distressful ad.
 
-## 🔌 Getting Started
+## :electric_plug: Getting Started
 
 The following instructions will get you a copy of the source code, and help you execute it.
 
-### 📦 Requirements
+### :package: Requirements
 
 This project requires [Flutter][flutter-install], SDK version: minimum 2.3.0.
 
-### ⚒️ Installation
+### :hammer_and_pick: Installation
 
 The first thing to do is to download the project, either by [downloading the ZIP file][tide-zip] and extract it somewhere in your machine, or by cloning the project with `git clone https://github.com/Cynnexis/tide.git tide`. The following steps will assume that the current directory is the project root.
 
@@ -35,17 +35,24 @@ The first thing to do is to download the project, either by [downloading the ZIP
 
 The app should be running now.
 
-## 🏗️ Build With
+## :building_construction: Build With
 
 * [Dart][dart]
 * [Flutter][flutter]
 * [Android Studio][android-studio]
 
-## 🤝 Contributing
+## :handshake: Contributing
 
-Contribution is not permitted yet, but will soon be available! Stay tuned 😉
+To contribute to this project, please read our [`CONTRIBUTING.md`][contributing] file.
 
-## 📄 License
+We also have a [code of conduct][code-of-conduct] to help create a welcoming and friendly
+environment.
+
+## :writing_hand: Authors
+
+Please see the [`CONTRIBUTORS.md`][contributors] file.
+
+## :page_facing_up: License
 
 This project is under the GNU Affero General Public License v3. Please see the [LICENSE][license] file for more detail (it's a really fascinating story written in there!).
 
@@ -55,4 +62,7 @@ This project is under the GNU Affero General Public License v3. Please see the [
 [dart]: https://dart.dev/
 [android-studio]: https://developer.android.com/studio
 [cynnexis]: https://github.com/Cynnexis
-[license]: https://github.com/Cynnexis/tide/blob/master/LICENSE
+[contributing]: CONTRIBUTING.md
+[contributors]: CONTRIBUTORS.md
+[code-of-conduct]: CODE_OF_CONDUCT.md
+[license]: LICENSE
