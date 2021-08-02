@@ -170,8 +170,9 @@ jobs:
             *) echo "error: unsupported architecture: $foundArch" >&2; exit 1 ;;
           esac
           curl -fsSL https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_${ARCH}.tar.gz | tar xz
-          mv yq_linux_${ARCH} /usr/bin/yq
-          chmod +x /usr/bin/yq
+          sudo mv yq_linux_${ARCH} /usr/bin/yq
+          sudo chown root: /usr/bin/yq
+          sudo chmod +x /usr/bin/yq
 
           # Get version name
           tide_version=$(yq eval '.version' pubspec.yaml)
