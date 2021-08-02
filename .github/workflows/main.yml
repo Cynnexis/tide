@@ -10,6 +10,9 @@ on:
       - master
       - 'cicd/**'
 
+env:
+  YQ_VERSION: v4.11.2
+
 jobs:
   lint:
     runs-on: ubuntu-20.04
@@ -143,17 +146,39 @@ jobs:
           # Move all artifacts to current dirtectory
           cd bin
           find . -type f -exec mv -v {} . \;
+
           # Remove all sub-directories
           find . -empty -type d -delete
           cd ..
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Get current app version
+        id: get_current_app_version
+        run: |
+          # Install yq
+          foundArch="$(uname -p)"
+          case "foundArch" in
+            armhf) ARCH='arm' ;;
+            aarch64) ARCH='arm64' ;;
+            x86_64) ARCH='amd64' ;;
+            x86) ARCH='386' ;;
+            *) echo "error: unsupported architecture: foundArch" >&2; exit 1 ;;
+          esac
+          curl -fsSL https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_${ARCH}.tar.gz | tar xz
+          mv yq_linux_${ARCH} /usr/bin/yq
+          chmod +x /usr/bin/yq
+
+          # Get version name
+          tide_version=$(yq eval '.version' pubspec.yaml)
+          echo "tide_version=$tide_version" >> $GITHUB_ENV
       - name: Create a release for Tide
         id: create_release
         uses: actions/create-release@v1.1.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.sha }}
-          release_name: ${{ github.sha }}
+          tag_name: v${{ env.tide_version }}
+          release_name: v${{ env.tide_version }}
           body: "Ref: ${{ github.ref }} SHA: ${{ github.sha }}"
           draft: true
           prerelease: false
