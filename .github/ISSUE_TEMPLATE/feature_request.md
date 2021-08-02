@@ -1,3 +1,7 @@
+<!--
+By filling an issue in this project, you agree to abide by the terms of the code of conduct (https://github.com/Cynnexis/tide/blob/master/CODE_OF_CONDUCT.md).
+-->
+
 ---
 name: Feature request
 about: Suggest an idea for this project
