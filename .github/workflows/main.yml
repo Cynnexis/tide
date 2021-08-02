@@ -158,7 +158,7 @@ jobs:
           # Install yq
           foundArch="$(uname -p)"
           # List of possible values found here: https://stackoverflow.com/a/45125525/7347145
-          case "foundArch" in
+          case "$foundArch" in
             arm|armhf) ARCH='arm' ;;
             arm64|aarch64|aarch64_be|armv8b|armv8l) ARCH='arm64' ;;
             mips) ARCH='mips' ;;
