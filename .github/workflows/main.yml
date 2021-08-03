@@ -10,6 +10,9 @@ on:
       - master
       - 'cicd/**'
 
+env:
+  YQ_VERSION: v4.11.2
+
 jobs:
   lint:
     runs-on: ubuntu-20.04
@@ -133,27 +136,60 @@ jobs:
     needs: [lint, pages, build]
     if: github.event_name == 'push' && contains(github.ref, 'master') || contains(github.ref, 'cicd/')
     steps:
+      - name: Prepare workspace
+        run: mkdir -p /tmp/android-binaries
       - name: Download action artifacts
         id: download_artifacts
         uses: actions/download-artifact@v2.0.10
         with:
-          path: bin
+          path: /tmp/android-binaries
       - name: Treat downloaded artifacts
         run: |
+          # Save current directory
+          OLD_WD=$(pwd)
+
           # Move all artifacts to current dirtectory
-          cd bin
+          cd /tmp/android-binaries
           find . -type f -exec mv -v {} . \;
+
           # Remove all sub-directories
           find . -empty -type d -delete
-          cd ..
+          cd "$OLD_WD"
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Get current app version
+        id: get_current_app_version
+        run: |
+          # Install yq
+          foundArch="$(uname -p)"
+          # List of possible values found here: https://stackoverflow.com/a/45125525/7347145
+          case "$foundArch" in
+            arm|armhf) ARCH='arm' ;;
+            arm64|aarch64|aarch64_be|armv8b|armv8l) ARCH='arm64' ;;
+            mips) ARCH='mips' ;;
+            mips64) ARCH='mips64' ;;
+            ppc64|ppcle|ppc64le) ARCH='ppc64' ;;
+            s390|s390x) ARCH='s390x' ;;
+            x86_64) ARCH='amd64' ;;
+            i386|i686|x86) ARCH='386' ;;
+            *) echo "error: unsupported architecture: $foundArch" >&2; exit 1 ;;
+          esac
+          curl -fsSL https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_${ARCH}.tar.gz | tar xz
+          sudo mv yq_linux_${ARCH} /usr/bin/yq
+          sudo chown root: /usr/bin/yq
+          sudo chmod +x /usr/bin/yq
+
+          # Get version name
+          tide_version=$(yq eval '.version' pubspec.yaml)
+          echo "tide_version=$tide_version" >> $GITHUB_ENV
       - name: Create a release for Tide
         id: create_release
         uses: actions/create-release@v1.1.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.sha }}
-          release_name: ${{ github.sha }}
+          tag_name: v${{ env.tide_version }}
+          release_name: v${{ env.tide_version }}
           body: "Ref: ${{ github.ref }} SHA: ${{ github.sha }}"
           draft: true
           prerelease: false
@@ -163,7 +199,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/app-release.aab
+          asset_path: /tmp/android-binaries/app-release.aab
           asset_name: app-release.aab
           asset_content_type: application/octet-stream
       - name: Upload APK (generic)
@@ -172,7 +208,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/app.apk
+          asset_path: /tmp/android-binaries/app.apk
           asset_name: app.apk
           asset_content_type: application/octet-stream
       - name: Upload APK (arm64)
@@ -181,7 +217,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/app-arm64-v8a-release.apk
+          asset_path: /tmp/android-binaries/app-arm64-v8a-release.apk
           asset_name: app-arm64-v8a-release.apk
           asset_content_type: application/octet-stream
       - name: Upload APK (armeabi)
@@ -190,7 +226,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/app-armeabi-v7a-release.apk
+          asset_path: /tmp/android-binaries/app-armeabi-v7a-release.apk
           asset_name: app-armeabi-v7a-release.apk
           asset_content_type: application/octet-stream
       - name: Upload APK (x86_64)
@@ -199,6 +235,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/app-x86_64-release.apk
+          asset_path: /tmp/android-binaries/app-x86_64-release.apk
           asset_name: app-x86_64-release.apk
           asset_content_type: application/octet-stream
