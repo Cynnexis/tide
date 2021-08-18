@@ -12,6 +12,7 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:tide/constants.dart';
+import 'package:tide/page/breathing_exercise_page.dart';
 import 'package:tide/page/home_page.dart';
 import 'package:tide/page/settings_page.dart';
 import 'package:tide/settings.dart';
@@ -144,11 +145,22 @@ class _TideAppState extends State<TideApp> {
               case '/home':
               case '/index':
                 return MaterialPageRoute(
-                    builder: (context) => const HomePage(), settings: settings);
+                  builder: (context) => const HomePage(),
+                  settings: settings,
+                );
+              case BreathingExercisePage.routeName:
+                return PageRouteBuilder(
+                  pageBuilder: (context, anim1, anim2) =>
+                      const BreathingExercisePage(),
+                  transitionsBuilder: BreathingExercisePage.transitionsBuilder,
+                  transitionDuration: BreathingExercisePage.transitionDuration,
+                  settings: settings,
+                );
               case SettingsPage.routeName:
                 return MaterialPageRoute(
-                    builder: (context) => const SettingsPage(),
-                    settings: settings);
+                  builder: (context) => const SettingsPage(),
+                  settings: settings,
+                );
             }
           },
           debugShowCheckedModeBanner: false,
