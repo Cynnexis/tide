@@ -80,5 +80,63 @@
   "copiedToClipboard": "Copied to clipboard",
   "@copiedToClipboard": {
     "description": "Tells the user that the data has been saved in the clipboard."
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button."
+  },
+  "ok": "Ok",
+  "@ok": {
+    "description": "Ok button."
+  },
+  "timerDone": "Timer is done",
+  "@timerDone": {
+    "description": "Text to display to indicate that the timer is done."
+  },
+  "formatMinutesSeconds": "{minutes}min {seconds}s",
+  "@formatMinutesSeconds": {
+    "description": "Text to show a timer value, in minutes and seconds.",
+    "placeholders": {
+      "minutes": {
+        "type": "int",
+        "example": "5"
+      },
+      "seconds": {
+        "type": "int",
+        "example": "25"
+      }
+    }
+  },
+  "formatMinutes": "{minutes}min",
+  "@formatMinutes": {
+    "description": "Text to show a timer value, in minutes and seconds.",
+    "placeholders": {
+      "minutes": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "formatSeconds": "{seconds}s",
+  "@formatSeconds": {
+    "description": "Text to show a timer value, in seconds.",
+    "placeholders": {
+      "seconds": {
+        "type": "int",
+        "example": "25"
+      }
+    }
+  },
+  "selectDuration": "Select a duration",
+  "@selectDuration": {
+    "description": "Ask the user to select a duration for a timer."
+  },
+  "tapToActivateTimer": "Tap to activate the timer",
+  "@tapToActivateTimer": {
+    "description": "Indicate the user that the button can be tapped to select a timer."
+  },
+  "stopTimer": "Stop the timer",
+  "@stopTimer": {
+    "description": "Indicate the user that the button can stop the timer."
   }
 }
