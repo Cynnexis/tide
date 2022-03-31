@@ -23,10 +23,9 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: '12.x'
-      - uses: subosito/flutter-action@v1
+      - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "2.4.0-4.2.pre"
-          channel: 'beta'
+          channel: 'stable'
       - name: Install dependencies
         run: flutter pub get
       - name: Analyze code
@@ -44,10 +43,9 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: '12.x'
-      - uses: subosito/flutter-action@v1
+      - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "2.4.0-4.2.pre"
-          channel: 'beta'
+          channel: 'stable'
       - name: Install dependencies
         run: flutter pub get
       - name: Generate documentation
@@ -70,10 +68,9 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: '12.x'
-      - uses: subosito/flutter-action@v1
+      - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "2.4.0-4.2.pre"
-          channel: 'beta'
+          channel: 'stable'
       - name: Install dependencies
         run: flutter pub get
       - name: Write keystore

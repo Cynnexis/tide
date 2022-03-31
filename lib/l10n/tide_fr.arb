@@ -17,5 +17,14 @@
   "langSettingExplanation": "La langue de l'application.",
   "exitConfirmation": "Appuyez à nouveau sur la touche retour pour quitter.",
   "startButton": "Démarrer",
-  "copiedToClipboard": "Copié dans le presse-papier"
+  "copiedToClipboard": "Copié dans le presse-papier",
+  "cancel": "Annuler",
+  "ok": "Ok",
+  "timerDone": "Le minuteur est terminé",
+  "formatMinutesSeconds": "{minutes}min {seconds}s",
+  "formatMinutes": "{minutes}min",
+  "formatSeconds": "{seconds}s",
+  "selectDuration": "Séléctionnez une durée",
+  "tapToActivateTimer": "Tappez pour activer le minuteur",
+  "stopTimer": "Arrêter le minuteur"
 }
