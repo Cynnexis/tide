@@ -19,7 +19,7 @@ import 'package:tide/settings.dart';
 import 'package:tide/theme.dart';
 import 'package:tide/utility/extension/locale_parser.dart';
 
-void main([List<String> args = const <String>[]]) async {
+Future<void> main([List<String> args = const <String>[]]) async {
   Locale? defaultLocale;
 
   // Parse arguments
@@ -116,8 +116,8 @@ class _TideAppState extends State<TideApp> {
               widget.defaultLocale ?? TideSettings.instanceSync.lang),
         )
       ],
-      child: Consumer<ValueNotifier<Locale?>>(
-          builder: (context, defaultLocale, child) {
+      child: Consumer<ValueNotifier<Locale?>>(builder: (BuildContext context,
+          ValueNotifier<Locale?> defaultLocale, Widget? child) {
         return MaterialApp(
           title: appName,
           localizationsDelegates: TideLocalizations.localizationsDelegates,
@@ -127,7 +127,7 @@ class _TideAppState extends State<TideApp> {
           darkTheme: TideTheme.dark,
           initialRoute: '/',
           routes: <String, Widget Function(BuildContext)>{
-            HomePage.routeName: (context) => const HomePage(),
+            HomePage.routeName: (BuildContext context) => const HomePage(),
           },
           onGenerateRoute: (RouteSettings settings) {
             if (kDebugMode) {
@@ -140,8 +140,8 @@ class _TideAppState extends State<TideApp> {
               );
             }
 
-            final MaterialPageRoute homeRoute = MaterialPageRoute(
-              builder: (context) => const HomePage(),
+            final MaterialPageRoute<void> homeRoute = MaterialPageRoute<void>(
+              builder: (BuildContext context) => const HomePage(),
               settings: settings,
             );
 
@@ -151,16 +151,17 @@ class _TideAppState extends State<TideApp> {
               case '/index':
                 return homeRoute;
               case BreathingExercisePage.routeName:
-                return PageRouteBuilder(
-                  pageBuilder: (context, anim1, anim2) =>
+                return PageRouteBuilder<void>(
+                  pageBuilder: (BuildContext context, Animation<double> anim1,
+                          Animation<double> anim2) =>
                       const BreathingExercisePage(),
                   transitionsBuilder: BreathingExercisePage.transitionsBuilder,
                   transitionDuration: BreathingExercisePage.transitionDuration,
                   settings: settings,
                 );
               case SettingsPage.routeName:
-                return MaterialPageRoute(
-                  builder: (context) => const SettingsPage(),
+                return MaterialPageRoute<void>(
+                  builder: (BuildContext context) => const SettingsPage(),
                   settings: settings,
                 );
               default:

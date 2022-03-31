@@ -4,10 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 import 'package:tide/constants.dart';
 import 'package:tide/theme.dart';
 import 'package:url_launcher/url_launcher.dart' as url;
-import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 
 void aboutApp(BuildContext context) {
   const double iconSize = 32;

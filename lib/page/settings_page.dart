@@ -38,7 +38,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return FutureBuilder<TideSettings>(
       future: TideSettings.instance,
-      builder: (context, snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<TideSettings> snapshot) {
         if (snapshot.hasError) {
           throw snapshot.error!;
         } else if (!snapshot.hasData) {
@@ -65,7 +65,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           .instanceSync.breathingDuration.inMilliseconds /
                       1000,
                   leading: const Icon(Icons.timer),
-                  onChange: (value) => setState(() =>
+                  onChange: (final double value) => setState(() =>
                       TideSettings.instanceSync.breathingDuration =
                           Duration(milliseconds: (value * 1000).floor())),
                 ),
@@ -82,7 +82,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           .instanceSync.holdingBreathDuration.inMilliseconds /
                       1000.0,
                   leading: const Icon(Icons.timelapse_rounded),
-                  onChange: (value) => setState(() =>
+                  onChange: (final double value) => setState(() =>
                       TideSettings.instanceSync.holdingBreathDuration =
                           Duration(milliseconds: (value * 1000).floor())),
                 ),
@@ -149,7 +149,10 @@ class _SettingsPageState extends State<SettingsPage> {
     if (0 <= langIndex &&
         langIndex < TideLocalizations.supportedLocales.length) {
       TideSettings.instanceSync.setLang(
-          context, TideLocalizations.supportedLocales[langIndex], langIndex);
+        context,
+        TideLocalizations.supportedLocales[langIndex],
+        index: langIndex,
+      );
       if (TideLocalizations.delegate
           .isSupported(TideSettings.instanceSync.lang!)) {
         TideLocalizations.delegate.load(TideSettings.instanceSync.lang!);

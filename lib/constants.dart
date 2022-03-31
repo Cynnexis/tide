@@ -5,4 +5,4 @@ const String appName = "Tide";
 const String appVersion = "0.0.2";
 
 /// The app Git repo URL
-const gitRepoURL = "http://github.com/Cynnexis/tide";
+const String gitRepoURL = "http://github.com/Cynnexis/tide";

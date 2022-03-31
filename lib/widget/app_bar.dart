@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 import 'package:tide/page/settings_page.dart';
 import 'package:tide/theme.dart';
-import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 import 'package:tide/utility/about_app_dialog.dart';
 
 class TideAppBar extends AppBar {
@@ -86,7 +86,7 @@ class TideAppBar extends AppBar {
           leadingWidth: leadingWidth,
         );
 
-  static void pushSettings(BuildContext context) async {
+  static Future<void> pushSettings(BuildContext context) async {
     await Navigator.pushNamed(context, SettingsPage.routeName);
   }
 }
