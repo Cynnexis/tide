@@ -5,7 +5,7 @@ import 'package:tide/theme.dart';
 import 'package:tide/widget/app_bar.dart';
 
 class HomePage extends StatefulWidget {
-  static const routeName = '/';
+  static const String routeName = '/';
 
   const HomePage({Key? key}) : super(key: key);
 
@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage>
   /// Do **NOT** use this method to refresh the widget tree.
   void _updateCircleSize() => setState(() {});
 
-  void pushBreathingExercisePage() async {
-    await Navigator.pushNamed(context, BreathingExercisePage.routeName);
+  Future<void> pushBreathingExercisePage() async {
+    await Navigator.pushNamed<void>(context, BreathingExercisePage.routeName);
   }
 }

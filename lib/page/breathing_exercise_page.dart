@@ -4,13 +4,13 @@ import 'dart:developer' as dev;
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:logging/logging.dart';
 import 'package:quiver/async.dart';
 import 'package:tide/theme.dart';
 import 'package:tide/widget/app_bar.dart';
 import 'package:tide/widget/breathing_bubble.dart';
-import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 
 /// Page that contains the breathing exercise.
 class BreathingExercisePage extends StatefulWidget {
@@ -58,7 +58,7 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
+            children: <Widget>[
               Builder(builder: (BuildContext context) {
                 // Display nothing if the timer is not set
                 if (_countdownTimer == null) return Container();
@@ -66,7 +66,10 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
                 // Else, display the timer current value
                 return StreamBuilder<CountdownTimer>(
                   stream: _countdownTimer,
-                  builder: (context, snapshot) {
+                  builder: (
+                    BuildContext context,
+                    AsyncSnapshot<CountdownTimer> snapshot,
+                  ) {
                     // Error handling
                     if (snapshot.hasError) {
                       // If an error has been caught, throw it in debug mode, else print it and ignore it.
@@ -149,7 +152,15 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
       title: Text(TideLocalizations.of(context)!.selectDuration),
       onConfirm: (Picker picker, List<int> values) {
         assert(picker.getSelectedValues().length == values.length);
-        assert(const ListEquality().equals(picker.getSelectedValues(), values));
+        assert(
+          const ListEquality<int>().equals(
+            picker
+                .getSelectedValues()
+                .map<int>((dynamic v) => v as int)
+                .toList(growable: false),
+            values,
+          ),
+        );
         assert(picker.getSelectedValues().length == 2);
         Duration duration = Duration(minutes: values[0], seconds: values[1]);
         setCountdownTimer(duration);
@@ -194,20 +205,20 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
 
   /// Callback for when the timer is done.
   void onTimerCompleted() {
-    // TODO: Make vibration and alarm sound
+    // TODO(Cynnexis): Make vibration and alarm sound
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => AlertDialog(
+      builder: (BuildContext context) => AlertDialog(
         title: Text(TideLocalizations.of(context)!.timerDone),
         actions: <Widget>[
           TextButton(
             onPressed: () {
               clearCountdownTimer();
               // Pop the dialog
-              Navigator.of(context).pop();
+              Navigator.of(context).pop<void>();
               // Pop the page to return to home
-              Navigator.of(context).pop();
+              Navigator.of(context).pop<void>();
             },
             child: Text(TideLocalizations.of(context)!.ok),
           ),

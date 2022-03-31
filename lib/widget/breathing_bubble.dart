@@ -79,7 +79,7 @@ class _BreathingBubbleState extends State<BreathingBubble>
               border: Border.all(color: Colors.white),
             ),
           ),
-          Builder(builder: (context) {
+          Builder(builder: (BuildContext context) {
             // Dynamically generate the text
             String text = '';
             switch (_animationStatus) {
@@ -153,14 +153,16 @@ class _BreathingBubbleState extends State<BreathingBubble>
     if (widget.controller == null ||
         widget.controller!.status == BreathingBubbleStatus.playing) {
       if (status == AnimationStatus.completed) {
-        Future.delayed(TideSettings.instanceSync.holdingBreathDuration, () {
+        Future<void>.delayed(TideSettings.instanceSync.holdingBreathDuration,
+            () {
           if (widget.controller == null ||
               widget.controller!.status == BreathingBubbleStatus.playing) {
             _animationController.reverse();
           }
         });
       } else if (status == AnimationStatus.dismissed) {
-        Future.delayed(TideSettings.instanceSync.holdingBreathDuration, () {
+        Future<void>.delayed(TideSettings.instanceSync.holdingBreathDuration,
+            () {
           if (widget.controller == null ||
               widget.controller!.status == BreathingBubbleStatus.playing) {
             _animationController.forward();

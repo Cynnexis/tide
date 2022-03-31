@@ -6,5 +6,37 @@ analyzer:
     - extension-methods
 
 linter:
+  # List of available lints: https://dart-lang.github.io/linter/lints/
   rules:
-    - prefer_void_to_null
+    always_declare_return_types: true
+    always_specify_types: true
+    always_use_package_imports: true
+    #avoid_classes_with_only_static_members: true
+    avoid_double_and_int_checks: true
+    avoid_field_initializers_in_const_classes: true
+    avoid_implementing_value_types: true
+    avoid_js_rounded_ints: true # Web only
+    avoid_positional_boolean_parameters: true
+    avoid_returning_null_for_future: true
+    avoid_returning_this: true
+    avoid_slow_async_io: true
+    avoid_type_to_string: true
+    avoid_void_async: true
+    cancel_subscriptions: true
+    cast_nullable_to_non_nullable: true
+    close_sinks: true
+    deprecated_consistency: true
+    #diagnostic_describe_all_properties: true
+    directives_ordering: true
+    flutter_style_todos: true
+    #invariant_booleans: true
+    literal_only_boolean_expressions: true
+    no_adjacent_strings_in_list: true
+    noop_primitive_operations: true
+    null_closures: false
+    prefer_void_to_null: true
+    test_types_in_equals: true
+    unnecessary_statements: true
+    unsafe_html: true
+    #use_build_context_synchronously: true
+    void_checks: true

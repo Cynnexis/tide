@@ -61,8 +61,9 @@ class TideSettings extends ChangeNotifier {
 
   //region SETTINGS
 
-  Duration get breathingDuration =>
-      Duration(milliseconds: getInt("breathingDurationMilliseconds", 7000)!);
+  Duration get breathingDuration => Duration(
+      milliseconds:
+          getInt("breathingDurationMilliseconds", defaultValue: 7000)!);
 
   set breathingDuration(Duration value) {
     _sharedPreferences.setInt(
@@ -71,7 +72,8 @@ class TideSettings extends ChangeNotifier {
   }
 
   Duration get holdingBreathDuration => Duration(
-      milliseconds: getInt("holdingBreathDurationMilliseconds", 1500)!);
+      milliseconds:
+          getInt("holdingBreathDurationMilliseconds", defaultValue: 1500)!);
 
   set holdingBreathDuration(Duration value) {
     _sharedPreferences.setInt(
@@ -81,7 +83,7 @@ class TideSettings extends ChangeNotifier {
 
   Locale? get lang {
     try {
-      String? result = getString("lang", '');
+      String? result = getString("lang", defaultValue: '');
       if (result == null || result.isEmpty) return null;
       List<String> parts = result.split('_');
       if (parts.length == 1) {
@@ -94,7 +96,7 @@ class TideSettings extends ChangeNotifier {
     }
   }
 
-  void setLang(BuildContext context, Locale? locale, [int? index]) {
+  void setLang(BuildContext context, Locale? locale, {int? index}) {
     _sharedPreferences.setString("lang", locale?.toString() ?? '');
     if (index != null) _sharedPreferences.setInt("langSettings", index);
     Provider.of<ValueNotifier<Locale?>>(context, listen: false).value = locale;
@@ -107,7 +109,7 @@ class TideSettings extends ChangeNotifier {
   //region SHARED PREFERENCES
 
   /// Reads a value of any type from persistent storage.
-  dynamic get(String key, [dynamic defaultValue]) {
+  dynamic get(String key, {dynamic defaultValue}) {
     try {
       return _sharedPreferences.get(key) ?? defaultValue;
     } catch (e) {
@@ -117,7 +119,7 @@ class TideSettings extends ChangeNotifier {
 
   /// Reads a value from persistent storage, returning the default value if not
   /// found
-  bool? getBool(String key, [bool? defaultValue]) {
+  bool? getBool(String key, {bool? defaultValue}) {
     try {
       return _sharedPreferences.getBool(key) ?? defaultValue;
     } catch (e) {
@@ -127,7 +129,7 @@ class TideSettings extends ChangeNotifier {
 
   /// Reads a value from persistent storage, returning the default value if not
   /// found
-  int? getInt(String key, [int? defaultValue]) {
+  int? getInt(String key, {int? defaultValue}) {
     try {
       return _sharedPreferences.getInt(key) ?? defaultValue;
     } catch (e) {
@@ -137,7 +139,7 @@ class TideSettings extends ChangeNotifier {
 
   /// Reads a value from persistent storage, returning the default value if not
   /// found
-  double? getDouble(String key, [double? defaultValue]) {
+  double? getDouble(String key, {double? defaultValue}) {
     try {
       return _sharedPreferences.getDouble(key) ?? defaultValue;
     } catch (e) {
@@ -147,7 +149,7 @@ class TideSettings extends ChangeNotifier {
 
   /// Reads a value from persistent storage, returning the default value if not
   /// found
-  String? getString(String key, [String? defaultValue]) {
+  String? getString(String key, {String? defaultValue}) {
     try {
       return _sharedPreferences.getString(key) ?? defaultValue;
     } catch (e) {
