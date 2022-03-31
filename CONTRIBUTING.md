@@ -17,8 +17,9 @@ Please send a [bug report][tide-issue-bug] via the GitHub issue interface, as de
 1. Update the `README.md` with details of changes to the interface, this includes new environment 
    variables, exposed ports, useful file locations and container parameters.
 2. Update the `CHANGELOG.md` with full details of the Pull Request.
-3. Increase the version numbers in `pubspec.yaml` and `lib/constants.dart` to the new version that
-   this Pull Request would represent. The versioning scheme we use is [SemVer](http://semver.org/).
+3. Increase the version numbers in `pubspec.yaml`, `lib/constants.dart` and
+   `android/app/src/main/AndroidManifest.xml` to the new version that this Pull Request would
+   represent. The versioning scheme we use is [SemVer](http://semver.org/).
 4. Don't forget to add your name or your organization name to the [`CONTRIBUTORS.md`][contributors]
    file.
 5. You may merge the Pull Request in once you have the sign-off of at least one other developer.

@@ -48,6 +48,7 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
     return Scaffold(
       appBar: TideAppBar(
         context: context,
+        backgroundColor: TideTheme.primaryColor,
       ),
       backgroundColor: TideTheme.primaryColor,
       body: Stack(

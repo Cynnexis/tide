@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage>
     didChangePlatformBrightness();
 
     _animationController = AnimationController(
-      duration: const Duration(seconds: 1, milliseconds: 500),
+      duration: const Duration(seconds: 2, milliseconds: 500),
       vsync: this,
     );
 
@@ -64,7 +64,10 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TideAppBar(context: context),
+      appBar: TideAppBar(
+        context: context,
+        backgroundColor: TideTheme.primaryColor,
+      ),
       backgroundColor: TideTheme.primaryColor,
       body: Center(
         child: Column(
