@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 import 'package:tide/page/breathing_exercise_page.dart';
@@ -56,8 +55,7 @@ class _HomePageState extends State<HomePage>
   @override
   void didChangePlatformBrightness() {
     setState(() {
-      TideTheme.setSystemUIOverlayStyle(
-          brightness: WidgetsBinding.instance!.window.platformBrightness);
+      TideTheme.setSystemUIOverlayStyle();
     });
   }
 

@@ -23,6 +23,8 @@ class TideAppBar extends AppBar {
     Brightness? brightness,
     IconThemeData? iconTheme = const IconThemeData(color: Colors.white),
     IconThemeData? actionsIconTheme,
+    TextStyle? toolbarTextStyle,
+    TextStyle? titleTextStyle,
     TextTheme? textTheme,
     bool primary = true,
     bool? centerTitle = true,
@@ -33,8 +35,6 @@ class TideAppBar extends AppBar {
     double? toolbarHeight,
     double? leadingWidth,
     bool? backwardsCompatibility,
-    TextStyle? toolbarTextStyle,
-    TextStyle? titleTextStyle,
     SystemUiOverlayStyle? systemOverlayStyle,
   }) : super(
           key: key,
@@ -49,7 +49,10 @@ class TideAppBar extends AppBar {
               Text(
                 TideLocalizations.of(context)!.appName,
                 style: const TextStyle(
-                    fontFamily: TideTheme.homeFontFamily, fontSize: 26),
+                  fontFamily: TideTheme.homeFontFamily,
+                  fontSize: 26,
+                  color: Colors.white,
+                ),
               ),
           actions: actions ??
               <Widget>[
@@ -65,13 +68,14 @@ class TideAppBar extends AppBar {
           shape: shape,
           backgroundColor: backgroundColor,
           foregroundColor: foregroundColor,
-          brightness: brightness,
+          systemOverlayStyle:
+              systemOverlayStyle ?? TideTheme.getSystemOverlayStyle(),
           iconTheme: iconTheme,
           actionsIconTheme: actionsIconTheme,
-          textTheme: textTheme ??
-              TideTheme.light.appBarTheme.textTheme
-                  ?.apply(bodyColor: Colors.white) ??
-              TideTheme.light.primaryTextTheme.apply(bodyColor: Colors.white),
+          titleTextStyle: titleTextStyle ??
+              textTheme?.titleMedium?.apply(color: Colors.white),
+          toolbarTextStyle: toolbarTextStyle ??
+              textTheme?.labelMedium?.apply(color: Colors.white),
           primary: primary,
           centerTitle: centerTitle,
           excludeHeaderSemantics: excludeHeaderSemantics,
@@ -80,10 +84,6 @@ class TideAppBar extends AppBar {
           bottomOpacity: bottomOpacity,
           toolbarHeight: toolbarHeight,
           leadingWidth: leadingWidth,
-          backwardsCompatibility: backwardsCompatibility,
-          toolbarTextStyle: toolbarTextStyle,
-          titleTextStyle: titleTextStyle,
-          systemOverlayStyle: systemOverlayStyle,
         );
 
   static void pushSettings(BuildContext context) async {

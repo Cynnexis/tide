@@ -140,14 +140,16 @@ class _TideAppState extends State<TideApp> {
               );
             }
 
+            final MaterialPageRoute homeRoute = MaterialPageRoute(
+              builder: (context) => const HomePage(),
+              settings: settings,
+            );
+
             switch (settings.name) {
               case HomePage.routeName:
               case '/home':
               case '/index':
-                return MaterialPageRoute(
-                  builder: (context) => const HomePage(),
-                  settings: settings,
-                );
+                return homeRoute;
               case BreathingExercisePage.routeName:
                 return PageRouteBuilder(
                   pageBuilder: (context, anim1, anim2) =>
@@ -161,6 +163,13 @@ class _TideAppState extends State<TideApp> {
                   builder: (context) => const SettingsPage(),
                   settings: settings,
                 );
+              default:
+                if (kDebugMode) {
+                  throw StateError(
+                      "The route \"${settings.name}\" doesn't exist.");
+                } else {
+                  return homeRoute;
+                }
             }
           },
           debugShowCheckedModeBanner: false,

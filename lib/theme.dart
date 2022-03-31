@@ -77,14 +77,16 @@ class TideTheme {
     return AspectRatio(aspectRatio: 1, child: child);
   }
 
-  static void setSystemUIOverlayStyle(
-      {Brightness? brightness, BuildContext? context}) {
-    if (brightness == null && context == null) {
-      throw ArgumentError("brightness and context cannot be both null.");
-    }
+  static SystemUiOverlayStyle getSystemOverlayStyle() {
+    return const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.light,
+      systemNavigationBarColor: primaryColor,
+    );
+  }
 
-    brightness ??= getSystemBrightness(context!);
-
+  static void setSystemUIOverlayStyle() {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarBrightness: Brightness.dark,
