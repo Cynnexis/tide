@@ -14,7 +14,7 @@ import 'package:tide/widget/breathing_bubble.dart';
 
 /// Page that contains the breathing exercise.
 class BreathingExercisePage extends StatefulWidget {
-  static const String routeName = "breathing-exercise";
+  static const String routeName = "/breathing-exercise";
   static const Duration transitionDuration = Duration(seconds: 2);
 
   static Widget transitionsBuilder(BuildContext context,
