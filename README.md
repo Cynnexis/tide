@@ -35,6 +35,45 @@ The first thing to do is to download the project, either by [downloading the ZIP
 
 The app should be running now.
 
+### :whale: Using Docker
+
+You can build a Docker image to serve the web application of Tide.
+All Docker files are stored under the `docker/` folder, but you can use the `Makefile` commands to build it.
+
+First, you need to configure the project by creating `tide.yaml` at the root of the project.
+You can copy it from `tide.sample.yaml` to have the structure of the configuration.
+Then, edit it to configure the Tide project and customize your Docker building process.
+
+Finally, enter the following command:
+
+```bash
+make build-docker
+```
+
+This command will call `docker/build.bash`, a bash script that uses `tide.yaml` to build the Dockerfiles.
+At the end of the process, you should have the Docker image `cynnexis/tide:web`, that you can use to serve the application:
+
+With the Makefile:
+
+```bash
+make docker-server
+```
+
+... or with the docker command:
+
+```bash
+docker run -d \
+	--name=tide-web \
+	--hostname="tide-web" \
+	--publish 80:80 \
+	-v "/etc/timezone:/etc/timezone:ro" \
+	-v "/etc/localtime:/etc/localtime:ro" \
+	-e TZ \
+	"cynnexis/tide:web"
+```
+
+And connect to http://localhost:80/
+
 ## :building_construction: Build With
 
 * [Dart][dart]
