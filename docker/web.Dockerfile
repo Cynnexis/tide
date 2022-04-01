@@ -34,6 +34,7 @@ SHELL ["/bin/bash", "-c"]
 
 # Install web dependencies
 RUN \
+  set -euo pipefail; \
 	# Change the mirror
 	if [[ -n $APT_UBUNTU_MIRROR_URL ]]; then \
 		sed "s@http://archive.ubuntu.com/@$APT_UBUNTU_MIRROR_URL@" -i /etc/apt/sources.list ; \
@@ -47,6 +48,9 @@ RUN \
 	flutter doctor --no-color --verbose && \
 	flutter clean && \
 	flutter pub get && \
+	# Build documentation
+	flutter pub global activate dartdoc && \
+	flutter pub global run dartdoc . && \
 	# Build release
 	flutter build web --release --web-renderer "$FLUTTER_WEB_RENDERER" && \
 	make version
@@ -94,6 +98,9 @@ COPY --from=builder /root/tide/docker/apache/httpd.template.conf /usr/local/apac
 # Copy the built HTML, CSS and JavaScript files from the previous stage to this
 # stage, right in the served directory:
 COPY --from=builder /root/tide/build/web /usr/local/apache2/htdocs
+
+# Copy the built documentation
+COPY --from=builder /root/tide/doc/api/ /usr/local/apache2/htdocs/docs/
 
 # For cURL configuration
 ENV CURL_HOME=/etc/curl
