@@ -1,16 +1,15 @@
 import 'dart:async';
 import 'dart:developer' as dev;
 
-import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
-import 'package:flutter_picker/flutter_picker.dart';
 import 'package:logging/logging.dart';
 import 'package:quiver/async.dart';
 import 'package:tide/theme.dart';
 import 'package:tide/widget/app_bar.dart';
 import 'package:tide/widget/breathing_bubble.dart';
+import 'package:tide/widget/timer_form.dart';
 
 /// Page that contains the breathing exercise.
 class BreathingExercisePage extends StatefulWidget {
@@ -101,30 +100,26 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
                   },
                 );
               }),
-              // Disable the time on Web because the package flutter_picker does
-              // not handle mouse events, and creates huge lags when using it on
-              // a browser.
-              if (!kIsWeb)
-                ButtonBar(
-                  alignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    AnimatedSwitcher(
-                      duration: const Duration(seconds: 1),
-                      child: _countdownTimer == null
-                          ? IconButton(
-                              icon: const Icon(Icons.timer),
-                              onPressed: () => _showTimerDialog(context),
-                              tooltip: TideLocalizations.of(context)!
-                                  .tapToActivateTimer,
-                            )
-                          : IconButton(
-                              icon: const Icon(Icons.stop),
-                              onPressed: clearCountdownTimer,
-                              tooltip: TideLocalizations.of(context)!.stopTimer,
-                            ),
-                    ),
-                  ],
-                ),
+              ButtonBar(
+                alignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  AnimatedSwitcher(
+                    duration: const Duration(seconds: 1),
+                    child: _countdownTimer == null
+                        ? IconButton(
+                            icon: const Icon(Icons.timer),
+                            onPressed: () => _showTimerDialog(context),
+                            tooltip: TideLocalizations.of(context)!
+                                .tapToActivateTimer,
+                          )
+                        : IconButton(
+                            icon: const Icon(Icons.stop),
+                            onPressed: clearCountdownTimer,
+                            tooltip: TideLocalizations.of(context)!.stopTimer,
+                          ),
+                  ),
+                ],
+              ),
             ],
           ),
         ],
@@ -132,51 +127,34 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
     );
   }
 
-  void _showTimerDialog(BuildContext context) {
-    Picker(
-      adapter: NumberPickerAdapter(
-        data: <NumberPickerColumn>[
-          NumberPickerColumn(
-            begin: 0,
-            end: 59,
-            initValue: 5,
-            onFormatValue: (int? value) =>
-                TideLocalizations.of(context)!.formatMinutes(value ?? 0),
-          ),
-          NumberPickerColumn(
-            begin: 0,
-            end: 59,
-            initValue: 0,
-            onFormatValue: (int? value) =>
-                TideLocalizations.of(context)!.formatSeconds(value ?? 0),
+  Future<void> _showTimerDialog(BuildContext context) async {
+    TimerFormController timerController = TimerFormController();
+
+    await showDialog<Duration>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(TideLocalizations.of(context)!.setATimer),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            TimerForm(
+              controller: timerController,
+            ),
+            Text(TideLocalizations.of(context)!.timerDescription),
+          ],
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () =>
+                Navigator.of(context).pop<Duration>(timerController.duration),
+            child: Text(TideLocalizations.of(context)!.ok),
           ),
         ],
+        alignment: Alignment.center,
       ),
-      hideHeader: true,
-      title: Text(TideLocalizations.of(context)!.selectDuration),
-      onConfirm: (Picker picker, List<int> values) {
-        assert(picker.getSelectedValues().length == values.length);
-        assert(
-          const ListEquality<int>().equals(
-            picker
-                .getSelectedValues()
-                .map<int>((dynamic v) => v as int)
-                .toList(growable: false),
-            values,
-          ),
-        );
-        assert(picker.getSelectedValues().length == 2);
-        Duration duration = Duration(minutes: values[0], seconds: values[1]);
-        setCountdownTimer(duration);
-      },
-      backgroundColor: TideTheme.getSystem(context).dialogBackgroundColor,
-      textStyle: TideTheme.getSystem(context)
-              .dialogTheme
-              .contentTextStyle
-              ?.copyWith(color: TideTheme.getFontColor(context)) ??
-          TextStyle(color: TideTheme.getFontColor(context)),
-      looping: true,
-    ).showDialog(context);
+    );
+
+    setCountdownTimer(timerController.duration);
   }
 
   /// Cancel [_countdownTimer] and set it to `null` so the garbage collector can

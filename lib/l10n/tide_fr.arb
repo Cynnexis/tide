@@ -24,7 +24,10 @@
   "formatMinutesSeconds": "{minutes}min {seconds}s",
   "formatMinutes": "{minutes}min",
   "formatSeconds": "{seconds}s",
-  "selectDuration": "Séléctionnez une durée",
+  "setATimer": "Configurez un minuteur",
+  "timerDescription": "Vous serez notifier lorsque le minuteur sera fini.",
   "tapToActivateTimer": "Tappez pour activer le minuteur",
-  "stopTimer": "Arrêter le minuteur"
+  "stopTimer": "Arrêter le minuteur",
+  "shortMinute": "min",
+  "shortSecond": "sec"
 }

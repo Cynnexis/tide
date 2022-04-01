@@ -127,9 +127,13 @@
       }
     }
   },
-  "selectDuration": "Select a duration",
+  "setATimer": "Set a timer",
   "@selectDuration": {
     "description": "Ask the user to select a duration for a timer."
+  },
+  "timerDescription": "You will be notified when the timer ends.",
+  "@selectDuration": {
+    "description": "Describe the timer in the timer dialog box."
   },
   "tapToActivateTimer": "Tap to activate the timer",
   "@tapToActivateTimer": {
@@ -138,5 +142,13 @@
   "stopTimer": "Stop the timer",
   "@stopTimer": {
     "description": "Indicate the user that the button can stop the timer."
+  },
+  "shortMinute": "min",
+  "@shortMinute": {
+    "description": "Short format for minute."
+  },
+  "shortSecond": "sec",
+  "@shortSecond": {
+    "description": "Short format for second."
   }
 }
