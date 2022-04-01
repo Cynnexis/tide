@@ -1,0 +1,39 @@
+---
+# Configuration file for the Tide project.
+
+# The docker object configure the Docker images when building Dockerfiles. This
+# object, and all its subfields are optional.
+#docker:
+  # The SDK version.
+  #
+  # See https://developer.android.com/studio/releases/platforms
+  #android_sdk_version: "32"
+
+  # The Android build tools version.
+  #
+  # See https://developer.android.com/studio/releases/build-tools
+  #android_build_tools_version: "30.0.2"
+
+  # The Flutter branch or version to use.
+  #
+  # See https://docs.flutter.dev/development/tools/sdk/releases
+  #flutter_version: "stable"
+
+  # Optional URL to use as an APT mirror instead of default Ubuntu servers.
+  # Please make sure that the given value starts with the protocol (http://,
+  # https://, ftp://, ...) and ends with a slash ("/").
+  #apt_ubuntu_mirror_url: "http://archive.ubuntu.com/"
+
+  # The flutter web renderer.
+  #
+  # See https://docs.flutter.dev/development/tools/web-renderers
+  #flutter_web_renderer: "auto"
+
+  # To prove your website ownership to Google Search Console, you might need to
+  # add a tag to your index,html file. You can put its content here, and it will
+  # automatically be added during Dockerfile build.
+  #google_search_meta_ownership_content: "my-id"
+
+# Required parameter. It set the maintainer email address.
+maintainer_email: john.doe@corp.org
+...

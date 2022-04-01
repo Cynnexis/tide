@@ -6,7 +6,7 @@ endif
 PORT=8080
 SHELL=/bin/bash
 HOST="localhost"
-.PHONY: help configure serve clean lint fix-lint doc rmdoc update-launcher build-release-android fix-packages-version version
+.PHONY: help configure serve clean lint fix-lint build-docker docker-serve doc rmdoc update-launcher build-release-android fix-packages-version version
 .ONESHELL:
 
 all: help
@@ -77,6 +77,34 @@ build/app/outputs/bundle/release/app-release.aab:
 
 build-release-and: build/app/outputs/bundle/release/app-release.aab
 
+build-docker:
+	@set -euo pipefail
+	./docker/build.bash
+
+docker-serve:
+	@set -euo pipefail
+
+	docker run -d \
+		--name=tide-web \
+		--hostname="tide-web" \
+		--publish 80:80 \
+		-v "/etc/timezone:/etc/timezone:ro" \
+		-v "/etc/localtime:/etc/localtime:ro" \
+		-e TZ \
+		"--restart=no" \
+		--health-cmd="{ \
+				{ curl -skL  http://localhost/ | grep -Ee '^\s*<title>Tide</title>\$$'; } && \
+				{ curl -skIL http://localhost/ | grep -Ee '^\s*HTTP/1.1 200(\s+OK)?';   } \
+			} || exit 1" \
+		--health-interval=1m \
+		--health-timeout=5s \
+		--health-start-period=10s \
+		--health-retries=3 \
+		--security-opt="no-new-privileges=true" \
+		--cap-drop=all \
+		--cap-add=NET_BIND_SERVICE \
+		"cynnexis/tide:web"
+
 fix-packages-version:
 	@set -euo pipefail
 	# List all type of dependencies
@@ -101,14 +129,22 @@ fix-packages-version:
 	done
 
 version:
-	@set -e
-	VERSION="Tide version $$(grep 'version:' pubspec.yaml | head -1 | awk '{print $$2}')"
-	if command -v "git" > /dev/null 2>&1; then
-		if [[ "$(git rev-parse --abbrev-ref HEAD)" == "master" ]]; then
-			echo "$$VERSION"
-		else \
-			echo "$$VERSION - rev $$(git rev-parse HEAD)"
-		fi
+	@set -euo pipefail
+	if command -v yq &> /dev/null; then
+		VERSION=$$(yq eval -MN --unwrapScalar '.version' pubspec.yaml)
 	else
-		echo "$$VERSION - rev $$(cat ".git/$$(grep "ref:" .git/HEAD | head -1 | awk '{print $$2}')")"
+		VERSION="$$(grep 'version:' pubspec.yaml | head -1 | awk '{print $$2}')"
 	fi
+
+	if [[ -d .git/ ]]; then
+		if command -v "git" &> /dev/null; then
+			if [[ "$$(git rev-parse --abbrev-ref HEAD)" != "master" ]]; then
+				VERSION="$$VERSION - rev $$(git rev-parse HEAD)"
+			fi
+		else
+			VERSION="$$VERSION - rev $$(cat ".git/$$(grep "ref:" .git/HEAD | head -1 | awk '{print $$2}')")"
+		fi
+	fi
+
+	echo "tide version $$VERSION"
+

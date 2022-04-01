@@ -19,7 +19,6 @@ dependencies:
 
   args: ^2.0.0
   cupertino_icons: ^1.0.2
-  flutter_picker: ^2.0.2
   flutter_settings_screens: ^0.3.0-null-safety
   intl: ^0.17.0-nullsafety.2
   logging: ^1.0.1
