@@ -101,26 +101,30 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
                   },
                 );
               }),
-              ButtonBar(
-                alignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  AnimatedSwitcher(
-                    duration: const Duration(seconds: 1),
-                    child: _countdownTimer == null
-                        ? IconButton(
-                            icon: const Icon(Icons.timer),
-                            onPressed: () => _showTimerDialog(context),
-                            tooltip: TideLocalizations.of(context)!
-                                .tapToActivateTimer,
-                          )
-                        : IconButton(
-                            icon: const Icon(Icons.stop),
-                            onPressed: clearCountdownTimer,
-                            tooltip: TideLocalizations.of(context)!.stopTimer,
-                          ),
-                  ),
-                ],
-              ),
+              // Disable the time on Web because the package flutter_picker does
+              // not handle mouse events, and creates huge lags when using it on
+              // a browser.
+              if (!kIsWeb)
+                ButtonBar(
+                  alignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    AnimatedSwitcher(
+                      duration: const Duration(seconds: 1),
+                      child: _countdownTimer == null
+                          ? IconButton(
+                              icon: const Icon(Icons.timer),
+                              onPressed: () => _showTimerDialog(context),
+                              tooltip: TideLocalizations.of(context)!
+                                  .tapToActivateTimer,
+                            )
+                          : IconButton(
+                              icon: const Icon(Icons.stop),
+                              onPressed: clearCountdownTimer,
+                              tooltip: TideLocalizations.of(context)!.stopTimer,
+                            ),
+                    ),
+                  ],
+                ),
             ],
           ),
         ],
