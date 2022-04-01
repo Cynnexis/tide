@@ -52,13 +52,8 @@ fix-lint:
 doc:
 	@PS4='$$ '
 	set -euxo pipefail
-	dartdoc --show-progress --exclude dart:async,dart:collection,dart:convert,dart:core,dart:developer,dart:io,dart:isolate,dart:math,dart:typed_data,dart,dart:ffi,dart:html,dart:js,dart:ui,dart:js_util
+	flutter pub global run dartdoc .
 	{ set +x; } 2> /dev/null
-	if [[ -d doc/api ]]; then
-		rm -rf docs/
-		mv doc/api docs
-		rm -rf doc
-	fi
 
 rmdoc:
 	rm -rf doc/api

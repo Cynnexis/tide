@@ -1,3 +1,5 @@
+# Docker ignore file with a deny-all default policy.
+
 *
 !assets/
 !docker/apache/
@@ -7,6 +9,10 @@
 !.metadata
 !analysis_options.yaml
 !analysis_options.yml
+!CHANGELOG.md
+!CODE_OF_CONDUCT.md
+!CONTRIBUTING.md
+!CONTRIBUTORS.md
 !dartdoc_options.yaml
 !dartdoc_options.yml
 !l10n.yaml
@@ -16,3 +22,5 @@
 !pubspec.lock
 !pubspec.yaml
 !pubspec.yml
+!README.md
+!SECURITY.md
