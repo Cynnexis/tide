@@ -133,13 +133,13 @@ jobs:
           ls -lha web/
       - name: Organize built files
         run: |
-          mv -fT doc/api web/docs
-          ls -lha web/
+          mv -fT doc/api build/web/docs
+          ls -lha build/web/
       - name: Deploy GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
           branch: gh-pages
-          folder: web
+          folder: build/web
           single-commit: true
 
   release:
