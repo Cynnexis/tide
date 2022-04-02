@@ -128,13 +128,11 @@ jobs:
           flutter pub global activate dartdoc
           flutter pub global run dartdoc .
       - name: Build the web app
-        run: |
-          flutter build web --release --base-href "/${{ github.event.repository.name }}/"
-          ls -lha web/
+        run: flutter build web --release --base-href "/${{ github.event.repository.name }}/"
       - name: Organize built files
         run: |
           mv -fT doc/api build/web/docs
-          ls -lha build/web/
+          cp -ar assets build/web/docs/assets
       - name: Deploy GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
