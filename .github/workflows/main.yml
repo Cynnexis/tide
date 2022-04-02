@@ -129,7 +129,7 @@ jobs:
           flutter pub global run dartdoc .
       - name: Build the web app
         run: |
-          flutter build web --release
+          flutter build web --release --base-href "/${{ github.event.repository.name }}/"
           ls -lha web/
       - name: Organize built files
         run: |
