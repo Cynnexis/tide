@@ -106,7 +106,7 @@ jobs:
     runs-on: ubuntu-20.04
     name: Build Webapp
     needs: [lint]
-    if: github.event_name == 'push' && contains(github.ref, 'master') || contains(github.ref, main') || contains(github.ref, 'cicd/')
+    if: github.event_name == 'push' && contains(github.ref, 'master') || contains(github.ref, 'main') || contains(github.ref, 'cicd/')
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -143,7 +143,7 @@ jobs:
     runs-on: ubuntu-20.04
     name: Create a release
     needs: [lint, build-android, build-web]
-    if: github.event_name == 'push' && contains(github.ref, 'master') || contains(github.ref, main') || contains(github.ref, 'cicd/')
+    if: github.event_name == 'push' && contains(github.ref, 'master') || contains(github.ref, 'main') || contains(github.ref, 'cicd/')
     steps:
       - name: Prepare workspace
         run: mkdir -p /tmp/android-binaries
