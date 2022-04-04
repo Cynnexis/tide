@@ -9,6 +9,9 @@ class TideAppBar extends AppBar {
   TideAppBar({
     Key? key,
     required BuildContext context,
+    bool showSettings = true,
+    bool showBackButton = false,
+    VoidCallback? onBackButtonPushed,
     Widget? leading,
     bool automaticallyImplyLeading = true,
     Widget? title,
@@ -39,10 +42,10 @@ class TideAppBar extends AppBar {
   }) : super(
           key: key,
           leading: leading ??
-              IconButton(
-                onPressed: () => aboutApp(context),
-                icon: TideTheme.getLogoImage(imageProvider: TideTheme.logo),
-                tooltip: TideLocalizations.of(context)!.appName,
+              _buildLeading(
+                context: context,
+                showBackButton: showBackButton,
+                onBackButtonPushed: onBackButtonPushed,
               ),
           automaticallyImplyLeading: automaticallyImplyLeading,
           title: title ??
@@ -55,12 +58,14 @@ class TideAppBar extends AppBar {
                 ),
               ),
           actions: actions ??
-              <Widget>[
-                IconButton(
-                  onPressed: () => pushSettings(context),
-                  icon: const Icon(Icons.settings),
-                ),
-              ],
+              (showSettings
+                  ? <Widget>[
+                      IconButton(
+                        onPressed: () => pushSettings(context),
+                        icon: const Icon(Icons.settings),
+                      ),
+                    ]
+                  : null),
           flexibleSpace: flexibleSpace,
           bottom: bottom,
           elevation: elevation,
@@ -85,6 +90,29 @@ class TideAppBar extends AppBar {
           toolbarHeight: toolbarHeight,
           leadingWidth: leadingWidth,
         );
+
+  static Widget _buildLeading({
+    required BuildContext context,
+    bool showBackButton = false,
+    VoidCallback? onBackButtonPushed,
+  }) {
+    if (showBackButton) {
+      return IconButton(
+        onPressed: onBackButtonPushed ??
+            () {
+              Navigator.of(context).pop<void>();
+            },
+        icon: const Icon(Icons.arrow_back),
+        tooltip: TideLocalizations.of(context)!.goBack,
+      );
+    } else {
+      return IconButton(
+        onPressed: () => aboutApp(context),
+        icon: TideTheme.getLogoImage(imageProvider: TideTheme.logo),
+        tooltip: TideLocalizations.of(context)!.appName,
+      );
+    }
+  }
 
   static Future<void> pushSettings(BuildContext context) async {
     await Navigator.pushNamed(context, SettingsPage.routeName);

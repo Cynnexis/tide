@@ -26,7 +26,15 @@ This project requires [Flutter][flutter-install], SDK version: minimum 2.3.0.
 
 ### :hammer_and_pick: Installation
 
-The first thing to do is to download the project, either by [downloading the ZIP file][tide-zip] and extract it somewhere in your machine, or by cloning the project with `git clone https://github.com/Cynnexis/tide.git tide`. The following steps will assume that the current directory is the project root.
+The first thing to do is to download the project, either by [downloading the ZIP file][tide-zip] and extract it somewhere in your machine, or by cloning the project with `git clone https://github.com/Cynnexis/tide.git tide`.
+
+Then, you need to configure the project by creating `tide.yaml` at the root of the project.
+You can copy it from `tide.sample.yaml` to have the structure of the configuration.
+Then, edit it to configure the Tide project and customize it.
+
+> Note that you can rename this file `tide.yml` (and not `.yaml`), but you will need to change the asset name in `pubspec.yaml`.
+
+The following steps will assume that the current directory is the project root.
 
 1. `flutter create --no-overwrite .`
 2. `flutter pub get`
@@ -40,11 +48,7 @@ The app should be running now.
 You can build a Docker image to serve the web application of Tide.
 All Docker files are stored under the `docker/` folder, but you can use the `Makefile` commands to build it.
 
-First, you need to configure the project by creating `tide.yaml` at the root of the project.
-You can copy it from `tide.sample.yaml` to have the structure of the configuration.
-Then, edit it to configure the Tide project and customize your Docker building process.
-
-Finally, enter the following command:
+To build them, enter the following command:
 
 ```bash
 make build-docker

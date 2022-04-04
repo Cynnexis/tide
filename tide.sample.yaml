@@ -34,6 +34,42 @@
   # automatically be added during Dockerfile build.
   #google_search_meta_ownership_content: "my-id"
 
+# Option for the webapp
+webapp:
+  # Object describing the URL where the webapp is stored
+  uri:
+    # The URI scheme. It can be 'http' or 'https'. This parameter is required.
+    scheme: https
+
+    # User information if needed.
+    #userInfo: 'username'
+
+    # The host. You may add subdomain, but no protocol, and no trailing slash.
+    # This parameter is required.
+    host: www.example.com
+
+    # The port number.
+    #
+    # By default, http uses 80 and https 443. This parameter is optional.
+    #port: 443
+
+    # The base href. It must begin with a slash and end with a slash. If no base
+    # href is used, only put a slash. This parameter is optional.
+    #
+    # Example:
+    #  - /
+    #  - /tide/
+    #  - /webapp/tide/
+    #path: /
+
+    # Other options are optional and for the uri instance.
+    #
+    # See https://api.dart.dev/stable/2.16.2/dart-core/Uri-class.html
+    #pathSegments:
+    #query:
+    #queryParameters:
+    #fragment:
+
 # Required parameter. It set the maintainer email address.
 maintainer_email: john.doe@corp.org
 ...
