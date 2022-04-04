@@ -15,8 +15,7 @@
   "systemLanguage": "Langue système",
   "langSetting": "Langue",
   "langSettingExplanation": "La langue de l'application.",
-  "exitConfirmation": "Appuyez à nouveau sur la touche retour pour quitter.",
-  "startButton": "Démarrer",
+  "startButton": "Commencer",
   "copiedToClipboard": "Copié dans le presse-papier",
   "cancel": "Annuler",
   "ok": "Ok",
@@ -29,5 +28,9 @@
   "tapToActivateTimer": "Tappez pour activer le minuteur",
   "stopTimer": "Arrêter le minuteur",
   "shortMinute": "min",
-  "shortSecond": "sec"
+  "shortSecond": "sec",
+  "goBack": "Retour",
+  "homeDescription": "Cliquez sur le bouton ci-dessous pour commencer l'exercise de respiration.",
+  "errorOccurred": "Une erreur s'est produite.",
+  "errorOccurredParseConfigFile": "Une erreur s'est produite lors du chargement du fichier de configuration."
 }

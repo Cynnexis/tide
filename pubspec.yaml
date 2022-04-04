@@ -28,6 +28,7 @@ dependencies:
   synchronized: ^3.0.0
   tuple: ^2.0.0
   url_launcher: ^6.0.9
+  yaml: ^3.1.0
 
 
 dev_dependencies:
@@ -53,12 +54,18 @@ flutter:
     - assets/images/github-light.png
     - assets/licenses/Courgette-LICENSE.txt
     - LICENSE
+    - tide.yaml
 
   fonts:
     - family: Courgette
       fonts:
         - asset: assets/fonts/Courgette.ttf
           weight: 400
+    - family: RobotoMono
+      fonts:
+        - asset: assets/fonts/RobotoMono-Regular.ttf
+        - asset: assets/fonts/RobotoMono-Bold.ttf
+          weight: 700
 
 
 flutter_icons:

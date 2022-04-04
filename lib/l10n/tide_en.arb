@@ -69,10 +69,6 @@
   "@langSettingExplanation": {
     "description": "Setting explanation."
   },
-  "exitConfirmation": "Press the back button again to exit.",
-  "@exitConfirmation": {
-    "description": "Tell the user to push the back button twice."
-  },
   "startButton": "Start",
   "@startButton": {
     "description": "The start button text."
@@ -150,5 +146,21 @@
   "shortSecond": "sec",
   "@shortSecond": {
     "description": "Short format for second."
+  },
+  "goBack": "Go back",
+  "@goBack": {
+    "description": "Text associated to icon button to go back to previous route."
+  },
+  "homeDescription": "Click on the button below to start your breathing exercise.",
+  "@homeDescription": {
+    "description": "Text on top of the home page, giving instructions to the user."
+  },
+  "errorOccurred": "An error occurred.",
+  "@errorOccurred": {
+    "description": "Indicate to the user that an error occurred."
+  },
+  "errorOccurredParseConfigFile": "An error occurred when parsing the configuration.",
+  "@errorOccurredParseConfigFile": {
+    "description": "Indicate to the user that an error occurred when parsing the configuration file."
   }
 }

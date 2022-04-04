@@ -27,6 +27,10 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
+      - name: Configure application
+        env:
+          TIDE_YAML: ${{ secrets.TIDE_YAML }}
+        run: printf "%s" "$TIDE_YAML" > tide.yaml
       - name: Install dependencies
         run: flutter pub get
       - name: Analyze code
@@ -48,6 +52,10 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
+      - name: Configure application
+        env:
+          TIDE_YAML: ${{ secrets.TIDE_YAML }}
+        run: printf "%s" "$TIDE_YAML" > tide.yaml
       - name: Install dependencies
         run: flutter pub get
       - name: Write keystore
@@ -121,6 +129,10 @@ jobs:
           channel: 'stable'
       - name: Configure workspace
         run: find . -type f \( -name Makefile -o -iname '*.bash' -o -iname '*.sh' \) -exec chmod +x "{}" \;
+      - name: Configure application
+        env:
+          TIDE_YAML: ${{ secrets.TIDE_YAML }}
+        run: printf "%s" "$TIDE_YAML" > tide.yaml
       - name: Install dependencies
         run: flutter pub get
       - name: Export documentation
@@ -167,31 +179,14 @@ jobs:
           cd "$OLD_WD"
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Get SDK Version from config
+        id: lookup_app_version
+        uses: mikefarah/yq@v4.23.1
+        with:
+          cmd: yq eval '.version' pubspec.yaml
       - name: Get current app version
         id: get_current_app_version
-        run: |
-          # Install yq
-          foundArch="$(uname -p)"
-          # List of possible values found here: https://stackoverflow.com/a/45125525/7347145
-          case "$foundArch" in
-            arm|armhf) ARCH='arm' ;;
-            arm64|aarch64|aarch64_be|armv8b|armv8l) ARCH='arm64' ;;
-            mips) ARCH='mips' ;;
-            mips64) ARCH='mips64' ;;
-            ppc64|ppcle|ppc64le) ARCH='ppc64' ;;
-            s390|s390x) ARCH='s390x' ;;
-            x86_64) ARCH='amd64' ;;
-            i386|i686|x86) ARCH='386' ;;
-            *) echo "error: unsupported architecture: $foundArch" >&2; exit 1 ;;
-          esac
-          curl -fsSL https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_${ARCH}.tar.gz | tar xz
-          sudo mv yq_linux_${ARCH} /usr/bin/yq
-          sudo chown root: /usr/bin/yq
-          sudo chmod +x /usr/bin/yq
-
-          # Get version name
-          tide_version=$(yq eval '.version' pubspec.yaml)
-          echo "tide_version=$tide_version" >> $GITHUB_ENV
+        run: echo "tide_version=${{ steps.lookup_app_version.outputs.result }}" >> $GITHUB_ENV
       - name: Create a release for Tide
         id: create_release
         uses: actions/create-release@v1.1.4

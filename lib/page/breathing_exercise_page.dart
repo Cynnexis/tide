@@ -48,6 +48,8 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
       appBar: TideAppBar(
         context: context,
         backgroundColor: TideTheme.primaryColor,
+        showSettings: false,
+        showBackButton: true,
       ),
       backgroundColor: TideTheme.primaryColor,
       body: Stack(
