@@ -89,7 +89,7 @@ RUN \
   flutter doctor --no-color --verbose && \
   chown -R root:root "${FLUTTER_HOME}" && \
 	# Change the APT mirror
-	if [[ -n ${APT_UBUNTU_MIRROR_URL+x} && -n $APT_UBUNTU_MIRROR_URL ]]; then \
+	if [[ -v APT_UBUNTU_MIRROR_URL && -n $APT_UBUNTU_MIRROR_URL ]]; then \
 		sed "s@http://archive.ubuntu.com/@$APT_UBUNTU_MIRROR_URL@" -i /etc/apt/sources.list ; \
 	fi && \
 	# Install some tools and dependencies

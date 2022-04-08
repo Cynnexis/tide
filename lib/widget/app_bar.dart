@@ -15,6 +15,7 @@ class TideAppBar extends AppBar {
     Widget? leading,
     bool automaticallyImplyLeading = true,
     Widget? title,
+    double titleOpacity = 1.0,
     List<Widget>? actions,
     Widget? flexibleSpace,
     PreferredSizeWidget? bottom,
@@ -49,12 +50,15 @@ class TideAppBar extends AppBar {
               ),
           automaticallyImplyLeading: automaticallyImplyLeading,
           title: title ??
-              Text(
-                TideLocalizations.of(context)!.appName,
-                style: const TextStyle(
-                  fontFamily: TideTheme.homeFontFamily,
-                  fontSize: 26,
-                  color: Colors.white,
+              Opacity(
+                opacity: titleOpacity,
+                child: Text(
+                  TideLocalizations.of(context)!.appName,
+                  style: const TextStyle(
+                    fontFamily: TideTheme.homeFontFamily,
+                    fontSize: 26,
+                    color: Colors.white,
+                  ),
                 ),
               ),
           actions: actions ??

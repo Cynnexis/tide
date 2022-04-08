@@ -17,6 +17,9 @@
 # Configure flutter for web and build web release.
 FROM cynnexis/tide:sdk AS builder
 
+# Add expand-emoji program
+ADD https://github.com/Cynnexis/expand-emoji/releases/latest/download/expand-emoji-linux-amd64 /usr/bin/expand-emoji
+
 # Arguments to use an APT mirror instead of default Ubuntu servers. Please make
 # sure that the given value starts with the protocol (http://, https://,
 # ftp://, ...) and ends with a slash ("/").
@@ -35,8 +38,10 @@ SHELL ["/bin/bash", "-c"]
 # Install web dependencies
 RUN \
   set -euo pipefail; \
+  # Configure installed program
+  chmod a+x /usr/bin/expand-emoji && \
 	# Change the mirror
-	if [[ -n $APT_UBUNTU_MIRROR_URL ]]; then \
+	if [[ -v APT_UBUNTU_MIRROR_URL && -n $APT_UBUNTU_MIRROR_URL ]]; then \
 		sed "s@http://archive.ubuntu.com/@$APT_UBUNTU_MIRROR_URL@" -i /etc/apt/sources.list ; \
 	fi && \
 	apt-get update && \
@@ -51,10 +56,11 @@ RUN \
 	# Build documentation
 	flutter pub global activate dartdoc && \
 	flutter pub global run dartdoc . && \
+	# Expand emoji in documentation
+	find doc -type f \( -iname '*.html' -o -iname '*.html5' -o -iname '*.css' -o -iname '*.php' -o -iname '*.js' \) -exec expand-emoji "{}" \; 1> /dev/null && \
 	# Build release
 	flutter build web --release --web-renderer "$FLUTTER_WEB_RENDERER" && \
 	make version
-
 
 ########## STAGE 2 - SERVER ##########
 # Fetch the release from last stage and serve it
@@ -114,6 +120,11 @@ RUN \
 	apk update && \
 	apk upgrade && \
 	apk add --no-cache tini tzdata gettext libcap curl openssl ca-certificates && \
+	# Check Docker build arguments
+	if [[ -z $PROJECT_VERSION || -z $MAINTAINER_EMAIL ]]; then \
+	  echo "Expected PROJECT_VERSION and MAINTAINER_EMAIL to be non-empty, got PROJECT_VERSION=\"$PROJECT_VERSION\" and MAINTAINER_EMAIL=\"$MAINTAINER_EMAIL\"." 1>&2 && \
+	  exit 1; \
+	fi && \
 	# Expand shell variable in template configuration file
 	envsubst < /usr/local/apache2/conf/httpd.template.conf > /usr/local/apache2/conf/httpd.conf && \
 	rm -f /usr/local/apache2/conf/httpd.template.conf && \

@@ -79,12 +79,32 @@ build-docker:
 docker-serve:
 	@set -euo pipefail
 
+	# Bash array containing all volumes as arguments
+	extra_volumes=()
+
+	# Function to add a configuration file to `extra_volumes`.
+	# It accepts only one argument: The absolute path to the configuration file on
+	# the host filesystem.
+	add_config() {
+	  extra_volumes+=("-v" "$$1:/usr/local/apache2/htdocs/assets/tide.yaml:ro")
+	}
+
+	if [[ -f tide.yaml ]]; then
+	  add_config "$$(pwd)/tide.yaml"
+	elif [[ -f tide.yml ]]; then
+	  add_config "$$(pwd)/tide.yml"
+	fi
+
+	PS4=' $$ '
+	set -x
+
 	docker run -d \
 		--name=tide-web \
 		--hostname="tide-web" \
 		--publish 80:80 \
 		-v "/etc/timezone:/etc/timezone:ro" \
 		-v "/etc/localtime:/etc/localtime:ro" \
+		"$${extra_volumes[@]}" \
 		-e TZ \
 		"--restart=no" \
 		--health-cmd="{ \
@@ -99,6 +119,8 @@ docker-serve:
 		--cap-drop=all \
 		--cap-add=NET_BIND_SERVICE \
 		"cynnexis/tide:web"
+
+		{ set +x; } 2> /dev/null
 
 fix-packages-version:
 	@set -euo pipefail

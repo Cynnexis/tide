@@ -27,6 +27,7 @@ dependencies:
   shared_preferences: ^2.0.6
   synchronized: ^3.0.0
   tuple: ^2.0.0
+  universal_io: ^2.0.4
   url_launcher: ^6.0.9
   yaml: ^3.1.0
 
