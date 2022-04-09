@@ -137,7 +137,7 @@ PS4='$ '
 
 # Build Flutter SDK first
 set -x
-docker build -t cynnexis/tide:sdk "${build_sdk_args[@]}" -f docker/sdk.Dockerfile .
+time docker build -t cynnexis/tide:sdk "${build_sdk_args[@]}" -f docker/sdk.Dockerfile .
 { set +x; } 2> /dev/null
 
 # Set the tag
@@ -145,7 +145,7 @@ docker tag cynnexis/tide:sdk "cynnexis/tide:sdk-$PROJECT_VERSION"
 
 # Then, build the Apache server
 set -x
-docker build -t "cynnexis/tide:web" "${build_web_args[@]}" -f docker/web.Dockerfile .
+time docker build -t "cynnexis/tide:web" "${build_web_args[@]}" -f docker/web.Dockerfile .
 { set +x; } 2> /dev/null
 
 # Set the tag
