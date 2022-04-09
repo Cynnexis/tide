@@ -162,5 +162,23 @@
   "errorOccurredParseConfigFile": "An error occurred when parsing the configuration.",
   "@errorOccurredParseConfigFile": {
     "description": "Indicate to the user that an error occurred when parsing the configuration file."
+  },
+  "fullscreenTip": "Press {hotkey} to enter or exit the fullscreen mode.",
+  "@fullscreenTip": {
+    "description": "Tips to enter/exit in fullscreen mode in the webapp. The placeholder will be used to put the hotkey associated to the action.",
+    "placeholders": {
+      "hotkey": {
+        "type": "String"
+      }
+    }
+  },
+  "breathingDurationTip": "Change the breathing and holding duration in the {settings} to fit your need.",
+  "@breathingDurationTip": {
+    "description": "Tips to set a custom breathing duration. The placeholder will be used as the setting icon and text (as bold).",
+    "placeholders": {
+      "settings": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -1,11 +1,12 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 import 'package:tide/page/breathing_exercise_page.dart';
 import 'package:tide/theme.dart';
+import 'package:tide/utility/fullscreen/fullscreen.dart';
 import 'package:tide/widget/app_bar.dart';
+import 'package:tide/widget/user_tips.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/';
@@ -115,15 +116,36 @@ class _HomePageState extends State<HomePage>
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Flexible(
-                  child: Text(
-                    TideLocalizations.of(context)!.homeDescription,
-                    textAlign: TextAlign.center,
+                  child: LayoutBuilder(
+                    builder: (
+                      BuildContext context,
+                      final BoxConstraints constraints,
+                    ) {
+                      return SizedBox.fromSize(
+                        size: constraints.biggest,
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              TideLocalizations.of(context)!.homeDescription,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontFamily: TideTheme.homeFontFamily,
+                                fontSize: 24,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
                 Flexible(
                   child: LayoutBuilder(
-                    builder:
-                        (BuildContext context, BoxConstraints constraints) {
+                    builder: (
+                      BuildContext context,
+                      final BoxConstraints constraints,
+                    ) {
                       // Compute button animation size
 
                       // Get the smallest dimension of the available space
@@ -185,11 +207,17 @@ class _HomePageState extends State<HomePage>
                     },
                   ),
                 ),
-                // Balance the layout with an empty widget
-                const Flexible(
-                  child: SizedBox(
-                    width: 1,
-                    height: 1,
+                Flexible(
+                  child: LayoutBuilder(
+                    builder: (
+                      BuildContext context,
+                      final BoxConstraints constraints,
+                    ) {
+                      return SizedBox.fromSize(
+                        size: constraints.biggest,
+                        child: const UserTips(),
+                      );
+                    },
                   ),
                 ),
               ],
@@ -215,11 +243,7 @@ class _HomePageState extends State<HomePage>
     await _pageOpacityAnimationController.forward().orCancel;
 
     await Navigator.pushNamed<void>(context, BreathingExercisePage.routeName);
-    await SystemChrome.restoreSystemUIOverlays();
-    await SystemChrome.setEnabledSystemUIMode(
-      SystemUiMode.manual,
-      overlays: SystemUiOverlay.values,
-    );
+    await exitFullscreen();
 
     await _pageOpacityAnimationController.reverse().orCancel;
   }

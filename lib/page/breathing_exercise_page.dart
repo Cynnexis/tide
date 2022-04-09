@@ -3,15 +3,14 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:quiver/async.dart';
 import 'package:tide/theme.dart';
+import 'package:tide/utility/fullscreen/fullscreen.dart';
 import 'package:tide/widget/app_bar.dart';
 import 'package:tide/widget/breathing_bubble.dart';
 import 'package:tide/widget/timer_form.dart';
-import 'package:universal_io/io.dart' as io;
 
 /// Page that contains the breathing exercise.
 class BreathingExercisePage extends StatefulWidget {
@@ -48,26 +47,18 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
   /// If null, then to timer is set.
   StreamSubscription<CountdownTimer>? _streamTimerSubscription;
 
-  /// Check if the current platform can enter fullscreen mode.
-  static bool get _canEnterFullscreen =>
-      kDebugMode && (io.Platform.isAndroid || io.Platform.isIOS);
-
   @override
   void initState() {
     super.initState();
 
     // Enter fullscreen
-    if (_canEnterFullscreen) {
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-    }
+    enterFullscreen();
   }
 
   @override
   void dispose() {
     // Exit fullscreen
-    if (_canEnterFullscreen) {
-      SystemChrome.restoreSystemUIOverlays();
-    }
+    exitFullscreen();
 
     super.dispose();
   }
@@ -77,13 +68,7 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
     return WillPopScope(
       onWillPop: () async {
         // Exit fullscreen
-        if (_canEnterFullscreen) {
-          await SystemChrome.restoreSystemUIOverlays();
-          await SystemChrome.setEnabledSystemUIMode(
-            SystemUiMode.manual,
-            overlays: SystemUiOverlay.values,
-          );
-        }
+        await exitFullscreen();
 
         return true;
       },

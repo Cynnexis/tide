@@ -119,6 +119,6 @@ class TideAppBar extends AppBar {
   }
 
   static Future<void> pushSettings(BuildContext context) async {
-    await Navigator.pushNamed(context, SettingsPage.routeName);
+    await Navigator.of(context).pushNamed<void>(SettingsPage.routeName);
   }
 }

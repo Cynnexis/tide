@@ -32,5 +32,7 @@
   "goBack": "Retour",
   "homeDescription": "Cliquez sur le bouton ci-dessous pour commencer l'exercise de respiration.",
   "errorOccurred": "Une erreur s'est produite.",
-  "errorOccurredParseConfigFile": "Une erreur s'est produite lors du chargement du fichier de configuration."
+  "errorOccurredParseConfigFile": "Une erreur s'est produite lors du chargement du fichier de configuration.",
+  "fullscreenTip": "Appuyez sur {hotkey} pour entrer ou sortir du mode plein écran.",
+  "breathingDurationTip": "Changez le temps d'inspiration et d'expiration dans les {settings} pour personaliser votre exercice."
 }

@@ -11,7 +11,7 @@ List<String>? _assetPathsCache;
 /// If a [context] is passed, it will be used to call [DefaultAssetBundle]. If
 /// not, [rootBundle] will be used instead.
 ///
-/// Source code inspired from https://stackoverflow.com/a/56555070/7347145 by
+/// Source code inspired from https://stackoverflow.com/a/56555070 by
 /// Kostya Vyrodov (consulted on March the 3rd, 2022)
 Future<List<String>> loadAssetsPaths({BuildContext? context}) async {
   if (_assetPathsCache == null) {
