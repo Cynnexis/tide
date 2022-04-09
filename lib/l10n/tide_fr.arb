@@ -1,7 +1,7 @@
 {
   "appName": "Tide",
   "longAppName": "Tide - Exercice de respiration pour se calmer",
-  "appDescription": "Tide est une application qui permet de réduire les crises de panique grâce à un simple exercice de respiration.\n\nElle aide les utilisateurs à se calmer en synchronisant l'inspiration et l'expiration, et en imitant la dilatation du diaphragme, tout en étant gratuite et sans publicité.",
+  "appDescription": "Tide est une application qui permet de réduire les crises de panique grâce à un simple exercice de respiration.\n\nElle aide les utilisateurs·rice·s à se calmer en synchronisant l'inspiration et l'expiration, et en imitant la dilatation du diaphragme, tout en étant gratuite et sans publicité.",
   "breathIn": "Inspirez",
   "holdBreath": "Maintenez",
   "breathOut": "Expirez",
@@ -24,7 +24,7 @@
   "formatMinutes": "{minutes}min",
   "formatSeconds": "{seconds}s",
   "setATimer": "Configurez un minuteur",
-  "timerDescription": "Vous serez notifier lorsque le minuteur sera fini.",
+  "timerDescription": "Vous serez notifié·e lorsque le minuteur sera fini.",
   "tapToActivateTimer": "Tappez pour activer le minuteur",
   "stopTimer": "Arrêter le minuteur",
   "shortMinute": "min",
@@ -37,5 +37,5 @@
   "breathingDurationTip": "Changez le temps d'inspiration et d'expiration dans les {settings} pour personaliser votre exercice.",
   "youWillBeOkayTip": "Tout va bien se passer ! \uD83C\uDF3A",
   "youMadeItThereTip": "Vous êtes arrivé jusqu'ici, vous pouvez le faire ! \uD83C\uDF3B",
-  "youAreStrongEnough": "Peu importe ce que c'est, vous êtes assez fort pour le gérer ! \uD83D\uDC90"
+  "youAreStrongEnough": "Peu importe ce que c'est, vous êtes assez fort·e pour le gérer ! \uD83D\uDC90"
 }
