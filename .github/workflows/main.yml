@@ -37,7 +37,7 @@ jobs:
       - name: Run tests
         run: flutter test --no-pub --coverage --concurrency=1 --no-test-assets --reporter expanded
       - name: Code coverage report
-        uses: romeovs/lcov-reporter-action@v0.2.16
+        uses: romeovs/lcov-reporter-action@v0.3.1
         with:
           delete-old-comments: true
           title: Tide
