@@ -49,6 +49,12 @@ class UserTips extends StatelessWidget {
     // string and add the [WidgetSpan]s instead.
     const String splitPlaceholder = "{{##!PLACEHOLDER!##}}";
 
+    // The default text style for the tips
+    final TextStyle? defaultTextStyle = style ??
+        Theme.of(context).textTheme.bodyText1?.copyWith(
+              fontStyle: FontStyle.italic,
+            );
+
     /// Add a new tip to the list [widgetTips] from a string and a [widget].
     ///
     /// [str] is the tip as a string. If it contains a [splitPlaceholder], it
@@ -69,9 +75,6 @@ class UserTips extends StatelessWidget {
           spans.add(widgetPlaceholder);
         }
       }
-
-      final TextStyle? defaultTextStyle =
-          style ?? Theme.of(context).textTheme.bodyText1;
 
       final Widget tipWidget = Text.rich(
         TextSpan(
@@ -151,6 +154,36 @@ class UserTips extends StatelessWidget {
         key: const Key('breathingDurationTip'),
       );
     }
+
+    // Add "You'll be okay! 🌺" tip
+    widgetTips.add(buildTipTile(
+      Text(
+        TideLocalizations.of(context)!.youWillBeOkayTip,
+        style: defaultTextStyle,
+      ),
+      key: const Key('youWillBeOkayTip'),
+    ));
+
+    // Add "You made it there, you can do it! 🌻" tip
+    widgetTips.add(buildTipTile(
+      Text(
+        TideLocalizations.of(context)!.youMadeItThereTip,
+        style: defaultTextStyle,
+      ),
+      key: const Key('youMadeItThereTip'),
+    ));
+
+    // Add "Whatever it is, you're strong enough! 💐" tip
+    widgetTips.add(buildTipTile(
+      Text(
+        TideLocalizations.of(context)!.youAreStrongEnough,
+        style: defaultTextStyle,
+      ),
+      key: const Key('youAreStrongEnough'),
+    ));
+
+    // Shuffle the tips
+    widgetTips.shuffle();
 
     return widgetTips;
   }
