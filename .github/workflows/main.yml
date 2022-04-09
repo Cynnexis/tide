@@ -39,7 +39,8 @@ jobs:
       - name: Code coverage report
         uses: romeovs/lcov-reporter-action@v0.3.1
         with:
-          delete-old-comments: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          delete-old-comments: ${{ github.event_name == 'pull_request' }}
           title: Tide
 
   build-android:
