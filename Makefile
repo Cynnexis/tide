@@ -130,7 +130,7 @@ build-release-and: build/app/outputs/bundle/release/app-release.aab
 .PHONY: build-docker
 build-docker:
 	@set -euo pipefail
-	./docker/build.bash
+	time ./docker/build.bash
 
 .PHONY: docker-serve
 docker-serve:
