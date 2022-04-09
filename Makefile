@@ -6,11 +6,11 @@ endif
 PORT=8080
 SHELL=/bin/bash
 HOST="localhost"
-.PHONY: help configure serve clean lint fix-lint build-docker docker-serve doc rmdoc update-launcher build-release-android fix-packages-version version
 .ONESHELL:
 
 all: help
 
+.PHONY: help
 help:
 	@echo -e "\tMakefile for Tide"
 	@echo ''
@@ -22,6 +22,7 @@ help:
 	@echo "  configure             - Configure the project folder."
 	@echo "  lint                  - Check the code format."
 	@echo "  fix-lint              - Fix the code format."
+	@echo "  test                  - Run the Flutter unit and widget tests."
 	@echo "  doc                   - Generate the documentation."
 	@echo "  rmdoc                 - Remove the documentation."
 	@echo "  update-launcher       - Update the icon launcher."
@@ -29,6 +30,21 @@ help:
 	@echo "  fix-packages-version  - Replace the 'any' packages version in 'pubspec.yaml' to their actual installed version based on 'pubspec.lock'."
 	@echo ''
 
+# Print to stdout the configuration file if found, else and print error message to stderr and exit with code 1
+.PHONY: get-config-file
+get-config-file:
+	@set -euo pipefail
+
+	if [[ -f tide.yaml ]]; then
+		echo "tide.yaml"
+	elif [[ -f tide.yml ]]; then
+		echo "tide.yml"
+	else
+		echo "No tide.yaml found at the root of the project." 1>&2
+		exit 1
+	fi
+
+.PHONY: configure
 configure:
 	@flutter channel beta
 	flutter upgrade
@@ -36,28 +52,66 @@ configure:
 	flutter packages pub run build_runner build
 	echo "\nFlutter has now the web feature enable. Please check the following tutorial to ensure it works: https://flutter.dev/docs/get-started/web"
 
+.PHONY: clean
 clean:
 	flutter clean
 	rm -rf coverage
 	rm -f .coverage
 
+.PHONY: lint
 lint:
 	@set -euo pipefail
 	echo "Checking Dart files format..."
 	dart format --output none --set-exit-if-changed .
 
+.PHONY: fix-lint
 fix-lint:
 	dart format --fix .
 
+.PHONY: test
+test:
+	@set -euo pipefail
+	flutter test --coverage --reporter expanded
+
+.PHONY: docker-test
+docker-test:
+	@set -euo pipefail
+
+	# Bash array containing all volumes as arguments
+	extra_volumes=()
+
+	set +e
+	config_file=$$($(MAKE) get-config-file 2> /dev/null)
+	set -e
+
+	if [[ -n $$config_file ]]; then
+	  extra_volumes+=("-v" "$$(realpath "$$config_file"):/usr/local/apache2/htdocs/assets/tide.yaml:ro")
+	fi
+
+	docker run -it \
+    		--name=tide-tests \
+    		--hostname="tide-tests" \
+    		-v "/etc/timezone:/etc/timezone:ro" \
+    		-v "/etc/localtime:/etc/localtime:ro" \
+    		"$${extra_volumes[@]}" \
+    		-e TZ \
+    		--restart=no \
+    		--security-opt="no-new-privileges=true" \
+    		--cap-drop=all \
+    		cynnexis/tide:sdk test --coverage --concurrency=1 --no-test-assets --reporter expanded
+
+.PHONY: doc
 doc:
 	@PS4='$$ '
 	set -euxo pipefail
 	flutter pub global run dartdoc .
 	{ set +x; } 2> /dev/null
 
+.PHONY: rmdoc
 rmdoc:
 	rm -rf doc/api
 
+.PHONY: update-launcher
 update-launcher:
 	flutter pub run flutter_launcher_icons:main
 
@@ -70,14 +124,31 @@ build/app/outputs/bundle/release/app-release.aab:
 	flutter build appbundle --obfuscate --split-debug-info=build/debug
 	echo "Use 'flutter install' to install the generated application bundle on your Android phone."
 
+.PHONY: build-release-and
 build-release-and: build/app/outputs/bundle/release/app-release.aab
 
+.PHONY: build-docker
 build-docker:
 	@set -euo pipefail
 	./docker/build.bash
 
+.PHONY: docker-serve
 docker-serve:
 	@set -euo pipefail
+
+	# Bash array containing all volumes as arguments
+	extra_volumes=()
+
+	set +e
+	config_file=$$($(MAKE) get-config-file 2> /dev/null)
+	set -e
+
+	if [[ -n $$config_file ]]; then
+	  extra_volumes+=("-v" "$$(realpath "$$config_file"):/usr/local/apache2/htdocs/assets/tide.yaml:ro")
+	fi
+
+	PS4=' $$ '
+	set -x
 
 	docker run -d \
 		--name=tide-web \
@@ -85,6 +156,7 @@ docker-serve:
 		--publish 80:80 \
 		-v "/etc/timezone:/etc/timezone:ro" \
 		-v "/etc/localtime:/etc/localtime:ro" \
+		"$${extra_volumes[@]}" \
 		-e TZ \
 		"--restart=no" \
 		--health-cmd="{ \
@@ -100,6 +172,9 @@ docker-serve:
 		--cap-add=NET_BIND_SERVICE \
 		"cynnexis/tide:web"
 
+		{ set +x; } 2> /dev/null
+
+.PHONY: fix-packages-version
 fix-packages-version:
 	@set -euo pipefail
 	# List all type of dependencies
@@ -123,6 +198,7 @@ fix-packages-version:
 		done <<< "$$dependencies"
 	done
 
+.PHONY: version
 version:
 	@set -euo pipefail
 	if command -v yq &> /dev/null; then

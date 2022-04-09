@@ -12,7 +12,7 @@ import 'package:tide/utility/config_file.dart';
 import 'package:tide/widget/error_tile.dart';
 import 'package:url_launcher/url_launcher.dart' as url;
 
-/// Defaut icon size
+/// Default icon size
 const double _iconSize = 32;
 
 /// Style for URLs.

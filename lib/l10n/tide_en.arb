@@ -162,5 +162,35 @@
   "errorOccurredParseConfigFile": "An error occurred when parsing the configuration.",
   "@errorOccurredParseConfigFile": {
     "description": "Indicate to the user that an error occurred when parsing the configuration file."
+  },
+  "fullscreenTip": "Press {hotkey} to enter or exit the fullscreen mode.",
+  "@fullscreenTip": {
+    "description": "Tip to enter/exit in fullscreen mode in the webapp. The placeholder will be used to put the hotkey associated to the action.",
+    "placeholders": {
+      "hotkey": {
+        "type": "String"
+      }
+    }
+  },
+  "breathingDurationTip": "Change the breathing and holding duration in the {settings} to fit your need.",
+  "@breathingDurationTip": {
+    "description": "Tip to set a custom breathing duration. The placeholder will be used as the setting icon and text (as bold).",
+    "placeholders": {
+      "settings": {
+        "type": "String"
+      }
+    }
+  },
+  "youWillBeOkayTip": "You'll be okay! \uD83C\uDF3A",
+  "@youWillBeOkayTip": {
+    "description": "Tip that reassure the user, saying they will be okay. It is advised to place an emoji related to flower on the right side of the text (the left side will be used by the lightbulb to show that it's a tip). See https://emojipedia.org/search/?q=flower for more details."
+  },
+  "youMadeItThereTip": "You made it there, you can do it! \uD83C\uDF3B",
+  "@youMadeItThereTip": {
+    "description": "Tip that reassure the user, saying they can do it. It is advised to place an emoji related to flower on the right side of the text (the left side will be used by the lightbulb to show that it's a tip). See https://emojipedia.org/search/?q=flower for more details."
+  },
+  "youAreStrongEnough": "Whatever it is, you are strong enough! \uD83D\uDC90",
+  "@youAreStrongEnough": {
+    "description": "Tip that reassure the user, saying they can overcome it. It is advised to place an emoji related to flower on the right side of the text (the left side will be used by the lightbulb to show that it's a tip). See https://emojipedia.org/search/?q=flower for more details."
   }
 }
