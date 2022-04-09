@@ -11,7 +11,7 @@ on:
       - 'cicd/**'
 
 jobs:
-  lint:
+  tests:
     runs-on: ubuntu-20.04
     name: Analyze code and generate the documentation
     steps:
@@ -34,11 +34,19 @@ jobs:
         run: flutter analyze --congratulate --no-pub --preamble --fatal-infos --fatal-warnings
       - name: Check dart code format
         run: flutter format --output=none --set-exit-if-changed .
+      - name: Run tests
+        run: flutter test --no-pub --coverage --concurrency=1 --no-test-assets --reporter expanded
+      - name: Code coverage report
+        uses: romeovs/lcov-reporter-action@v0.3.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          delete-old-comments: ${{ github.event_name == 'pull_request' }}
+          title: Tide
 
   build-android:
     runs-on: ubuntu-20.04
     name: Build Android Binaries
-    needs: [lint]
+    needs: [tests]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -112,7 +120,7 @@ jobs:
   build-web:
     runs-on: ubuntu-20.04
     name: Build Webapp
-    needs: [lint]
+    needs: [tests]
     if: github.event_name == 'push' && contains(github.ref, 'master') || contains(github.ref, 'main') || contains(github.ref, 'cicd/')
     steps:
       - name: Checkout
@@ -152,7 +160,7 @@ jobs:
   release:
     runs-on: ubuntu-20.04
     name: Create a release
-    needs: [lint, build-android, build-web]
+    needs: [tests, build-android, build-web]
     if: github.event_name == 'push' && contains(github.ref, 'master') || contains(github.ref, 'main') || contains(github.ref, 'cicd/')
     steps:
       - name: Prepare workspace
