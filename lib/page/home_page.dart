@@ -116,6 +116,7 @@ class _HomePageState extends State<HomePage>
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Flexible(
+                  key: const Key('tide_home_description'),
                   child: LayoutBuilder(
                     builder: (
                       BuildContext context,
@@ -141,6 +142,7 @@ class _HomePageState extends State<HomePage>
                   ),
                 ),
                 Flexible(
+                  key: const Key('tide_home_start_button_flexible'),
                   child: LayoutBuilder(
                     builder: (
                       BuildContext context,
@@ -180,12 +182,18 @@ class _HomePageState extends State<HomePage>
                         size: constraints.biggest,
                         child: UnconstrainedBox(
                           child: ClipOval(
+                            key: const Key('tide_home_start_button_clip_oval'),
                             child: Material(
+                              key: const Key('tide_home_start_button_material'),
                               color: Colors.white, // Button color
                               child: InkWell(
+                                key: const Key(
+                                    'tide_home_start_button_ink_well'),
                                 splashColor: Colors.white70, // Splash color
                                 onTap: pushBreathingExercisePage,
                                 child: SizedBox.square(
+                                  key: const Key(
+                                      'tide_home_start_button_sized_box'),
                                   dimension: animatedDiameter,
                                   child: Center(
                                     child: Text(
@@ -208,6 +216,7 @@ class _HomePageState extends State<HomePage>
                   ),
                 ),
                 Flexible(
+                  key: const Key('tide_home_tips_flexible'),
                   child: LayoutBuilder(
                     builder: (
                       BuildContext context,
@@ -215,7 +224,7 @@ class _HomePageState extends State<HomePage>
                     ) {
                       return SizedBox.fromSize(
                         size: constraints.biggest,
-                        child: const UserTips(),
+                        child: const UserTips(key: Key('tide_home_tips')),
                       );
                     },
                   ),

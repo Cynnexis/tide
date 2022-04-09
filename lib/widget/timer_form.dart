@@ -127,6 +127,7 @@ class TimerFormState extends State<TimerForm> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           DropdownButton<int>(
+            key: const Key('timer_form_dropdown_button_minutes'),
             items: dropdownItems,
             value: minutes,
             onChanged: (int? newMinutes) {
@@ -139,6 +140,7 @@ class TimerFormState extends State<TimerForm> {
           Text(TideLocalizations.of(context)!.shortMinute),
           _horizontalGap,
           DropdownButton<int>(
+            key: const Key('timer_form_dropdown_button_seconds'),
             items: dropdownItems,
             value: seconds,
             onChanged: (int? newSeconds) {

@@ -91,7 +91,7 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
           body: Stack(
             alignment: AlignmentDirectional.center,
             children: <Widget>[
-              const BreathingBubble(),
+              const BreathingBubble(key: Key('tide_breathing_bubble')),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -140,9 +140,11 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
                   }),
                   if (!kIsWeb)
                     ButtonBar(
+                      key: const Key('tide_breathing_ex_button_bar'),
                       alignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         IconButton(
+                          key: const Key('tide_breathing_ex_back_button'),
                           icon: const Icon(Icons.arrow_back),
                           onPressed: () {
                             Navigator.of(context).pop<void>();
@@ -162,14 +164,17 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
 
   Widget _buildTimerButton(BuildContext context) {
     return AnimatedSwitcher(
+      key: const Key('tide_breathing_ex_timer_switch'),
       duration: const Duration(seconds: 1),
       child: _countdownTimer == null
           ? IconButton(
+              key: const Key('tide_breathing_ex_start_timer'),
               icon: const Icon(Icons.timer),
               onPressed: () => _showTimerDialog(context),
               tooltip: TideLocalizations.of(context)!.tapToActivateTimer,
             )
           : IconButton(
+              key: const Key('tide_breathing_ex_stop_timer'),
               icon: const Icon(Icons.stop),
               onPressed: clearCountdownTimer,
               tooltip: TideLocalizations.of(context)!.stopTimer,
@@ -188,6 +193,7 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             TimerForm(
+              key: const Key('tide_breathing_ex_timer_form'),
               controller: timerController,
             ),
             Text(TideLocalizations.of(context)!.timerDescription),
@@ -195,6 +201,7 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
         ),
         actions: <Widget>[
           TextButton(
+            key: const Key('tide_breathing_ex_timer_form_ok_button'),
             onPressed: () =>
                 Navigator.of(context).pop<Duration>(timerController.duration),
             child: Text(TideLocalizations.of(context)!.ok),
