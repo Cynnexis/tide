@@ -77,7 +77,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                 TideSettings.instanceSync
                                     .setLang(context, null, index: 0);
                               });
-                              rebuildAllChildren(context);
                               Navigator.of(context).pop<void>();
                             },
                             child: Text(TideLocalizations.of(context)!.reset),
@@ -105,41 +104,52 @@ class _SettingsPageState extends State<SettingsPage> {
               SettingsGroup(
                 title: TideLocalizations.of(context)!.breathingExerciseSetting,
                 children: <Widget>[
-                  SliderSettingsTile(
+                  buildSlideTile(
+                    context,
                     title:
                         TideLocalizations.of(context)!.breathingDurationSetting,
                     subtitle: TideLocalizations.of(context)!
                         .breathingDurationSettingExplanation(durationToSeconds(
                             TideSettings.instanceSync.breathingDuration)),
-                    settingKey: "breathingDurationSeconds",
-                    min: 1,
-                    max: 20,
-                    step: 0.5,
-                    defaultValue: TideSettings
+                    value: TideSettings
                             .instanceSync.breathingDuration.inMilliseconds /
                         1000,
+                    min: 1,
+                    max: 20,
                     leading: const Icon(Icons.timer),
-                    onChange: (final double value) => setState(() =>
+                    onReset: () {
+                      setState(() {
+                        TideSettings.instanceSync.breathingDuration =
+                            TideSettings.defaultBreathingDuration;
+                      });
+                    },
+                    onChanged: (final double value) => setState(() =>
                         TideSettings.instanceSync.breathingDuration =
                             Duration(milliseconds: (value * 1000).floor())),
                   ),
-                  SliderSettingsTile(
+                  buildSlideTile(
+                    context,
                     title:
                         TideLocalizations.of(context)!.holdingDurationSetting,
                     subtitle: TideLocalizations.of(context)!
                         .holdingDurationSettingExplanation(durationToSeconds(
                             TideSettings.instanceSync.holdingBreathDuration)),
-                    settingKey: "holdingBreathDurationSeconds",
+                    value: TideSettings
+                            .instanceSync.holdingBreathDuration.inMilliseconds /
+                        1000,
                     min: 1,
                     max: 20,
-                    step: 0.5,
-                    defaultValue: TideSettings
-                            .instanceSync.holdingBreathDuration.inMilliseconds /
-                        1000.0,
                     leading: const Icon(Icons.timelapse_rounded),
-                    onChange: (final double value) => setState(() =>
+                    onReset: () {
+                      setState(() {
                         TideSettings.instanceSync.holdingBreathDuration =
-                            Duration(milliseconds: (value * 1000).floor())),
+                            TideSettings.defaultHoldingBreathDuration;
+                      });
+                    },
+                    onChanged: (final double value) => setState(() {
+                      TideSettings.instanceSync.holdingBreathDuration =
+                          Duration(milliseconds: (value * 1000).floor());
+                    }),
                   ),
                 ],
               ),
@@ -173,6 +183,57 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
         );
       },
+    );
+  }
+
+  /// Build a reset button as an [IconButton].
+  Widget buildResetButton(
+    BuildContext context, {
+    required final VoidCallback onPressed,
+  }) {
+    return IconButton(
+      onPressed: onPressed,
+      icon: const Icon(Icons.repeat),
+      tooltip: TideLocalizations.of(context)!.reset,
+    );
+  }
+
+  Widget buildSlideTile(
+    BuildContext context, {
+    required final String title,
+    required final String subtitle,
+    required final double value,
+    required final double min,
+    required final double max,
+    final double precision = 0.5,
+    final Widget? leading,
+    final Widget? trailing,
+    final VoidCallback? onReset,
+    final ValueChanged<double>? onChanged,
+  }) {
+    assert(trailing == null || onReset == null,
+        'Cannot have both trailing and onReset non-null:\ntrailing: $trailing\nonReset: $onReset');
+
+    return ListTile(
+      leading: leading,
+      trailing: trailing ??
+          (onReset != null
+              ? buildResetButton(context, onPressed: onReset)
+              : null),
+      title: Text(title),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(subtitle),
+          Slider(
+            value: value,
+            onChanged: onChanged,
+            min: min,
+            max: max,
+            divisions: ((max - min) * (1.0 / precision)).floor(),
+          ),
+        ],
+      ),
     );
   }
 
@@ -256,30 +317,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
     content += 's';
     return content;
-  }
-
-  /// Force rebuilding all children given by [context].
-  ///
-  /// Source code inspired from https://stackoverflow.com/a/58513635/7347145
-  /// by MarcG and Philippe Fanaro (consulted on April 10th, 2022).
-  void rebuildAllChildren(BuildContext context) {
-    /// Rebuild the given element
-    void rebuild(final Element el) {
-      el.markNeedsBuild();
-      el.visitChildren(rebuild);
-    }
-
-    if (context is Element) {
-      context.visitChildren(rebuild);
-    } else if (kDebugMode) {
-      dev.log(
-        'Could not rebuild children because the given context is not an instance of Element, but a "${context.runtimeType}":\n$context',
-        time: DateTime.now(),
-        level: Level.FINE.value,
-        name: 'SettingsPageState.rebuildAllChildren',
-        zone: Zone.current,
-      );
-    }
   }
 }
 
