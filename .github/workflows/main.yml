@@ -24,18 +24,6 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-      # TODO: DEBUG
-      - name: Log info
-        run: |
-          sudo apt-get update
-          sudo apt-get install -qqy tree
-          sudo apt-get clean
-
-          pwd
-          tree -apugh .
-
-          echo "./.github"
-          tree -a ./.github
       - name: Configure application
         uses: ./.github/actions/tide-configuration-file/
       - name: Install dependencies
