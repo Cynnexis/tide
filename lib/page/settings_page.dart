@@ -45,78 +45,195 @@ class _SettingsPageState extends State<SettingsPage> {
           return const Center(child: CircularProgressIndicator());
         }
 
-        return SettingsScreen(
-          title: TideLocalizations.of(context)!.settings,
-          children: <Widget>[
-            SettingsGroup(
-              title: TideLocalizations.of(context)!.breathingExerciseSetting,
-              children: <Widget>[
-                SliderSettingsTile(
-                  title:
-                      TideLocalizations.of(context)!.breathingDurationSetting,
-                  subtitle: TideLocalizations.of(context)!
-                      .breathingDurationSettingExplanation(durationToSeconds(
-                          TideSettings.instanceSync.breathingDuration)),
-                  settingKey: "breathingDurationSeconds",
-                  min: 1,
-                  max: 20,
-                  step: 0.5,
-                  defaultValue: TideSettings
-                          .instanceSync.breathingDuration.inMilliseconds /
-                      1000,
-                  leading: const Icon(Icons.timer),
-                  onChange: (final double value) => setState(() =>
-                      TideSettings.instanceSync.breathingDuration =
-                          Duration(milliseconds: (value * 1000).floor())),
-                ),
-                SliderSettingsTile(
-                  title: TideLocalizations.of(context)!.holdingDurationSetting,
-                  subtitle: TideLocalizations.of(context)!
-                      .holdingDurationSettingExplanation(durationToSeconds(
-                          TideSettings.instanceSync.holdingBreathDuration)),
-                  settingKey: "holdingBreathDurationSeconds",
-                  min: 1,
-                  max: 20,
-                  step: 0.5,
-                  defaultValue: TideSettings
-                          .instanceSync.holdingBreathDuration.inMilliseconds /
-                      1000.0,
-                  leading: const Icon(Icons.timelapse_rounded),
-                  onChange: (final double value) => setState(() =>
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(TideLocalizations.of(context)!.settings),
+            actions: <Widget>[
+              PopupMenuButton<_SettingsPopupEntry>(
+                onSelected: (_SettingsPopupEntry entry) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(TideLocalizations.of(context)!
+                            .resetToDefaultValues),
+                        content: Text(TideLocalizations.of(context)!
+                            .resetSettingConfirmation),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop<void>();
+                            },
+                            child: Text(TideLocalizations.of(context)!.cancel),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                TideSettings.instanceSync.breathingDuration =
+                                    TideSettings.defaultBreathingDuration;
+                                TideSettings
+                                        .instanceSync.holdingBreathDuration =
+                                    TideSettings.defaultHoldingBreathDuration;
+                                TideSettings.instanceSync
+                                    .setLang(context, null, index: 0);
+                              });
+                              Navigator.of(context).pop<void>();
+                            },
+                            child: Text(TideLocalizations.of(context)!.reset),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                itemBuilder: (BuildContext context) {
+                  return <PopupMenuEntry<_SettingsPopupEntry>>[
+                    PopupMenuItem<_SettingsPopupEntry>(
+                      value: _SettingsPopupEntry.resetToDefaultValues,
+                      child: Text(
+                          TideLocalizations.of(context)!.resetToDefaultValues),
+                    ),
+                  ];
+                },
+              ),
+            ],
+          ),
+          body: ListView(
+            shrinkWrap: true,
+            children: <Widget>[
+              SettingsGroup(
+                title: TideLocalizations.of(context)!.breathingExerciseSetting,
+                children: <Widget>[
+                  buildSlideTile(
+                    context,
+                    title:
+                        TideLocalizations.of(context)!.breathingDurationSetting,
+                    subtitle: TideLocalizations.of(context)!
+                        .breathingDurationSettingExplanation(durationToSeconds(
+                            TideSettings.instanceSync.breathingDuration)),
+                    value: TideSettings
+                            .instanceSync.breathingDuration.inMilliseconds /
+                        1000,
+                    min: 1,
+                    max: 20,
+                    leading: const Icon(Icons.timer),
+                    onReset: () {
+                      setState(() {
+                        TideSettings.instanceSync.breathingDuration =
+                            TideSettings.defaultBreathingDuration;
+                      });
+                    },
+                    onChanged: (final double value) => setState(() =>
+                        TideSettings.instanceSync.breathingDuration =
+                            Duration(milliseconds: (value * 1000).floor())),
+                  ),
+                  buildSlideTile(
+                    context,
+                    title:
+                        TideLocalizations.of(context)!.holdingDurationSetting,
+                    subtitle: TideLocalizations.of(context)!
+                        .holdingDurationSettingExplanation(durationToSeconds(
+                            TideSettings.instanceSync.holdingBreathDuration)),
+                    value: TideSettings
+                            .instanceSync.holdingBreathDuration.inMilliseconds /
+                        1000,
+                    min: 1,
+                    max: 20,
+                    leading: const Icon(Icons.timelapse_rounded),
+                    onReset: () {
+                      setState(() {
+                        TideSettings.instanceSync.holdingBreathDuration =
+                            TideSettings.defaultHoldingBreathDuration;
+                      });
+                    },
+                    onChanged: (final double value) => setState(() {
                       TideSettings.instanceSync.holdingBreathDuration =
-                          Duration(milliseconds: (value * 1000).floor())),
-                ),
-              ],
-            ),
-            SettingsGroup(
-              title: TideLocalizations.of(context)!.interfaceSettings,
-              children: <Widget>[
-                DropDownSettingsTile<int>(
-                  title: TideLocalizations.of(context)!.langSetting,
-                  subtitle:
-                      TideLocalizations.of(context)!.langSettingExplanation,
-                  settingKey: "langSettings",
-                  selected: TideSettings.instanceSync.lang != null
-                      ? TideLocalizations.supportedLocales
-                          .indexOf(TideSettings.instanceSync.lang!)
-                      : -1,
-                  values: <int, String>{
-                    -1: TideLocalizations.of(context)!.systemLanguage,
-                    for (int i = 0;
-                        i < TideLocalizations.supportedLocales.length;
-                        i++)
-                      i: getLanguageFromCode(
-                          TideLocalizations.supportedLocales[i].languageCode),
-                  },
-                  onChange: (int langIndex) {
-                    setState(() => onLanguageListChanged(context, langIndex));
-                  },
-                ),
-              ],
-            ),
-          ],
+                          Duration(milliseconds: (value * 1000).floor());
+                    }),
+                  ),
+                ],
+              ),
+              SettingsGroup(
+                title: TideLocalizations.of(context)!.interfaceSettings,
+                children: <Widget>[
+                  DropDownSettingsTile<int>(
+                    title: TideLocalizations.of(context)!.langSetting,
+                    subtitle:
+                        TideLocalizations.of(context)!.langSettingExplanation,
+                    settingKey: "langSettings",
+                    selected: TideSettings.instanceSync.lang != null
+                        ? TideLocalizations.supportedLocales
+                            .indexOf(TideSettings.instanceSync.lang!)
+                        : -1,
+                    values: <int, String>{
+                      -1: TideLocalizations.of(context)!.systemLanguage,
+                      for (int i = 0;
+                          i < TideLocalizations.supportedLocales.length;
+                          i++)
+                        i: getLanguageFromCode(
+                            TideLocalizations.supportedLocales[i].languageCode),
+                    },
+                    onChange: (int langIndex) {
+                      setState(() => onLanguageListChanged(context, langIndex));
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         );
       },
+    );
+  }
+
+  /// Build a reset button as an [IconButton].
+  Widget buildResetButton(
+    BuildContext context, {
+    required final VoidCallback onPressed,
+  }) {
+    return IconButton(
+      onPressed: onPressed,
+      icon: const Icon(Icons.repeat),
+      tooltip: TideLocalizations.of(context)!.reset,
+    );
+  }
+
+  Widget buildSlideTile(
+    BuildContext context, {
+    required final String title,
+    required final String subtitle,
+    required final double value,
+    required final double min,
+    required final double max,
+    final double precision = 0.5,
+    final Widget? leading,
+    final Widget? trailing,
+    final VoidCallback? onReset,
+    final ValueChanged<double>? onChanged,
+  }) {
+    assert(trailing == null || onReset == null,
+        'Cannot have both trailing and onReset non-null:\ntrailing: $trailing\nonReset: $onReset');
+
+    return ListTile(
+      leading: leading,
+      trailing: trailing ??
+          (onReset != null
+              ? buildResetButton(context, onPressed: onReset)
+              : null),
+      title: Text(title),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(subtitle),
+          Slider(
+            value: value,
+            onChanged: onChanged,
+            min: min,
+            max: max,
+            divisions: ((max - min) * (1.0 / precision)).floor(),
+          ),
+        ],
+      ),
     );
   }
 
@@ -201,4 +318,8 @@ class _SettingsPageState extends State<SettingsPage> {
     content += 's';
     return content;
   }
+}
+
+enum _SettingsPopupEntry {
+  resetToDefaultValues,
 }

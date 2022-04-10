@@ -85,6 +85,18 @@
   "@ok": {
     "description": "Ok button."
   },
+  "reset": "Reset",
+  "@reset": {
+    "description": "Reset button to reset a setting."
+  },
+  "resetToDefaultValues": "Reset settings to default values",
+  "@resetToDefaultValues": {
+    "description": "Title of the dialog box to reset all settings."
+  },
+  "resetSettingConfirmation": "Are you sure you want to reset all settings to their default values?",
+  "@resetSettingConfirmation": {
+    "description": "Content of the dialog box to reset all settings."
+  },
   "timerDone": "Timer is done",
   "@timerDone": {
     "description": "Text to display to indicate that the timer is done."
