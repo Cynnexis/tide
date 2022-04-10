@@ -156,7 +156,7 @@ jobs:
 
           # Search for all files
           while IFS= read -r -d '' file; do
-            json_doc_files="${json_doc_files}\"doc/$file\", "
+            json_doc_files="${json_doc_files}\"$file\", "
           done < <(find doc -type f \( -iname '*.html' -o -iname '*.htm' -o -iname '*.html5' -o -iname '*.css' -o -iname '*.php' -o -iname '*.js' \) -print0)
 
           # Close json
