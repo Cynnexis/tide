@@ -10,7 +10,6 @@ import 'package:tide/utility/extension/list_extension.dart';
 import 'package:tide/utility/fullscreen/fullscreen.dart';
 import 'package:tide/widget/button_span.dart';
 import 'package:tide/widget/hotkey.dart';
-import 'package:tide/widget/rounded_material.dart';
 import 'package:tide/widget/slideshow.dart';
 
 class UserTips extends StatelessWidget {
