@@ -1,10 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 import 'package:tide/page/breathing_exercise_page.dart';
 import 'package:tide/theme.dart';
 import 'package:tide/utility/fullscreen/fullscreen.dart';
+import 'package:tide/widget/animated_breathing.dart';
 import 'package:tide/widget/app_bar.dart';
 import 'package:tide/widget/user_tips.dart';
 
@@ -34,9 +33,6 @@ class _HomePageState extends State<HomePage>
   /// The animation controller for the start button
   late AnimationController _startAnimationController;
 
-  /// The animation for the start button
-  late Animation<double> _startAnimation;
-
   //endregion
 
   @override
@@ -63,13 +59,6 @@ class _HomePageState extends State<HomePage>
       vsync: this,
     );
 
-    _startAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _startAnimationController,
-      curve: Curves.easeInOut,
-    ));
     _startAnimationController.addListener(_updateCircleSize);
 
     _startAnimationController.repeat(reverse: true);
@@ -143,68 +132,33 @@ class _HomePageState extends State<HomePage>
                 ),
                 Flexible(
                   key: const Key('tide_home_start_button_flexible'),
-                  child: LayoutBuilder(
+                  child: AnimatedBreathing(
+                    controller: _startAnimationController,
                     builder: (
                       BuildContext context,
-                      final BoxConstraints constraints,
+                      final double scale,
+                      final Animation<double> animation,
                     ) {
-                      // Compute button animation size
-
-                      // Get the smallest dimension of the available space
-                      final double smallestMaxDimension =
-                          min(constraints.maxWidth, constraints.maxHeight);
-                      // Compute the min and max diameter according to available space
-                      final double minDiameter = smallestMaxDimension * 0.85;
-                      final double maxDiameter = smallestMaxDimension * 1.0;
-                      assert(
-                        minDiameter < maxDiameter,
-                        'Expected minDiameter < maxDiameter, got '
-                        'minDiameter=$minDiameter, maxDiameter=$maxDiameter.',
-                      );
-                      // Current animation value, between 0 and 1
-                      final double time = _startAnimation.value;
-                      assert(
-                        0.0 <= time && time <= 1.0,
-                        'Expected time to be between 0.0 and 1.0, got $time.',
-                      );
-                      // Compute the current diameter of the button
-                      final double animatedDiameter =
-                          minDiameter + (maxDiameter - minDiameter) * time;
-                      assert(
-                        animatedDiameter <= smallestMaxDimension,
-                        'Expected the size of the button to be less or equal to '
-                        'the available space, but got button '
-                        'size=$animatedDiameter and available '
-                        'space=${smallestMaxDimension}px.',
-                      );
-
-                      return SizedBox.fromSize(
-                        size: constraints.biggest,
-                        child: UnconstrainedBox(
-                          child: ClipOval(
-                            key: const Key('tide_home_start_button_clip_oval'),
-                            child: Material(
-                              key: const Key('tide_home_start_button_material'),
-                              color: Colors.white, // Button color
-                              child: InkWell(
-                                key: const Key(
-                                    'tide_home_start_button_ink_well'),
-                                splashColor: Colors.white70, // Splash color
-                                onTap: pushBreathingExercisePage,
-                                child: SizedBox.square(
-                                  key: const Key(
-                                      'tide_home_start_button_sized_box'),
-                                  dimension: animatedDiameter,
-                                  child: Center(
-                                    child: Text(
-                                      TideLocalizations.of(context)!
-                                          .startButton,
-                                      style: const TextStyle(
-                                        color: TideTheme.primaryColor,
-                                        fontFamily: TideTheme.homeFontFamily,
-                                        fontSize: 26,
-                                      ),
-                                    ),
+                      return ClipOval(
+                        key: const Key('tide_home_start_button_clip_oval'),
+                        child: Material(
+                          key: const Key('tide_home_start_button_material'),
+                          color: Colors.white, // Button color
+                          child: InkWell(
+                            key: const Key('tide_home_start_button_ink_well'),
+                            splashColor: Colors.white70, // Splash color
+                            onTap: pushBreathingExercisePage,
+                            child: SizedBox.square(
+                              key:
+                                  const Key('tide_home_start_button_sized_box'),
+                              dimension: scale,
+                              child: Center(
+                                child: Text(
+                                  TideLocalizations.of(context)!.startButton,
+                                  style: const TextStyle(
+                                    color: TideTheme.primaryColor,
+                                    fontFamily: TideTheme.homeFontFamily,
+                                    fontSize: 26,
                                   ),
                                 ),
                               ),

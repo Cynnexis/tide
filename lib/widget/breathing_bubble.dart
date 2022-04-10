@@ -6,13 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 import 'package:tide/settings.dart';
 import 'package:tide/theme.dart';
+import 'package:tide/widget/animated_breathing.dart';
 
 /// Widget that represents a circle that grow and shrink to represents the
 /// diaphragm movements.
 class BreathingBubble extends StatefulWidget {
   final BreathingBubbleController? controller;
 
-  const BreathingBubble({Key? key, this.controller}) : super(key: key);
+  const BreathingBubble({
+    Key? key,
+    this.controller,
+  }) : super(key: key);
 
   @override
   State createState() => _BreathingBubbleState();
@@ -21,7 +25,6 @@ class BreathingBubble extends StatefulWidget {
 class _BreathingBubbleState extends State<BreathingBubble>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
-  late Animation<double> _animation;
   AnimationStatus _animationStatus = AnimationStatus.dismissed;
 
   @override
@@ -33,14 +36,6 @@ class _BreathingBubbleState extends State<BreathingBubble>
       duration: TideSettings.instanceSync.breathingDuration,
       vsync: this,
     );
-
-    _animation = Tween<double>(
-      begin: 200,
-      end: 300,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
-    ));
 
     if (widget.controller != null) {
       widget.controller!.addListener(_breathingBubbleControllerListener);
@@ -70,13 +65,27 @@ class _BreathingBubbleState extends State<BreathingBubble>
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          Container(
-            width: _animation.value,
-            height: _animation.value,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.white),
+          SafeArea(
+            minimum: const EdgeInsets.all(32),
+            child: AnimatedBreathing(
+              controller: _animationController,
+              smallFactor: 0.6,
+              bigFactor: 1.0,
+              builder: (
+                BuildContext context,
+                final double scale,
+                final Animation<double> animation,
+              ) {
+                return Container(
+                  width: scale,
+                  height: scale,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white),
+                  ),
+                );
+              },
             ),
           ),
           Builder(builder: (BuildContext context) {
