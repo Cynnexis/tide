@@ -57,7 +57,7 @@ RUN \
 	flutter pub global activate dartdoc && \
 	flutter pub global run dartdoc . && \
 	# Expand emoji in documentation
-	find doc -type f \( -iname '*.html' -o -iname '*.html5' -o -iname '*.css' -o -iname '*.php' -o -iname '*.js' \) -exec expand-emoji "{}" \; 1> /dev/null && \
+	find doc -type f \( -iname '*.html' -o -iname '*.htm' -o -iname '*.html5' -o -iname '*.css' -o -iname '*.php' -o -iname '*.js' \) -exec expand-emoji "{}" \; 1> /dev/null && \
 	# Build release
 	flutter build web --release --web-renderer "$FLUTTER_WEB_RENDERER" && \
 	make version
