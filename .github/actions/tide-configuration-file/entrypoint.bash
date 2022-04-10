@@ -33,7 +33,7 @@ done
 
 # Get author email address from initial commit
 if [[ -z $maintainer_email ]]; then
-  if [[ -d .git ]]; then
+  if [[ ! -d .git ]]; then
     echo -e "Cannot get the maintainer email from a project without a '.git/' folder.:\n$(pwd)\n$(ls -lha .)" 1>&2
     exit 1
   fi
