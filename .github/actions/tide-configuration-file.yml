@@ -1,0 +1,30 @@
+on:
+  workflow_call:
+    input:
+      output_file:
+        required: false
+        type: string
+        default: tide.yaml
+
+jobs:
+  add_tide_yaml:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Create ${{ inputs.output_file }}
+        env:
+          output_file: ${{ inputs.output_file }}
+        run: |
+          # Get author email address from initial commit
+          email=$(git show -s --format='%ae' "$(git rev-list --max-parents=0 HEAD)")
+
+          cat > "$output_file" <<EOF
+          webapp:
+            uri:
+              scheme: https
+              host: cynnexis.github.io
+              port: 443
+              path: /tide/
+
+          maintainer_email: "$email"
+          EOF
+
