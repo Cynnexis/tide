@@ -38,5 +38,6 @@
   "youWillBeOkayTip": "Tout va bien se passer ! \uD83C\uDF3A",
   "youMadeItThereTip": "Vous êtes arrivé·e jusqu'ici, vous pouvez le faire ! \uD83C\uDF3B",
   "youAreStrongEnough": "Peu importe ce que c'est, vous êtes assez fort·e pour le gérer ! \uD83D\uDC90",
-  "loading": "Chargement..."
+  "loading": "Chargement...",
+  "disabledAnimationsWarning": "Les animations sont désactivés. Cela peut causer des problèmes de fonctionnement. Réactivez-les depuis les #paramètres système#."
 }

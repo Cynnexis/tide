@@ -8,8 +8,8 @@ import 'package:logging/logging.dart';
 import 'package:tide/page/settings_page.dart';
 import 'package:tide/utility/extension/list_extension.dart';
 import 'package:tide/utility/fullscreen/fullscreen.dart';
+import 'package:tide/widget/button_span.dart';
 import 'package:tide/widget/hotkey.dart';
-import 'package:tide/widget/rounded_material.dart';
 import 'package:tide/widget/slideshow.dart';
 
 class UserTips extends StatelessWidget {
@@ -133,22 +133,12 @@ class UserTips extends StatelessWidget {
           TideLocalizations.of(context)!.breathingDurationTip(splitPlaceholder);
       addTipWithPlaceholder(
         rawBreathingDurationTip,
-        widgetPlaceholder: WidgetSpan(
-          child: RoundedMaterial(
-            onTap: () {
-              Navigator.of(context).pushNamed<void>(SettingsPage.routeName);
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const Icon(Icons.settings),
-                  Text(TideLocalizations.of(context)!.settings),
-                ],
-              ),
-            ),
-          ),
+        widgetPlaceholder: ButtonSpan(
+          onTap: () {
+            Navigator.of(context).pushNamed<void>(SettingsPage.routeName);
+          },
+          leading: const Icon(Icons.settings),
+          child: Text(TideLocalizations.of(context)!.settings),
           alignment: PlaceholderAlignment.middle,
         ),
         key: const Key('breathingDurationTip'),
