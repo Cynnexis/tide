@@ -37,7 +37,7 @@ jobs:
           echo "./.github"
           tree -a ./.github
       - name: Configure application
-        uses: Cynnexis/tide/.github/actions/tide-configuration-file.yml@cicd/fix-config-file-#25
+        uses: ./.github/actions/tide-configuration-file/
       - name: Install dependencies
         run: flutter pub get
       - name: Analyze code
@@ -68,7 +68,7 @@ jobs:
         with:
           channel: 'stable'
       - name: Configure application
-        uses: Cynnexis/tide/.github/actions/tide-configuration-file.yml@cicd/fix-config-file-#25
+        uses: ./.github/actions/tide-configuration-file/
       - name: Install dependencies
         run: flutter pub get
       - name: Write keystore
@@ -143,7 +143,7 @@ jobs:
       - name: Configure workspace
         run: find . -type f \( -name Makefile -o -iname '*.bash' -o -iname '*.sh' \) -exec chmod +x "{}" \;
       - name: Configure application
-        uses: Cynnexis/tide/.github/actions/tide-configuration-file.yml@cicd/fix-config-file-#25
+        uses: ./.github/actions/tide-configuration-file/
       - name: Install dependencies
         run: flutter pub get
       - name: Export documentation

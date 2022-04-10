@@ -4,6 +4,8 @@
 # See https://docs.github.com/en/actions/using-workflows/reusing-workflows for
 # more details on reusable workflows.
 #
+name: Add configuration file for Tide
+
 on:
   workflow_call:
     # Input arguments for this reusable workflow
@@ -66,7 +68,7 @@ jobs:
           # Get author email address from initial commit
           if [[ ! -v maintainer_email || -z $maintainer_email ]]; then
             if [[ -d .git ]]; then
-              echo "Cannot get the maintainer email from a project without a '.git/' folder.:\n$(pwd)\n$(ls -lha .)" 1>&2
+              echo -e "Cannot get the maintainer email from a project without a '.git/' folder.:\n$(pwd)\n$(ls -lha .)" 1>&2
               exit 1
             fi
             maintainer_email=$(git show -s --format='%ae' "$(git rev-list --max-parents=0 HEAD)")
@@ -80,6 +82,6 @@ jobs:
               port: $port
               path: "$path"
 
-          maintainer_email: "maintainer_email"
+          maintainer_email: "$maintainer_email"
           EOF
 
