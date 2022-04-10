@@ -24,8 +24,20 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
+      # TODO: DEBUG
+      - name: Log info
+        run: |
+          sudo apt-get update
+          sudo apt-get install -qqy tree
+          sudo apt-get clean
+
+          pwd
+          tree -apugh .
+
+          echo "./.github"
+          tree -a ./.github
       - name: Configure application
-        uses: ./.github/actions/tide-configuration-file
+        uses: ./.github/actions/tide-configuration-file.yml
       - name: Install dependencies
         run: flutter pub get
       - name: Analyze code
@@ -56,7 +68,7 @@ jobs:
         with:
           channel: 'stable'
       - name: Configure application
-        uses: ./.github/actions/tide-configuration-file
+        uses: ./.github/actions/tide-configuration-file.yml
       - name: Install dependencies
         run: flutter pub get
       - name: Write keystore
@@ -131,7 +143,7 @@ jobs:
       - name: Configure workspace
         run: find . -type f \( -name Makefile -o -iname '*.bash' -o -iname '*.sh' \) -exec chmod +x "{}" \;
       - name: Configure application
-        uses: ./.github/actions/tide-configuration-file
+        uses: ./.github/actions/tide-configuration-file.yml
       - name: Install dependencies
         run: flutter pub get
       - name: Export documentation
