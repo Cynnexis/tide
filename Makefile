@@ -134,6 +134,13 @@ build-docker:
 	@set -euo pipefail
 	time ./docker/build.bash
 
+.PHONY: build-docker-action
+build-docker-action:
+	@set -euo pipefail
+	cd .github/actions/tide-configuration-file
+	time docker build -t cynnexis/tide:action .
+	cd ../../../
+
 .PHONY: docker-serve
 docker-serve:
 	@set -euo pipefail

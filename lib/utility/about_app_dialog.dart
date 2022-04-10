@@ -85,7 +85,10 @@ void aboutApp(BuildContext context) {
                   TideLocalizations.of(context)!.errorOccurredParseConfigFile,
             );
           } else if (!snapshot.hasData) {
-            return const CircularProgressIndicator();
+            return ListTile(
+              leading: const CircularProgressIndicator(),
+              title: Text(TideLocalizations.of(context)!.loading),
+            );
           }
 
           return _buildTile(
