@@ -5,6 +5,7 @@ import 'package:tide/theme.dart';
 import 'package:tide/utility/fullscreen/fullscreen.dart';
 import 'package:tide/widget/animated_breathing.dart';
 import 'package:tide/widget/app_bar.dart';
+import 'package:tide/widget/round_button.dart';
 import 'package:tide/widget/user_tips.dart';
 
 class HomePage extends StatefulWidget {
@@ -139,28 +140,27 @@ class _HomePageState extends State<HomePage>
                       final double scale,
                       final Animation<double> animation,
                     ) {
-                      return ClipOval(
-                        key: const Key('tide_home_start_button_clip_oval'),
-                        child: Material(
-                          key: const Key('tide_home_start_button_material'),
-                          color: Colors.white, // Button color
-                          child: InkWell(
-                            key: const Key('tide_home_start_button_ink_well'),
-                            splashColor: Colors.white70, // Splash color
-                            onTap: pushBreathingExercisePage,
-                            child: SizedBox.square(
-                              key:
-                                  const Key('tide_home_start_button_sized_box'),
-                              dimension: scale,
-                              child: Center(
-                                child: Text(
-                                  TideLocalizations.of(context)!.startButton,
-                                  style: const TextStyle(
-                                    color: TideTheme.primaryColor,
-                                    fontFamily: TideTheme.homeFontFamily,
-                                    fontSize: 26,
-                                  ),
-                                ),
+                      return RoundButton(
+                        key: const Key('tide_home_start_button_round_button'),
+                        clipOvalKey:
+                            const Key('tide_home_start_button_clip_oval'),
+                        materialKey:
+                            const Key('tide_home_start_button_material'),
+                        inkWellKey:
+                            const Key('tide_home_start_button_ink_well'),
+                        backgroundColor: Colors.white,
+                        splashColor: Colors.white70,
+                        onTap: pushBreathingExercisePage,
+                        child: SizedBox.square(
+                          key: const Key('tide_home_start_button_sized_box'),
+                          dimension: scale,
+                          child: Center(
+                            child: Text(
+                              TideLocalizations.of(context)!.startButton,
+                              style: const TextStyle(
+                                color: TideTheme.primaryColor,
+                                fontFamily: TideTheme.homeFontFamily,
+                                fontSize: 26,
                               ),
                             ),
                           ),

@@ -7,6 +7,7 @@ import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 import 'package:tide/settings.dart';
 import 'package:tide/theme.dart';
 import 'package:tide/widget/animated_breathing.dart';
+import 'package:tide/widget/round_button.dart';
 
 /// Widget that represents a circle that grow and shrink to represents the
 /// diaphragm movements.
@@ -62,61 +63,58 @@ class _BreathingBubbleState extends State<BreathingBubble>
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          SafeArea(
-            minimum: const EdgeInsets.all(32),
-            child: AnimatedBreathing(
-              controller: _animationController,
-              smallFactor: 0.6,
-              bigFactor: 1.0,
-              builder: (
-                BuildContext context,
-                final double scale,
-                final Animation<double> animation,
-              ) {
-                return Container(
-                  width: scale,
-                  height: scale,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white),
+      child: SafeArea(
+        minimum: const EdgeInsets.all(32),
+        child: AnimatedBreathing(
+          controller: _animationController,
+          smallFactor: 0.6,
+          bigFactor: 1.0,
+          builder: (
+            BuildContext context,
+            final double scale,
+            final Animation<double> animation,
+          ) {
+            return RoundButton(
+              backgroundColor: Colors.white,
+              splashColor: Colors.white70,
+              child: SizedBox.square(
+                dimension: scale,
+                child: Center(
+                  child: Builder(
+                    builder: (BuildContext context) {
+                      // Dynamically generate the text
+                      String text = '';
+                      switch (_animationStatus) {
+                        case AnimationStatus.dismissed:
+                        case AnimationStatus.completed:
+                          text = TideLocalizations.of(context)!.holdBreath;
+                          break;
+                        case AnimationStatus.forward:
+                          text = TideLocalizations.of(context)!.breathIn;
+                          break;
+                        case AnimationStatus.reverse:
+                          text = TideLocalizations.of(context)!.breathOut;
+                          break;
+                      }
+                      return AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 400),
+                        child: Text(
+                          text,
+                          key: ValueKey<String>(text),
+                          style: const TextStyle(
+                            color: TideTheme.primaryColor,
+                            fontFamily: TideTheme.homeFontFamily,
+                            fontSize: 26,
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
-          ),
-          Builder(builder: (BuildContext context) {
-            // Dynamically generate the text
-            String text = '';
-            switch (_animationStatus) {
-              case AnimationStatus.dismissed:
-              case AnimationStatus.completed:
-                text = TideLocalizations.of(context)!.holdBreath;
-                break;
-              case AnimationStatus.forward:
-                text = TideLocalizations.of(context)!.breathIn;
-                break;
-              case AnimationStatus.reverse:
-                text = TideLocalizations.of(context)!.breathOut;
-                break;
-            }
-            return AnimatedSwitcher(
-              duration: const Duration(milliseconds: 400),
-              child: Text(
-                text,
-                key: ValueKey<String>(text),
-                style: const TextStyle(
-                  color: TideTheme.primaryColor,
-                  fontFamily: TideTheme.homeFontFamily,
-                  fontSize: 26,
                 ),
               ),
             );
-          }),
-        ],
+          },
+        ),
       ),
     );
   }
