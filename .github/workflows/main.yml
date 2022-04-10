@@ -144,6 +144,36 @@ jobs:
         run: |
           flutter pub global activate dartdoc
           flutter pub global run dartdoc .
+      - name: Search for documentation files
+        run: |
+          # Install requirements
+          sudo apt-get update
+          sudo apt-get install -qqy jq
+          sudo apt-get clean
+
+          # Save all documentation files in the JSON array $json_doc_files
+          json_doc_files="["
+
+          # Search for all files
+          while IFS= read -r -d '' file; do
+            json_doc_files="${json_doc_files}\"doc/$file\", "
+          done < <(find doc -type f \( -iname '*.html' -o -iname '*.htm' -o -iname '*.html5' -o -iname '*.css' -o -iname '*.php' -o -iname '*.js' \) -print0)
+
+          # Close json
+          json_doc_files=$(sed -Ee 's/,\s*$/\]/' <<< "$json_doc_files")
+
+          # Assert is json
+          if ! jq -e . &> /dev/null <<< "$json_doc_files"; then
+            echo -e "An error occurred when constructing the JSON array for all documentation file:\n$json_doc_files" 1>&2
+            exit 1
+          fi
+
+          # Add as GitHub env var
+          echo "json_doc_files=$json_doc_files" >> $GITHUB_ENV
+      - name: Expand emoji in documentation
+        uses: Cynnexis/expand-emoji@v1
+        with:
+          files: "${{ env.json_doc_files }}"
       - name: Build the web app
         run: flutter build web --release --base-href "/${{ github.event.repository.name }}/"
       - name: Organize built files
