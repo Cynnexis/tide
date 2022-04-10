@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Security updates are published to `master`.
+Security updates are published to `main`.
 
 ## Reporting a Vulnerability
 

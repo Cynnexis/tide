@@ -211,7 +211,7 @@ version:
 
 	if [[ -d .git/ ]]; then
 		if command -v "git" &> /dev/null; then
-			if [[ "$$(git rev-parse --abbrev-ref HEAD)" != "master" ]]; then
+			if [[ "$$(git rev-parse --abbrev-ref HEAD)" != "main" ]]; then
 				VERSION="$$VERSION - rev $$(git rev-parse HEAD)"
 			fi
 		else
