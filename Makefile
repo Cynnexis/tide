@@ -88,7 +88,9 @@ docker-test:
 	  extra_volumes+=("-v" "$$(realpath "$$config_file"):/usr/local/apache2/htdocs/assets/tide.yaml:ro")
 	fi
 
-	docker run -it \
+	docker run \
+			-it \
+			--rm \
     		--name=tide-tests \
     		--hostname="tide-tests" \
     		-v "/etc/timezone:/etc/timezone:ro" \
