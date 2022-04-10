@@ -11,6 +11,7 @@ import 'package:tide/utility/fullscreen/fullscreen.dart';
 import 'package:tide/widget/app_bar.dart';
 import 'package:tide/widget/breathing_bubble.dart';
 import 'package:tide/widget/timer_form.dart';
+import 'package:universal_io/io.dart' as io;
 
 /// Page that contains the breathing exercise.
 class BreathingExercisePage extends StatefulWidget {
@@ -47,18 +48,26 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
   /// If null, then to timer is set.
   StreamSubscription<CountdownTimer>? _streamTimerSubscription;
 
+  /// Detect if the current device is a mobile device.
+  bool get isMobileDevice =>
+      !kIsWeb && (io.Platform.isAndroid || io.Platform.isIOS);
+
   @override
   void initState() {
     super.initState();
 
-    // Enter fullscreen
-    enterFullscreen();
+    // Enter fullscreen on mobile device only
+    if (isMobileDevice) {
+      enterFullscreen();
+    }
   }
 
   @override
   void dispose() {
     // Exit fullscreen
-    exitFullscreen();
+    if (isMobileDevice) {
+      exitFullscreen();
+    }
 
     super.dispose();
   }

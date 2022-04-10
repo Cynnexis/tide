@@ -81,14 +81,16 @@ docker-test:
 	extra_volumes=()
 
 	set +e
-	config_file=$$($(MAKE) get-config-file 2> /dev/null)
+	config_file=$$($(MAKE) --quiet --no-print-directory get-config-file 2> /dev/null)
 	set -e
 
 	if [[ -n $$config_file ]]; then
 	  extra_volumes+=("-v" "$$(realpath "$$config_file"):/usr/local/apache2/htdocs/assets/tide.yaml:ro")
 	fi
 
-	docker run -it \
+	docker run \
+			-it \
+			--rm \
     		--name=tide-tests \
     		--hostname="tide-tests" \
     		-v "/etc/timezone:/etc/timezone:ro" \
@@ -140,7 +142,7 @@ docker-serve:
 	extra_volumes=()
 
 	set +e
-	config_file=$$($(MAKE) get-config-file 2> /dev/null)
+	config_file=$$($(MAKE) --quiet --no-print-directory get-config-file 2> /dev/null)
 	set -e
 
 	if [[ -n $$config_file ]]; then
@@ -209,7 +211,7 @@ version:
 
 	if [[ -d .git/ ]]; then
 		if command -v "git" &> /dev/null; then
-			if [[ "$$(git rev-parse --abbrev-ref HEAD)" != "master" ]]; then
+			if [[ "$$(git rev-parse --abbrev-ref HEAD)" != "main" ]]; then
 				VERSION="$$VERSION - rev $$(git rev-parse HEAD)"
 			fi
 		else
