@@ -61,9 +61,11 @@ class TideSettings extends ChangeNotifier {
 
   //region SETTINGS
 
+  static const Duration defaultBreathingDuration = Duration(seconds: 7);
+
   Duration get breathingDuration => Duration(
-      milliseconds:
-          getInt("breathingDurationMilliseconds", defaultValue: 7000)!);
+      milliseconds: getInt("breathingDurationMilliseconds",
+          defaultValue: defaultBreathingDuration.inMilliseconds)!);
 
   set breathingDuration(Duration value) {
     _sharedPreferences.setInt(
@@ -71,9 +73,12 @@ class TideSettings extends ChangeNotifier {
     notifyListeners();
   }
 
+  static const Duration defaultHoldingBreathDuration =
+      Duration(seconds: 1, milliseconds: 500);
+
   Duration get holdingBreathDuration => Duration(
-      milliseconds:
-          getInt("holdingBreathDurationMilliseconds", defaultValue: 1500)!);
+      milliseconds: getInt("holdingBreathDurationMilliseconds",
+          defaultValue: defaultHoldingBreathDuration.inMilliseconds)!);
 
   set holdingBreathDuration(Duration value) {
     _sharedPreferences.setInt(
