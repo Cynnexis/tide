@@ -10,6 +10,8 @@ jobs:
   add_tide_yaml:
     runs-on: ubuntu-20.04
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Create ${{ inputs.output_file }}
         env:
           output_file: ${{ inputs.output_file }}
