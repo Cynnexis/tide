@@ -25,7 +25,7 @@ jobs:
         with:
           channel: 'stable'
       - name: Configure application
-        uses: ./.github/actions/tide-configuration-file.yml
+        uses: ./.github/actions/tide-configuration-file
       - name: Install dependencies
         run: flutter pub get
       - name: Analyze code
@@ -56,7 +56,7 @@ jobs:
         with:
           channel: 'stable'
       - name: Configure application
-        uses: ./.github/actions/tide-configuration-file.yml
+        uses: ./.github/actions/tide-configuration-file
       - name: Install dependencies
         run: flutter pub get
       - name: Write keystore
@@ -131,7 +131,7 @@ jobs:
       - name: Configure workspace
         run: find . -type f \( -name Makefile -o -iname '*.bash' -o -iname '*.sh' \) -exec chmod +x "{}" \;
       - name: Configure application
-        uses: ./.github/actions/tide-configuration-file.yml
+        uses: ./.github/actions/tide-configuration-file
       - name: Install dependencies
         run: flutter pub get
       - name: Export documentation
