@@ -81,7 +81,7 @@ docker-test:
 	extra_volumes=()
 
 	set +e
-	config_file=$$($(MAKE) get-config-file 2> /dev/null)
+	config_file=$$($(MAKE) --quiet --no-print-directory get-config-file 2> /dev/null)
 	set -e
 
 	if [[ -n $$config_file ]]; then
@@ -142,7 +142,7 @@ docker-serve:
 	extra_volumes=()
 
 	set +e
-	config_file=$$($(MAKE) get-config-file 2> /dev/null)
+	config_file=$$($(MAKE) --quiet --no-print-directory get-config-file 2> /dev/null)
 	set -e
 
 	if [[ -n $$config_file ]]; then
