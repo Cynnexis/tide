@@ -192,5 +192,9 @@
   "youAreStrongEnough": "Whatever it is, you are strong enough! \uD83D\uDC90",
   "@youAreStrongEnough": {
     "description": "Tip that reassure the user, saying they can overcome it. It is advised to place an emoji related to flower on the right side of the text (the left side will be used by the lightbulb to show that it's a tip). See https://emojipedia.org/search/?q=flower for more details."
+  },
+  "loading": "Loading...",
+  "@loading": {
+    "description": "The loading text."
   }
 }
