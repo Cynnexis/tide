@@ -101,8 +101,8 @@ class AnimatedBreathingState extends State<AnimatedBreathing> {
         final double minDiameter = smallestMaxDimension * widget.smallFactor;
         final double maxDiameter = smallestMaxDimension * widget.bigFactor;
         assert(
-          minDiameter < maxDiameter,
-          'Expected minDiameter < maxDiameter, got '
+          minDiameter <= maxDiameter,
+          'Expected minDiameter <= maxDiameter, got '
           'minDiameter=$minDiameter, maxDiameter=$maxDiameter.',
         );
         // Current animation value, between 0 and 1

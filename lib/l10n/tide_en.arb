@@ -196,5 +196,9 @@
   "loading": "Loading...",
   "@loading": {
     "description": "The loading text."
+  },
+  "disabledAnimationsWarning": "Animations are disabled. This can cause the application to malfunction. Please activate them from your #device settings#.",
+  "@disabledAnimationsWarning": {
+    "description": "Text to warn the user about disabled animation. You need to put a word or a group of word between two sharp (#) character to make them as a button. This button will redirect the user to the device settings."
   }
 }
