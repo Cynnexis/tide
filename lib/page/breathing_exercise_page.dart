@@ -77,7 +77,9 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
     return WillPopScope(
       onWillPop: () async {
         // Exit fullscreen
-        await exitFullscreen();
+        if (isMobileDevice) {
+          await exitFullscreen();
+        }
 
         return true;
       },

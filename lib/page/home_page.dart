@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 import 'package:system_settings/system_settings.dart';
@@ -9,6 +10,7 @@ import 'package:tide/widget/app_bar.dart';
 import 'package:tide/widget/button_span.dart';
 import 'package:tide/widget/round_button.dart';
 import 'package:tide/widget/user_tips.dart';
+import 'package:universal_io/io.dart' as io;
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/';
@@ -239,7 +241,10 @@ class _HomePageState extends State<HomePage>
     await _pageOpacityAnimationController.forward().orCancel;
 
     await Navigator.pushNamed<void>(context, BreathingExercisePage.routeName);
-    await exitFullscreen();
+
+    if (!kIsWeb && (io.Platform.isAndroid || io.Platform.isIOS)) {
+      await exitFullscreen();
+    }
 
     await _pageOpacityAnimationController.reverse().orCancel;
   }
