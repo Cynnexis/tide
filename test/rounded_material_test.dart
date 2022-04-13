@@ -1,10 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tide/widget/rounded_material.dart';
 
 void main() {
-  testWidgets('Golden file', (final WidgetTester tester) async {
+  testWidgets('RoundedMaterial Golden file', (final WidgetTester tester) async {
     /// Check if the button was clicked
     bool wasClicked = false;
 

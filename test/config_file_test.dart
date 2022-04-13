@@ -94,8 +94,10 @@ void main() {
 
     expect(configFileInstance, isNotNull);
     expect(configFileInstance!.maintainerEmail, equals('john.doe@corp.org'));
-    expect(configFileInstance!.web.uri.toString(),
-        equals('https://username@www.example.com:8080/test/tide/?test=true&flutter=yes#my-anchor'));
+    expect(
+        configFileInstance!.web.uri.toString(),
+        equals(
+            'https://username@www.example.com:8080/test/tide/?test=true&flutter=yes#my-anchor'));
 
     ConfigFile.removeInstance();
   });

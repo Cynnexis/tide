@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="List Extension Tests" type="FlutterTestConfigType" factoryName="Flutter Test" singleton="false">
+  <configuration default="false" name="List Extension Test" type="FlutterTestConfigType" factoryName="Flutter Test" singleton="false">
     <option name="testFile" value="$PROJECT_DIR$/test/list_extension_test.dart" />
     <option name="useRegexp" value="false" />
     <option name="additionalArgs" value="" />

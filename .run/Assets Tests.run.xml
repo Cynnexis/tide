@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Assets Tests" type="FlutterTestConfigType" factoryName="Flutter Test">
+  <configuration default="false" name="Assets Test" type="FlutterTestConfigType" factoryName="Flutter Test">
     <option name="testFile" value="$PROJECT_DIR$/test/assets_test.dart" />
     <option name="useRegexp" value="false" />
     <option name="additionalArgs" value="" />

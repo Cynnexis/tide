@@ -21,7 +21,8 @@ void main() {
   test('Test invalid assets', () async {
     expect(await assetExists('asset/invalid-asset'), isFalse);
     expect(await assetExists('asset/licenses/invalid-filename.txt'), isFalse);
-    expect(await assetExists('asset/invalid-folder/invalid-filename.txt'), isFalse);
+    expect(await assetExists('asset/invalid-folder/invalid-filename.txt'),
+        isFalse);
     expect(await assetExists(''), isFalse);
     expect(await assetExists('🌹'), isFalse);
   });
