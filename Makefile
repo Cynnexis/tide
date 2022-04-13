@@ -72,7 +72,7 @@ fix-lint:
 .PHONY: test
 test:
 	@set -euo pipefail
-	flutter test --coverage --reporter expanded
+	flutter test --coverage --reporter expanded --dart-define=FLUTTER_TEST=true
 
 .PHONY: docker-test
 docker-test:
@@ -101,12 +101,29 @@ docker-test:
     		--restart=no \
     		--security-opt="no-new-privileges=true" \
     		--cap-drop=all \
-    		cynnexis/tide:sdk test --coverage --concurrency=1 --no-test-assets --reporter expanded
+    		cynnexis/tide:sdk test --coverage --concurrency=1 --no-test-assets --reporter expanded --dart-define=FLUTTER_TEST=true
 
 .PHONY: update-goldens
 update-goldens:
 	@set -euo pipefail
 	flutter test --update-goldens
+
+.PHONY: test-integration
+test-integration:
+	@set -euo pipefail
+	flutter test --coverage --reporter expanded --dart-define=FLUTTER_TEST=true integration_test/tide_test.dart
+
+.PHONY: test-integration-web
+test-integration-web:
+	@set -euo pipefail
+
+	echo "To run the integrations tests on web, you need to have the ChromeDriver. Please see https://docs.flutter.dev/cookbook/testing/integration/introduction#5b-web" 1>&2
+
+	flutter drive \
+		--driver=test_driver/integration_test.dart \
+		--target=integration_test/tide_test.dart \
+		--dart-define=FLUTTER_TEST=true \
+		-d web-server
 
 .PHONY: doc
 doc:

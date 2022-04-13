@@ -54,13 +54,18 @@ void aboutApp(BuildContext context) {
     context: context,
     applicationName: TideLocalizations.of(context)!.longAppName,
     applicationIcon: ClipRRect(
+      key: const Key('about_dialog_app_icon_clip_rect'),
       borderRadius: BorderRadius.circular(8.0),
       child: Container(
+        key: const Key('about_dialog_app_icon_container'),
         color: Colors.white,
         child: SizedBox(
+          key: const Key('about_dialog_app_icon_sized_box'),
           width: 60,
           height: 60,
-          child: TideTheme.getLogoImage(),
+          child: TideTheme.getLogoImage(
+            key: const Key('about_dialog_app_icon'),
+          ),
         ),
       ),
     ),

@@ -145,7 +145,11 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
                         if (!snapshot.hasData) return Container();
 
                         // Else, print the countdown value
-                        return Text(timerToString(snapshot.data!.remaining));
+                        return Text(
+                          timerToString(snapshot.data!.remaining),
+                          key: const Key(
+                              'tide_breathing_ex_remaining_time_text'),
+                        );
                       },
                     );
                   }),
@@ -199,6 +203,7 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
     Duration? result = await showDialog<Duration>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
+        key: const Key('breathing_ex_timer_dialog_box'),
         title: Text(TideLocalizations.of(context)!.setATimer),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -262,6 +267,7 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) => AlertDialog(
+        key: const Key('tide_breathing_ex_timer_finished_dialog'),
         title: Text(TideLocalizations.of(context)!.timerDone),
         actions: <Widget>[
           TextButton(
@@ -272,7 +278,11 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
               // Pop the page to return to home
               Navigator.of(context).pop<void>();
             },
-            child: Text(TideLocalizations.of(context)!.ok),
+            child: Text(
+              TideLocalizations.of(context)!.ok,
+              key: const Key(
+                  'tide_breathing_ex_timer_finished_dialog_ok_button'),
+            ),
           ),
         ],
       ),

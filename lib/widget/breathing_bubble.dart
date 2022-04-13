@@ -31,7 +31,7 @@ class BreathingBubble extends StatefulWidget {
 
 class _BreathingBubbleState extends State<BreathingBubble>
     with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
+  AnimationController? _animationController;
   AnimationStatus _animationStatus = AnimationStatus.dismissed;
 
   @override
@@ -48,23 +48,26 @@ class _BreathingBubbleState extends State<BreathingBubble>
       widget.controller!.addListener(_breathingBubbleControllerListener);
     }
 
-    _animationController.addListener(_updateCircleSize);
-    _animationController.addStatusListener(_animationControllerStatusListener);
-    _animationController.forward();
+    _animationController!.addListener(_updateCircleSize);
+    _animationController!.addStatusListener(_animationControllerStatusListener);
+    _animationController!.forward();
   }
 
   @override
   void dispose() {
     TideSettings.instanceSync.removeListener(_updateAnimationController);
-    _animationController.removeListener(_updateCircleSize);
-    _animationController
-        .removeStatusListener(_animationControllerStatusListener);
-    if (_animationController.isAnimating ||
-        _animationController.status == AnimationStatus.forward ||
-        _animationController.status == AnimationStatus.reverse) {
-      _animationController.stop(canceled: true);
+    if (_animationController != null) {
+      _animationController!.removeListener(_updateCircleSize);
+      _animationController!
+          .removeStatusListener(_animationControllerStatusListener);
+      if (_animationController!.isAnimating ||
+          _animationController!.status == AnimationStatus.forward ||
+          _animationController!.status == AnimationStatus.reverse) {
+        _animationController!.stop(canceled: true);
+      }
+      _animationController!.dispose();
+      _animationController = null;
     }
-    _animationController.dispose();
     if (widget.controller != null) {
       widget.controller!.removeListener(_breathingBubbleControllerListener);
     }
@@ -77,7 +80,7 @@ class _BreathingBubbleState extends State<BreathingBubble>
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: AnimatedBreathing(
-          controller: _animationController,
+          controller: _animationController!,
           smallFactor: 0.6,
           bigFactor: 1.0,
           builder: (
@@ -145,6 +148,11 @@ class _BreathingBubbleState extends State<BreathingBubble>
   /// Method that changes the animation status according to [widget.controller]
   /// status.
   void _breathingBubbleControllerListener() {
+    // If animation controller is disposed, return
+    if (_animationController == null) {
+      return;
+    }
+
     // Check that the controller is defined
     if (widget.controller != null) {
       // Switch on the status
@@ -159,10 +167,10 @@ class _BreathingBubbleState extends State<BreathingBubble>
         case BreathingBubbleStatus.playing:
           switch (_animationStatus) {
             case AnimationStatus.forward:
-              _animationController.forward();
+              _animationController!.forward();
               break;
             case AnimationStatus.reverse:
-              _animationController.reverse();
+              _animationController!.reverse();
               break;
             case AnimationStatus.dismissed:
             case AnimationStatus.completed:
@@ -171,7 +179,7 @@ class _BreathingBubbleState extends State<BreathingBubble>
           break;
         // If the status is now "pause", the animation is stopped
         case BreathingBubbleStatus.paused:
-          _animationController.stop(canceled: false);
+          _animationController!.stop(canceled: false);
           break;
       }
     }
@@ -186,17 +194,19 @@ class _BreathingBubbleState extends State<BreathingBubble>
       if (status == AnimationStatus.completed) {
         Future<void>.delayed(TideSettings.instanceSync.holdingBreathDuration,
             () {
-          if (widget.controller == null ||
-              widget.controller!.status == BreathingBubbleStatus.playing) {
-            _animationController.reverse();
+          if (_animationController != null &&
+              (widget.controller == null ||
+                  widget.controller!.status == BreathingBubbleStatus.playing)) {
+            _animationController?.reverse();
           }
         });
       } else if (status == AnimationStatus.dismissed) {
         Future<void>.delayed(TideSettings.instanceSync.holdingBreathDuration,
             () {
-          if (widget.controller == null ||
-              widget.controller!.status == BreathingBubbleStatus.playing) {
-            _animationController.forward();
+          if (_animationController != null &&
+              (widget.controller == null ||
+                  widget.controller!.status == BreathingBubbleStatus.playing)) {
+            _animationController?.forward();
           }
         });
       }
@@ -210,7 +220,10 @@ class _BreathingBubbleState extends State<BreathingBubble>
 
   /// Update the animation duration according to the settings.
   void _updateAnimationController() {
-    _animationController.duration = TideSettings.instanceSync.breathingDuration;
+    if (_animationController != null) {
+      _animationController!.duration =
+          TideSettings.instanceSync.breathingDuration;
+    }
   }
 }
 

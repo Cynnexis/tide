@@ -65,6 +65,7 @@ class TideAppBar extends AppBar {
               (showSettings
                   ? <Widget>[
                       IconButton(
+                        key: const Key('tide_app_bar_settings_button'),
                         onPressed: () => pushSettings(context),
                         icon: const Icon(Icons.settings),
                       ),
@@ -102,6 +103,7 @@ class TideAppBar extends AppBar {
   }) {
     if (showBackButton) {
       return IconButton(
+        key: const Key('tide_app_bar_back_button'),
         onPressed: onBackButtonPushed ??
             () {
               Navigator.of(context).pop<void>();
@@ -111,6 +113,7 @@ class TideAppBar extends AppBar {
       );
     } else {
       return IconButton(
+        key: const Key('tide_app_bar_about_button'),
         onPressed: () => aboutApp(context),
         icon: TideTheme.getLogoImage(imageProvider: TideTheme.logo),
         tooltip: TideLocalizations.of(context)!.appName,

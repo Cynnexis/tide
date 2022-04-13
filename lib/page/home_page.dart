@@ -167,7 +167,7 @@ class _HomePageState extends State<HomePage>
                                 const Key('tide_home_start_button_ink_well'),
                             backgroundColor: Colors.white,
                             splashColor: Colors.white70,
-                            onTap: pushBreathingExercisePage,
+                            onTap: () => pushBreathingExercisePage(context),
                             child: SizedBox.square(
                               key:
                                   const Key('tide_home_start_button_sized_box'),
@@ -236,9 +236,15 @@ class _HomePageState extends State<HomePage>
   /// Do **NOT** use this method to refresh the widget tree.
   void _updateTitleOpacity() => setState(() {});
 
-  Future<void> pushBreathingExercisePage() async {
+  Future<void> pushBreathingExercisePage(BuildContext context) async {
+    // Indicates if animations can be run
+    bool canRunAnimations = !MediaQuery.of(context).disableAnimations &&
+        !const bool.fromEnvironment('FLUTTER_TEST');
+
     // Start title opacity animation
-    await _pageOpacityAnimationController.forward().orCancel;
+    if (canRunAnimations) {
+      await _pageOpacityAnimationController.forward().orCancel;
+    }
 
     await Navigator.pushNamed<void>(context, BreathingExercisePage.routeName);
 
@@ -246,7 +252,9 @@ class _HomePageState extends State<HomePage>
       await exitFullscreen();
     }
 
-    await _pageOpacityAnimationController.reverse().orCancel;
+    if (canRunAnimations) {
+      await _pageOpacityAnimationController.reverse().orCancel;
+    }
   }
 
   /// Check that animations are enabled.
