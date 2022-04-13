@@ -1,8 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="RoundedMaterial Widget Test" type="FlutterTestConfigType" factoryName="Flutter Test">
-    <option name="testFile" value="$PROJECT_DIR$/test/rounded_material_test.dart" />
-    <option name="useRegexp" value="false" />
-    <option name="additionalArgs" value="" />
-    <method v="2" />
-  </configuration>
-</component>
