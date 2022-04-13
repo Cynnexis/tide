@@ -58,15 +58,44 @@ class ConfigFile {
   /// loaded, please use [instance] instead, but otherwise, this function is
   /// recommended over the getter.
   ///
-  /// If a [context] is passed, it will be used to call [DefaultAssetBundle]. If
-  /// not, [rootBundle] will be used instead.
+  /// To load the configuration, you have two options:
+  ///
+  /// * **Load from the assets:** This is the default behavior. If a [context]
+  /// is passed, it will be used to call [DefaultAssetBundle]. If not,
+  /// [rootBundle] will be used instead.
+  /// * **Load it from a given configuration:** Use [configuration] to load a
+  /// Yaml document, or if it is not a Yaml document, a file from the assets.
+  /// In the latter case, you may pass a [context].
   ///
   /// Note that this function is thread-safe.
-  static Future<ConfigFile> load({BuildContext? context}) async {
+  static Future<ConfigFile> load(
+      {BuildContext? context, String? configuration}) async {
     return await _instanceLock.synchronized<ConfigFile>(() async {
       if (_instance == null) {
-        final String configContent = await _readConfigFile(context: context);
-        final dynamic configDynamicYaml = loadYaml(configContent);
+        // The object that will contain the configuration content, as a mapping
+        dynamic configDynamicYaml;
+        if (configuration == null) {
+          // Automatically detect the configuration file and load it from the assets
+          final String configContent = await readConfigFile(context: context);
+          configDynamicYaml = loadYaml(configContent);
+        } else {
+          // Try to parse the given configuration, it it fails, assume it is a path
+          try {
+            configDynamicYaml = loadYaml(configuration);
+          } catch (err) {
+            // Only capture [YamlException] and [ArgumentError]
+            if (err is! YamlException && err is! ArgumentError) {
+              rethrow;
+            }
+
+            // Assume [configuration] is a path
+            final String configContent = await readConfigFile(
+                configAssetPath: configuration, context: context);
+            configDynamicYaml = loadYaml(configContent);
+          }
+        }
+
+        // Check that the [configDynamicYaml] is a mapping
         if (configDynamicYaml! is Map<String, dynamic>) {
           throw StateError(
               'Expected the YAML configuration to be a mapping, got "${configDynamicYaml.runtimeType}".');
@@ -96,7 +125,11 @@ class ConfigFile {
                   ? <String, dynamic>{
                       for (final MapEntry<dynamic, dynamic> entry
                           in (mapWebUri['queryParameters'] as YamlMap).entries)
-                        entry.key as String: entry.value
+                        entry.key as String: entry.value is Iterable<dynamic>
+                            ? entry.value
+                                .cast<String>((dynamic e) => e.toString())
+                                .toList(growable: false)
+                            : entry.value.toString(),
                     }
                   : null,
           /* String? */ fragment: mapWebUri['fragment'],
@@ -104,14 +137,7 @@ class ConfigFile {
 
         _instance = ConfigFile._internal(
           web: ConfigWeb(
-            uri:
-                webAppUri /*ConfigWebUrl(
-              protocol: mapWebUri['protocol'],
-              domain: mapWebUri['domain'],
-              port: mapWebUri['port'],
-              baseHref: mapWebUri['base_href'],
-            )*/
-            ,
+            uri: webAppUri,
           ),
           maintainerEmail: configYaml['maintainer_email'],
         );
@@ -123,19 +149,28 @@ class ConfigFile {
 
   //endregion
 
+  /// Remove the instance of this singleton.
+  ///
+  /// This is only available for testing.
+  @visibleForTesting
+  static void removeInstance() {
+    _instance = null;
+  }
+
   /// Read the configuration file located at [configAssetPath].
   ///
   /// If [configAssetPath] is not given, it will automatically be detected with
-  /// [_detectConfigFilePath].
+  /// [detectConfigFilePath].
   ///
   /// If a [context] is passed, it will be used to call [DefaultAssetBundle]. If
   /// not, [rootBundle] will be used instead.
-  static Future<String> _readConfigFile({
+  @visibleForTesting
+  static Future<String> readConfigFile({
     String? configAssetPath,
     BuildContext? context,
   }) async {
     return await (context == null ? rootBundle : DefaultAssetBundle.of(context))
-        .loadString(configAssetPath ?? await _detectConfigFilePath());
+        .loadString(configAssetPath ?? await detectConfigFilePath());
   }
 
   /// Detect the configuration file in the list of asset using the fallback list
@@ -146,7 +181,8 @@ class ConfigFile {
   ///
   /// If a [context] is passed, it will be used to call [DefaultAssetBundle]. If
   /// not, [rootBundle] will be used instead.
-  static Future<String> _detectConfigFilePath({BuildContext? context}) async {
+  @visibleForTesting
+  static Future<String> detectConfigFilePath({BuildContext? context}) async {
     List<String> assetPaths = await loadAssetsPaths(context: context);
     for (final String path in _defaultConfigFilePaths) {
       if (assetPaths.contains(path)) {
