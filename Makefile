@@ -23,6 +23,7 @@ help:
 	@echo "  lint                  - Check the code format."
 	@echo "  fix-lint              - Fix the code format."
 	@echo "  test                  - Run the Flutter unit and widget tests."
+	@echo "  update-goldens        - Create or update golden files."
 	@echo "  doc                   - Generate the documentation."
 	@echo "  rmdoc                 - Remove the documentation."
 	@echo "  update-launcher       - Update the icon launcher."
@@ -101,6 +102,11 @@ docker-test:
     		--security-opt="no-new-privileges=true" \
     		--cap-drop=all \
     		cynnexis/tide:sdk test --coverage --concurrency=1 --no-test-assets --reporter expanded
+
+.PHONY: update-goldens
+update-goldens:
+	@set -euo pipefail
+	flutter test --update-goldens
 
 .PHONY: doc
 doc:
