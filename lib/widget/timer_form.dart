@@ -5,11 +5,15 @@ import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 class TimerForm extends StatefulWidget {
   final EdgeInsets padding;
   final TimerFormController? controller;
+  final String? shortMinuteText;
+  final String? shortSecondText;
 
   const TimerForm({
     Key? key,
     this.padding = EdgeInsets.zero,
     this.controller,
+    this.shortMinuteText,
+    this.shortSecondText,
   }) : super(key: key);
 
   @override
@@ -113,22 +117,21 @@ class TimerFormState extends State<TimerForm> {
 
   @override
   Widget build(BuildContext context) {
-    final List<DropdownMenuItem<int>> dropdownItems = _l0to59
-        .map<DropdownMenuItem<int>>((int i) => DropdownMenuItem<int>(
-              child: Text(i.toString()),
-              value: i,
-            ))
-        .toList(growable: false);
-
     return Padding(
       padding: widget.padding,
       child: Row(
+        key: widget.key != null ? Key('${getWidgetKeyValue()}_row') : null,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           DropdownButton<int>(
-            key: const Key('timer_form_dropdown_button_minutes'),
-            items: dropdownItems,
+            key: widget.key != null
+                ? Key('${getWidgetKeyValue()}_dropdown_button_minutes')
+                : null,
+            items: rangeItems(
+              keyPrefix: widget.key != null ? '${getWidgetKeyValue()}_' : '',
+              keySuffix: 'm',
+            ),
             value: minutes,
             onChanged: (int? newMinutes) {
               setState(() {
@@ -137,11 +140,16 @@ class TimerFormState extends State<TimerForm> {
             },
           ),
           _horizontalGap,
-          Text(TideLocalizations.of(context)!.shortMinute),
+          Text(getShortMinuteText(context)),
           _horizontalGap,
           DropdownButton<int>(
-            key: const Key('timer_form_dropdown_button_seconds'),
-            items: dropdownItems,
+            key: widget.key != null
+                ? Key('${getWidgetKeyValue()}_dropdown_button_seconds')
+                : null,
+            items: rangeItems(
+              keyPrefix: widget.key != null ? '${getWidgetKeyValue()}_' : '',
+              keySuffix: 's',
+            ),
             value: seconds,
             onChanged: (int? newSeconds) {
               setState(() {
@@ -150,10 +158,45 @@ class TimerFormState extends State<TimerForm> {
             },
           ),
           _horizontalGap,
-          Text(TideLocalizations.of(context)!.shortSecond),
+          Text(getShortSecondText(context)),
         ],
       ),
     );
+  }
+
+  /// Return a list of [DropdownMenuItem] containing values between 0 and 60.
+  List<DropdownMenuItem<int>> rangeItems({
+    final double min = 0,
+    double max = 60,
+    final String keyPrefix = '',
+    final String keySuffix = '',
+  }) =>
+      _l0to59
+          .map<DropdownMenuItem<int>>(
+            (int i) => DropdownMenuItem<int>(
+              key: Key(keyPrefix + i.toString() + keySuffix),
+              child: Text(i.toString()),
+              value: i,
+            ),
+          )
+          .toList(growable: false);
+
+  String getShortMinuteText(BuildContext context) =>
+      widget.shortMinuteText ?? TideLocalizations.of(context)!.shortMinute;
+
+  String getShortSecondText(BuildContext context) =>
+      widget.shortSecondText ?? TideLocalizations.of(context)!.shortSecond;
+
+  /// Get the value of the widget key.
+  ///
+  /// If there is no key, or the key is not a [ValueKey] with type [String],
+  /// [defaultValue] is returned.
+  String getWidgetKeyValue({final String defaultValue = ''}) {
+    if (widget.key == null || widget.key is! ValueKey<String>) {
+      return defaultValue;
+    } else {
+      return (widget.key! as ValueKey<String>).value;
+    }
   }
 
   /// Function to call when a changes must be reported to controller in this
