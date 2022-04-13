@@ -4,6 +4,7 @@ import 'package:tide/widget/rounded_material.dart';
 /// Button that can be placed in a [TextSpan] or [RichText].
 class ButtonSpan extends WidgetSpan {
   ButtonSpan({
+    Key? key,
     required final Widget child,
     final VoidCallback? onTap,
     final Widget? leading,
@@ -13,6 +14,7 @@ class ButtonSpan extends WidgetSpan {
     final TextStyle? style,
   }) : super(
           child: RoundedMaterial(
+            key: key,
             onTap: onTap,
             backgroundColor: backgroundColor,
             child: Padding(

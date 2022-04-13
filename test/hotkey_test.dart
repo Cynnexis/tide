@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:tide/widget/hotkey.dart';
 
 void main() {
-  testWidgets('RoundButton Golden file', (final WidgetTester tester) async {
+  testWidgets('Hotkey Golden file', (final WidgetTester tester) async {
     /// Check if the button was clicked
     bool wasClicked = false;
 
