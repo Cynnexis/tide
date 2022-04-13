@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tide/widget/button_span.dart';
-import 'package:tide/widget/hotkey.dart';
 
 void main() {
   testWidgets('ButtonSpan Golden file', (final WidgetTester tester) async {

@@ -13,10 +13,16 @@ import 'package:tide/widget/round_button.dart';
 /// diaphragm movements.
 class BreathingBubble extends StatefulWidget {
   final BreathingBubbleController? controller;
+  final String? holdBreathText;
+  final String? breathInText;
+  final String? breathOutText;
 
   const BreathingBubble({
     Key? key,
     this.controller,
+    this.holdBreathText,
+    this.breathInText,
+    this.breathOutText,
   }) : super(key: key);
 
   @override
@@ -53,6 +59,11 @@ class _BreathingBubbleState extends State<BreathingBubble>
     _animationController.removeListener(_updateCircleSize);
     _animationController
         .removeStatusListener(_animationControllerStatusListener);
+    if (_animationController.isAnimating ||
+        _animationController.status == AnimationStatus.forward ||
+        _animationController.status == AnimationStatus.reverse) {
+      _animationController.stop(canceled: true);
+    }
     _animationController.dispose();
     if (widget.controller != null) {
       widget.controller!.removeListener(_breathingBubbleControllerListener);
@@ -63,8 +74,8 @@ class _BreathingBubbleState extends State<BreathingBubble>
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: SafeArea(
-        minimum: const EdgeInsets.all(32),
+      child: Padding(
+        padding: const EdgeInsets.all(32),
         child: AnimatedBreathing(
           controller: _animationController,
           smallFactor: 0.6,
@@ -87,13 +98,13 @@ class _BreathingBubbleState extends State<BreathingBubble>
                       switch (_animationStatus) {
                         case AnimationStatus.dismissed:
                         case AnimationStatus.completed:
-                          text = TideLocalizations.of(context)!.holdBreath;
+                          text = getHoldBreathText(context);
                           break;
                         case AnimationStatus.forward:
-                          text = TideLocalizations.of(context)!.breathIn;
+                          text = getBreathInText(context);
                           break;
                         case AnimationStatus.reverse:
-                          text = TideLocalizations.of(context)!.breathOut;
+                          text = getBreathOutText(context);
                           break;
                       }
                       return AnimatedSwitcher(
@@ -119,6 +130,18 @@ class _BreathingBubbleState extends State<BreathingBubble>
     );
   }
 
+  String getHoldBreathText(BuildContext context) {
+    return widget.holdBreathText ?? TideLocalizations.of(context)!.holdBreath;
+  }
+
+  String getBreathInText(BuildContext context) {
+    return widget.breathInText ?? TideLocalizations.of(context)!.breathIn;
+  }
+
+  String getBreathOutText(BuildContext context) {
+    return widget.breathOutText ?? TideLocalizations.of(context)!.breathOut;
+  }
+
   /// Method that changes the animation status according to [widget.controller]
   /// status.
   void _breathingBubbleControllerListener() {
@@ -135,13 +158,14 @@ class _BreathingBubbleState extends State<BreathingBubble>
         // If the status is now "play", resume the animation (either forward or backward according to [_animationStatus])
         case BreathingBubbleStatus.playing:
           switch (_animationStatus) {
-            case AnimationStatus.dismissed:
             case AnimationStatus.forward:
               _animationController.forward();
               break;
-            case AnimationStatus.completed:
             case AnimationStatus.reverse:
               _animationController.reverse();
+              break;
+            case AnimationStatus.dismissed:
+            case AnimationStatus.completed:
               break;
           }
           break;
