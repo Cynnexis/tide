@@ -165,7 +165,6 @@ jobs:
     runs-on: ubuntu-20.04
     name: Build Webapp
     needs: [tests]
-    if: github.event_name == 'push' && contains(github.ref, 'main') || contains(github.ref, 'cicd/')
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -219,17 +218,47 @@ jobs:
         run: |
           mv -fT doc/api build/web/docs
           cp -ar assets build/web/docs/assets
+
+          # Create a zip archive for artifact, deploy and release
+          cd build/web
+          find . -maxdepth 1 | tail -n+2 | xargs zip -9 -r tide-web.zip
+          cd ../..
+
+  deploy-web:
+    runs-on: ubuntu-20.04
+    name: Deploy the Web app on GitHub Pages
+    needs: [build-web]
+    if: github.event_name == 'push' && contains(github.ref, 'main') || contains(github.ref, 'cicd/')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Download action artifacts
+        id: download_artifacts
+        uses: actions/download-artifact@v2.0.10
+        with:
+          name: Tide (web archive)
+          path: /tmp/artifacts
+      - name: Unzip
+        run: |
+          # TODO: DEBUG
+          sudo apt-get update
+          sudo apt-get install -qqy tree
+          tree /tmp/artifacts
+
+          # Unzip the archive
+          mkdir -p /tmp/web
+          unzip -d /tmp/web tide-web.zip
       - name: Deploy GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
           branch: gh-pages
-          folder: build/web
+          folder: /tmp/web
           single-commit: true
 
   release:
     runs-on: ubuntu-20.04
     name: Create a release
-    needs: [tests, build-android, build-web, build-windows]
+    needs: [tests, build-android, build-web, build-windows, deploy-web]
     if: github.event_name == 'push' && contains(github.ref, 'main') || contains(github.ref, 'cicd/')
     steps:
       - name: Prepare workspace
@@ -322,6 +351,15 @@ jobs:
           asset_path: /tmp/artifacts/app-x86_64-release.apk
           asset_name: tide-x86_64-release.apk
           asset_content_type: application/octet-stream
+      - name: Upload Web archive
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "/tmp/artifacts/Tide (web archive)/tide-web.zip"
+          asset_name: tide-x86_64-release.apk
+          asset_content_type: application/zip
       - name: Upload MSIX (x64)
         uses: actions/upload-release-asset@v1.0.2
         env:
