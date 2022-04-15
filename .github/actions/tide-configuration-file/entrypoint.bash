@@ -1,6 +1,10 @@
 #!/bin/bash
 set -euo pipefail
 
+# Workaround for CVE-2022-24765 (see https://github.blog/2022-04-12-git-security-vulnerability-announced/)
+cd "${GITHUB_WORKSPACE}" || exit 1
+git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
 output_file="tide.yaml"
 scheme="https"
 host="cynnexis.github.io"
