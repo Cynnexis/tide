@@ -54,8 +54,11 @@ class TideTheme {
   /// a radius number to be used as a metric for all corners, or give a
   /// [BorderRadius] instance.
   static Widget getLogoImage(
-      {ImageProvider? imageProvider, dynamic borderRadius}) {
-    Image image = Image(image: imageProvider ?? TideTheme.logo);
+      {ImageProvider? imageProvider, dynamic borderRadius, final Key? key}) {
+    Image image = Image(
+      key: key,
+      image: imageProvider ?? TideTheme.logo,
+    );
     Widget child = image;
     if (borderRadius != null) {
       if (borderRadius is num) {
