@@ -44,6 +44,7 @@ dev_dependencies:
   dartdoc: ^4.1.0
   flutter_launcher_icons: ^0.9.1
   flutter_lints: ^1.0.4
+  msix: ^3.5.1
   mutex: ^3.0.0
   test: ^1.17.5
 
@@ -80,3 +81,20 @@ flutter_icons:
   image_path: "assets/images/tide.png"
   adaptive_icon_foreground: "assets/images/tide.png"
   adaptive_icon_background: "#00FFFFFF"
+
+msix_config:
+  display_name: Tide
+  logo_path: assets/images/tide.png
+  trim_logo: false
+  execution_alias: tide
+  enable_at_startup: false
+  publisher_display_name: Cynnexis
+  identity_name: org.cynnexis.tide
+  msix_version: 1.0.0.0
+  publisher: CN=BF212345-5644-46DF-8668-012044C1B138
+  capabilities: internetClient
+  languages: en-us, fr-fr
+  store: true
+  output_path: build/
+  output_name: tide-windows_x64
+  architecture: x64
