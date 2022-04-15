@@ -24,8 +24,8 @@ dependencies:
   logging: ^1.0.1
   provider: ^6.0.2
   quiver: ^3.0.1
-  shared_preferences: ^2.0.6
-  synchronized: ^3.0.0
+  shared_preferences: ^2.0.13
+  synchronized: ^3.0.0+2
   system_settings: ^2.1.0
   tuple: ^2.0.0
   universal_io: ^2.0.4

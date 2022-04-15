@@ -24,6 +24,7 @@ help:
 	@echo "  fix-lint              - Fix the code format."
 	@echo "  test                  - Run the Flutter unit and widget tests."
 	@echo "  update-goldens        - Create or update golden files."
+	@echo "  docker-update-goldens - Create or update golden files from a Linux Docker container (to update the Linux golden images)."
 	@echo "  doc                   - Generate the documentation."
 	@echo "  rmdoc                 - Remove the documentation."
 	@echo "  update-launcher       - Update the icon launcher."
@@ -101,12 +102,51 @@ docker-test:
     		--restart=no \
     		--security-opt="no-new-privileges=true" \
     		--cap-drop=all \
-    		cynnexis/tide:sdk test --coverage --concurrency=1 --no-test-assets --reporter expanded --dart-define=FLUTTER_TEST=true
+    		cynnexis/tide:sdk test --coverage --concurrency=1 --reporter expanded --dart-define=FLUTTER_TEST=true
 
 .PHONY: update-goldens
 update-goldens:
 	@set -euo pipefail
-	flutter test --update-goldens
+	flutter test --update-goldens --dart-define=FLUTTER_TEST=true
+
+.PHONY: docker-update-goldens
+docker-update-goldens:
+	@set -euo pipefail
+
+	# Build SDK Docker image
+	time ./docker/build.bash --only=sdk
+
+	# Bash array containing all volumes as arguments
+	extra_volumes=()
+
+	set +e
+	config_file=$$($(MAKE) --quiet --no-print-directory get-config-file 2> /dev/null)
+	set -e
+
+	if [[ -n $$config_file ]]; then
+	  extra_volumes+=("-v" "$$(realpath "$$config_file"):/root/tide/tide.yaml:ro")
+	fi
+
+	PS4=' $$ '
+	set -x
+
+	# Launch tests
+	docker run \
+		-it \
+		--rm \
+		--name=tide-update-golden \
+		--hostname="tide-update-golden" \
+		-v "/etc/timezone:/etc/timezone:ro" \
+		-v "/etc/localtime:/etc/localtime:ro" \
+		-v "$(pwd)/test/golden-images/:/root/tide/test/golden-images/" \
+		"$${extra_volumes[@]}" \
+		-e TZ \
+		--restart=no \
+		--security-opt="no-new-privileges=true" \
+		--cap-drop=all \
+		cynnexis/tide:sdk test --update-goldens --dart-define=FLUTTER_TEST=true
+
+	{ set +x; } 2> /dev/null
 
 .PHONY: test-integration
 test-integration:

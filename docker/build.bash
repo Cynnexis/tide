@@ -22,15 +22,17 @@ print_help() {
   echo
   echo 'Build the Dockerfiles in tide/docker/.'
   echo
-  echo "usage: $0 [-h/--help] [--android-sdk=VERSION] [--flutter-version=VERSION]"
+  echo "usage: $0 [-h/--help] [--config=FILE] [--only=STAGE]"
   echo
   echo 'Arguments:'
   echo '  -h / --help   - Print this message and exit.'
   echo '  --config=FILE - Path the the configuration file. Defaults to "tide.yaml", and if not found, to "tide.yml".'
+  echo '  --only=STAGE  - Stop the pipeline to a specific stage. There are two stages in the pipeline: sdk and web. Specifying the last stage with this option will do nothing (the pipeline will be executed normally).'
   echo
 }
 
 tide_config_file=
+finish_at_stage=web
 for arg in "$@"; do
 	case $arg in
 	  -h|--help)
@@ -38,6 +40,22 @@ for arg in "$@"; do
 	    exit 0
 	    ;;
 		--config=*)
+		  build_sdk_args+=("--build-arg" "ANDROID_SDK_VERSION=${arg#*=}")
+			;;
+		--only=*)
+		  case "${arg#*=}" in
+		    web|all|no|nothing|none|null)
+		      finish_at_stage=web
+		      ;;
+		    sdk|tools|android|flutter|test|tests)
+		      finish_at_stage=sdk
+		      ;;
+		    *)
+          echo "Expected sdk or web as stage, got \"$arg\"." 1>&2
+          print_help 1>&2
+          exit 1
+          ;;
+		  esac
 		  build_sdk_args+=("--build-arg" "ANDROID_SDK_VERSION=${arg#*=}")
 			;;
 		*)
@@ -142,6 +160,11 @@ time docker build -t cynnexis/tide:sdk "${build_sdk_args[@]}" -f docker/sdk.Dock
 
 # Set the tag
 docker tag cynnexis/tide:sdk "cynnexis/tide:sdk-$PROJECT_VERSION"
+
+# Check if the pipeline can go one
+if [[ $finish_at_stage = 'sdk' ]]; then
+  exit 0
+fi
 
 # Then, build the Apache server
 set -x

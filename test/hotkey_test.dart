@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tide/widget/hotkey.dart';
 
+import 'utils.dart';
+
 void main() {
   testWidgets('Hotkey Golden file', (final WidgetTester tester) async {
     /// Check if the button was clicked
@@ -41,7 +43,7 @@ void main() {
     final Finder hotkeyHelpFinder = find.byKey(const Key('hotkey_f1'));
     expect(hotkeyHelpFinder, findsOneWidget);
     await expectLater(
-        hotkeyHelpFinder, matchesGoldenFile('golden-images/hotkey_f1.png'));
+        hotkeyHelpFinder, matchesGoldenFilePlatform('hotkey_f1.png'));
 
     expect(wasClicked, isFalse);
     await tester.tap(hotkeyHelpFinder);

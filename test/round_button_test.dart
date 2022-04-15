@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tide/widget/round_button.dart';
 
+import 'utils.dart';
+
 void main() {
   testWidgets('RoundButton Golden file', (final WidgetTester tester) async {
     /// Check if the button was clicked
@@ -46,7 +48,7 @@ void main() {
     final Finder roundButtonFinder = find.byKey(const Key('round_button'));
     expect(roundButtonFinder, findsOneWidget);
     await expectLater(
-        roundButtonFinder, matchesGoldenFile('golden-images/round_button.png'));
+        roundButtonFinder, matchesGoldenFilePlatform('round_button.png'));
 
     expect(wasClicked, isFalse);
     await tester.tap(roundButtonFinder);

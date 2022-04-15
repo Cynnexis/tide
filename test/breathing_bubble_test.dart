@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tide/settings.dart';
 import 'package:tide/widget/breathing_bubble.dart';
+
+import 'utils.dart';
 
 void main() {
   setUpAll(() {
     TestWidgetsFlutterBinding.ensureInitialized();
+
+    // Use fake SharedPreferences because of https://github.com/flutter/flutter/issues/97100
+    SharedPreferences.setMockInitialValues(<String, Object>{});
   });
 
   testWidgets('BreathingBubble Golden file', (final WidgetTester tester) async {
@@ -37,11 +43,11 @@ void main() {
     expect(breathingBubbleFinder, findsOneWidget);
     expect(bubbleController.status, equals(BreathingBubbleStatus.playing));
     await expectLater(breathingBubbleFinder,
-        matchesGoldenFile('golden-images/breathing_bubble_1.png'));
+        matchesGoldenFilePlatform('breathing_bubble_1.png'));
 
     // Wait for expansion animation to finish and go to hold
     await tester.pump(TideSettings.instanceSync.breathingDuration);
     await expectLater(breathingBubbleFinder,
-        matchesGoldenFile('golden-images/breathing_bubble_2.png'));
+        matchesGoldenFilePlatform('breathing_bubble_2.png'));
   });
 }

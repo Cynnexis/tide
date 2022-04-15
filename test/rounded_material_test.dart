@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tide/widget/rounded_material.dart';
 
+import 'utils.dart';
+
 void main() {
   testWidgets('RoundedMaterial Golden file', (final WidgetTester tester) async {
     /// Check if the button was clicked
@@ -39,7 +41,7 @@ Placerat in egestas erat imperdiet sed euismod nisi porta lorem. Nullam non nisi
         find.byKey(const Key('rounded_material'));
     expect(roundedMaterialFinder, findsOneWidget);
     await expectLater(roundedMaterialFinder,
-        matchesGoldenFile('golden-images/rounded_material.png'));
+        matchesGoldenFilePlatform('rounded_material.png'));
 
     expect(wasClicked, isFalse);
     await tester.tap(roundedMaterialFinder);

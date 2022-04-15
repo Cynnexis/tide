@@ -3,8 +3,10 @@
 *
 !assets/
 !docker/apache/
+!integration_test/
 !lib/
 !test/
+!test_driver/
 !web/
 !.metadata
 !analysis_options.yaml

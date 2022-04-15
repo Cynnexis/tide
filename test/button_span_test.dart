@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tide/widget/button_span.dart';
 
+import 'utils.dart';
+
 void main() {
   testWidgets('ButtonSpan Golden file', (final WidgetTester tester) async {
     /// Check if the button was clicked
@@ -44,7 +46,7 @@ void main() {
     final Finder buttonSpanFinder = find.byKey(const Key('button_span'));
     expect(buttonSpanFinder, findsOneWidget);
     await expectLater(
-        buttonSpanFinder, matchesGoldenFile('golden-images/button_span.png'));
+        buttonSpanFinder, matchesGoldenFilePlatform('button_span.png'));
 
     expect(wasClicked, isFalse);
     await tester.tap(buttonSpanFinder);

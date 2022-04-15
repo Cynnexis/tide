@@ -27,7 +27,7 @@ void main() {
     final Finder timerFormFinder = find.byKey(const Key('timer_form'));
     expect(timerFormFinder, findsOneWidget);
     await expectLater(
-        timerFormFinder, matchesGoldenFile('golden-images/timer_form.png'));
+        timerFormFinder, matchesGoldenFilePlatform('timer_form.png'));
 
     // Find widgets
     final Finder minutesDropdownFinder =
