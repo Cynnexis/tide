@@ -52,6 +52,11 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
   bool get isMobileDevice =>
       !kIsWeb && (io.Platform.isAndroid || io.Platform.isIOS);
 
+  /// Boolean that indicates if the bottom bar button should appear.
+  ///
+  /// If `false`, the buttons will appear on the application bar.
+  bool get showBottomBar => isMobileDevice;
+
   @override
   void initState() {
     super.initState();
@@ -86,7 +91,7 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
       child: SafeArea(
         child: Scaffold(
           // Show app bar in web only
-          appBar: kIsWeb
+          appBar: !showBottomBar
               ? TideAppBar(
                   context: context,
                   showBackButton: true,
@@ -153,7 +158,7 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
                       },
                     );
                   }),
-                  if (!kIsWeb)
+                  if (showBottomBar)
                     ButtonBar(
                       key: const Key('tide_breathing_ex_button_bar'),
                       alignment: MainAxisAlignment.spaceAround,
