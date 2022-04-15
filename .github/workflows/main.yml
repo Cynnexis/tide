@@ -223,6 +223,13 @@ jobs:
           cd build/web
           find . -maxdepth 1 | tail -n+2 | xargs zip -9 -r tide-web.zip
           cd ../..
+      - name: Upload web archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: Tide (web archive)
+          path: build/web/tide-web.zip
+          if-no-files-found: error
+          retention-days: 30
 
   deploy-web:
     runs-on: ubuntu-20.04
