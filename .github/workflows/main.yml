@@ -115,6 +115,45 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
+  build-windows:
+    runs-on: windows-2022
+    name: Build for Windows
+    needs: [tests]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '2.10.4'
+      - name: Configure application
+        uses: ./.github/actions/tide-configuration-file/
+      - name: Install dependencies
+        run: flutter pub get
+      # Build the project
+      - name: Build EXE
+        run: flutter build windows
+      # Build and upload x64
+      - name: Build MSI (x64)
+        run: flutter pub run msix:create --build-windows false --architecture x64 --output-name tide-windows_x64
+      - name: Upload MSI (x64)
+        uses: actions/upload-artifact@v2
+      with:
+        name: MSI (x64)
+        path: build/tide-windows_x64.msi
+        if-no-files-found: error
+        retention-days: 30
+      # Build and upload x86
+      - name: Build MSI (x86)
+        run: flutter pub run msix:create --build-windows false --architecture x86 --output-name tide-windows_x86
+      - name: Upload MSI (x86)
+        uses: actions/upload-artifact@v2
+        with:
+          name: MSI (x86)
+          path: build/tide-windows_x86.msi
+          if-no-files-found: error
+          retention-days: 30
+
   build-web:
     runs-on: ubuntu-20.04
     name: Build Webapp
@@ -123,10 +162,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - uses: actions/setup-java@v3.1.0
-        with:
-          distribution: 'zulu'
-          java-version: '11'
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
@@ -187,23 +222,28 @@ jobs:
   release:
     runs-on: ubuntu-20.04
     name: Create a release
-    needs: [tests, build-android, build-web]
+    needs: [tests, build-android, build-web, build-windows]
     if: github.event_name == 'push' && contains(github.ref, 'main') || contains(github.ref, 'cicd/')
     steps:
       - name: Prepare workspace
-        run: mkdir -p /tmp/android-binaries
+        run: mkdir -p /tmp/artifacts
       - name: Download action artifacts
         id: download_artifacts
         uses: actions/download-artifact@v2.0.10
         with:
-          path: /tmp/android-binaries
+          path: /tmp/artifacts
       - name: Treat downloaded artifacts
         run: |
+          # TODO: DEBUG
+          sudp apt-get update
+          sudp apt-get install -qqy tree
+          tree /tmp/artifacts
+
           # Save current directory
           OLD_WD=$(pwd)
 
           # Move all artifacts to current dirtectory
-          cd /tmp/android-binaries
+          cd /tmp/artifacts
           find . -type f -exec mv -v {} . \;
 
           # Remove all sub-directories
@@ -236,8 +276,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/android-binaries/app-release.aab
-          asset_name: app-release.aab
+          asset_path: /tmp/artifacts/app-release.aab
+          asset_name: tide-release.aab
           asset_content_type: application/octet-stream
       - name: Upload APK (generic)
         uses: actions/upload-release-asset@v1.0.2
@@ -245,8 +285,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/android-binaries/app.apk
-          asset_name: app.apk
+          asset_path: /tmp/artifacts/app.apk
+          asset_name: tide.apk
           asset_content_type: application/octet-stream
       - name: Upload APK (arm64)
         uses: actions/upload-release-asset@v1.0.2
@@ -254,8 +294,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/android-binaries/app-arm64-v8a-release.apk
-          asset_name: app-arm64-v8a-release.apk
+          asset_path: /tmp/artifacts/app-arm64-v8a-release.apk
+          asset_name: tide-arm64-v8a-release.apk
           asset_content_type: application/octet-stream
       - name: Upload APK (armeabi)
         uses: actions/upload-release-asset@v1.0.2
@@ -263,8 +303,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/android-binaries/app-armeabi-v7a-release.apk
-          asset_name: app-armeabi-v7a-release.apk
+          asset_path: /tmp/artifacts/app-armeabi-v7a-release.apk
+          asset_name: tide-armeabi-v7a-release.apk
           asset_content_type: application/octet-stream
       - name: Upload APK (x86_64)
         uses: actions/upload-release-asset@v1.0.2
@@ -272,6 +312,24 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/android-binaries/app-x86_64-release.apk
-          asset_name: app-x86_64-release.apk
+          asset_path: /tmp/artifacts/app-x86_64-release.apk
+          asset_name: tide-x86_64-release.apk
+          asset_content_type: application/octet-stream
+      - name: Upload MSI (x64)
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: /tmp/artifacts/tide-windows_x64.apk
+          asset_name: tide-windows_x64.apk
+          asset_content_type: application/octet-stream
+      - name: Upload MSI (x86)
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: /tmp/artifacts/tide-windows_x86.apk
+          asset_name: tide-windows_x86.apk
           asset_content_type: application/octet-stream
