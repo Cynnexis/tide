@@ -242,8 +242,8 @@ jobs:
       - name: Treat downloaded artifacts
         run: |
           # TODO: DEBUG
-          sudp apt-get update
-          sudp apt-get install -qqy tree
+          sudo apt-get update
+          sudo apt-get install -qqy tree
           tree /tmp/artifacts
 
           # Save current directory
