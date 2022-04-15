@@ -141,23 +141,23 @@ jobs:
       - name: Build EXE
         run: flutter build windows
       # Build and upload x64
-      - name: Build MSI (x64)
+      - name: Build MSIX (x64)
         run: flutter pub run msix:create --build-windows false --architecture x64 --output-name tide-windows_x64
-      - name: Upload MSI (x64)
+      - name: Upload MSIX (x64)
         uses: actions/upload-artifact@v2
         with:
           name: MSI (x64)
-          path: build/tide-windows_x64.msi
+          path: build/tide-windows_x64.msix
           if-no-files-found: error
           retention-days: 30
       # Build and upload x86
-      - name: Build MSI (x86)
+      - name: Build MSIX (x86)
         run: flutter pub run msix:create --build-windows false --architecture x86 --output-name tide-windows_x86
-      - name: Upload MSI (x86)
+      - name: Upload MSIX (x86)
         uses: actions/upload-artifact@v2
         with:
           name: MSI (x86)
-          path: build/tide-windows_x86.msi
+          path: build/tide-windows_x86.msix
           if-no-files-found: error
           retention-days: 30
 
@@ -322,21 +322,21 @@ jobs:
           asset_path: /tmp/artifacts/app-x86_64-release.apk
           asset_name: tide-x86_64-release.apk
           asset_content_type: application/octet-stream
-      - name: Upload MSI (x64)
+      - name: Upload MSIX (x64)
         uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/artifacts/tide-windows_x64.apk
+          asset_path: /tmp/artifacts/tide-windows_x64.msix
           asset_name: tide-windows_x64.apk
           asset_content_type: application/octet-stream
-      - name: Upload MSI (x86)
+      - name: Upload MSIX (x86)
         uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/artifacts/tide-windows_x86.apk
+          asset_path: /tmp/artifacts/tide-windows_x86.msix
           asset_name: tide-windows_x86.apk
           asset_content_type: application/octet-stream
