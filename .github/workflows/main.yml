@@ -138,11 +138,11 @@ jobs:
         run: flutter pub run msix:create --build-windows false --architecture x64 --output-name tide-windows_x64
       - name: Upload MSI (x64)
         uses: actions/upload-artifact@v2
-      with:
-        name: MSI (x64)
-        path: build/tide-windows_x64.msi
-        if-no-files-found: error
-        retention-days: 30
+        with:
+          name: MSI (x64)
+          path: build/tide-windows_x64.msi
+          if-no-files-found: error
+          retention-days: 30
       # Build and upload x86
       - name: Build MSI (x86)
         run: flutter pub run msix:create --build-windows false --architecture x86 --output-name tide-windows_x86
