@@ -254,7 +254,7 @@ jobs:
 
           # Unzip the archive
           mkdir -p /tmp/web
-          unzip -d /tmp/web tide-web.zip
+          unzip -d /tmp/web /tmp/artifacts/tide-web.zip
       - name: Deploy GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
