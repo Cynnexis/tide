@@ -247,11 +247,6 @@ jobs:
           path: /tmp/artifacts
       - name: Unzip
         run: |
-          # TODO: DEBUG
-          sudo apt-get update
-          sudo apt-get install -qqy tree
-          tree /tmp/artifacts
-
           # Unzip the archive
           mkdir -p /tmp/web
           unzip -d /tmp/web /tmp/artifacts/tide-web.zip
@@ -275,23 +270,6 @@ jobs:
         uses: actions/download-artifact@v2.0.10
         with:
           path: /tmp/artifacts
-      - name: Treat downloaded artifacts
-        run: |
-          # TODO: DEBUG
-          sudo apt-get update
-          sudo apt-get install -qqy tree
-          tree /tmp/artifacts
-
-          # Save current directory
-          OLD_WD=$(pwd)
-
-          # Move all artifacts to current dirtectory
-          cd /tmp/artifacts
-          find . -type f -exec mv -v {} . \;
-
-          # Remove all sub-directories
-          find . -empty -type d -delete
-          cd "$OLD_WD"
       - name: Checkout
         uses: actions/checkout@v2
       - name: Get SDK Version from config
@@ -319,7 +297,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/artifacts/app-release.aab
+          asset_path: "/tmp/artifacts/Appbundle/app-release.aab"
           asset_name: tide-release.aab
           asset_content_type: application/octet-stream
       - name: Upload APK (generic)
@@ -328,7 +306,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/artifacts/app.apk
+          asset_path: "/tmp/artifacts/APK (generic)/app.apk"
           asset_name: tide.apk
           asset_content_type: application/octet-stream
       - name: Upload APK (arm64)
@@ -337,7 +315,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/artifacts/app-arm64-v8a-release.apk
+          asset_path: "/tmp/artifacts/APK (arm64)/app-arm64-v8a-release.apk"
           asset_name: tide-arm64-v8a-release.apk
           asset_content_type: application/octet-stream
       - name: Upload APK (armeabi)
@@ -346,7 +324,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/artifacts/app-armeabi-v7a-release.apk
+          asset_path: "/tmp/artifacts/APK (armeabi)/app-armeabi-v7a-release.apk"
           asset_name: tide-armeabi-v7a-release.apk
           asset_content_type: application/octet-stream
       - name: Upload APK (x86_64)
@@ -355,7 +333,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/artifacts/app-x86_64-release.apk
+          asset_path: "/tmp/artifacts/APK (x86_64)/app-x86_64-release.apk"
           asset_name: tide-x86_64-release.apk
           asset_content_type: application/octet-stream
       - name: Upload Web archive
@@ -365,7 +343,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: "/tmp/artifacts/Tide (web archive)/tide-web.zip"
-          asset_name: tide-x86_64-release.apk
+          asset_name: tide-web.zip
           asset_content_type: application/zip
       - name: Upload MSIX (x64)
         uses: actions/upload-release-asset@v1.0.2
