@@ -64,11 +64,11 @@ clean:
 lint:
 	@set -euo pipefail
 	echo "Checking Dart files format..."
-	dart format --output none --set-exit-if-changed .
+	flutter format --output none --set-exit-if-changed .
 
 .PHONY: fix-lint
 fix-lint:
-	dart format --fix .
+	flutter format --fix .
 
 .PHONY: test
 test:

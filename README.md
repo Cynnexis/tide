@@ -38,8 +38,7 @@ The following steps will assume that the current directory is the project root.
 
 1. `flutter create --no-overwrite .`
 2. `flutter pub get`
-3. `flutter analyze`
-4. `flutter run`
+3. `flutter run`
 
 The app should be running now.
 
@@ -77,6 +76,108 @@ docker run -d \
 ```
 
 And connect to http://localhost:80/
+
+## :white_check_mark: Tests
+
+Tide has units, widgets and integration tests.
+This section will help you understand how tests are structured, and how to execute them.
+
+### Unit and Widget Tests
+
+Unit and widget test files are stored under the `test/` directory.
+All files that ends with `_test.dart` are considered test files.
+
+Most widget tests uses [golden files](https://api.flutter.dev/flutter/flutter_test/matchesGoldenFile.html) to assert that they render as expected.
+However, according to the Flutter [issue #36667](https://github.com/flutter/flutter/issues/36667), golden images might change from one platform to another.
+That is why all golden images stored in `test/golden-images/` are separated in sub-folders representing the platform.
+However, not all golden images might have been created, as the platforms might not be accessible by the developer(s).
+If you notice that the golden files are missing for your platform, please execute the following command at the root of the project:
+
+```bash
+make update-goldens
+```
+
+... or:
+
+```bash
+flutter test --update-goldens --dart-define=FLUTTER_TEST=true
+```
+
+This will generate all golden images for your platform.
+We encourage you to [create a pull-request](https://github.com/Cynnexis/tide/compare) with the new golden images to contribute to the project!
+
+Once the golden files are ready, you can execute the tests with:
+
+```bash
+make test
+```
+
+... or:
+
+```bash
+flutter test --dart-define=FLUTTER_TEST=true
+```
+
+You can also execute the test in a Docker container.
+To do so, first build the `cynnexis/tide:sdk` Docker image:
+
+```bash
+./docker/build.bash --only=sdk
+```
+
+Then, execute:
+
+```bash
+make docker-test
+```
+
+... or:
+
+```bash
+docker run -it --rm --name=tide-tests cynnexis/tide:sdk test --concurrency=1 --dart-define=FLUTTER_TEST=true
+```
+
+### Integration Tests
+
+Only one integration test workflow has been created, and is stored under `integration_test/tide_test.dart`.
+
+#### Desktop and mobile devices
+
+To launch it for desktop or mobile devices, use:
+
+```bash
+make test-integration
+```
+
+... or:
+
+```bash
+flutter test --dart-define=FLUTTER_TEST=true integration_test/tide_test.dart
+```
+
+#### Web
+
+To launch it for web, you first need to download the [ChromeDriver](https://docs.flutter.dev/cookbook/testing/integration/introduction#5b-web) and launch it:
+
+```bash
+chromedriver --port=4444
+```
+
+In another terminal, execute the following command at the root of the Tide project:
+
+```bash
+make test-integration-web
+```
+
+... or:
+
+```bash
+flutter drive \
+  --driver=test_driver/integration_test.dart \
+  --target=integration_test/tide_test.dart \
+  --dart-define=FLUTTER_TEST=true \
+  -d web-server
+```
 
 ## :building_construction: Build With
 
