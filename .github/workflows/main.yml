@@ -13,7 +13,7 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-20.04
-    name: Analyze code and generate the documentation
+    name: Analyze & tests
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -115,18 +115,59 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
+  build-windows:
+    runs-on: windows-2022
+    name: Build for Windows
+    needs: [tests]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '2.10.4'
+      - name: Configure application
+        run: |
+          echo webapp: > tide.yaml
+          echo   uri: >> tide.yaml
+          echo     scheme: "https" >> tide.yaml
+          echo     host: "cynnexis.github.io" >> tide.yaml
+          echo     port: 443 >> tide.yaml
+          echo     path: "/tide/" >> tide.yaml
+          echo maintainer_email: "$maintainer_email" >> tide.yaml
+      - name: Install dependencies
+        run: flutter pub get
+      # Build the project
+      - name: Build EXE
+        run: flutter build windows
+      # Build and upload x64
+      - name: Build MSIX (x64)
+        run: flutter pub run msix:create --build-windows false --architecture x64 --output-name tide-windows_x64
+      - name: Upload MSIX (x64)
+        uses: actions/upload-artifact@v2
+        with:
+          name: MSI (x64)
+          path: build/tide-windows_x64.msix
+          if-no-files-found: error
+          retention-days: 30
+      # Build and upload x86
+      - name: Build MSIX (x86)
+        run: flutter pub run msix:create --build-windows false --architecture x86 --output-name tide-windows_x86
+      - name: Upload MSIX (x86)
+        uses: actions/upload-artifact@v2
+        with:
+          name: MSI (x86)
+          path: build/tide-windows_x86.msix
+          if-no-files-found: error
+          retention-days: 30
+
   build-web:
     runs-on: ubuntu-20.04
     name: Build Webapp
     needs: [tests]
-    if: github.event_name == 'push' && contains(github.ref, 'main') || contains(github.ref, 'cicd/')
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - uses: actions/setup-java@v3.1.0
-        with:
-          distribution: 'zulu'
-          java-version: '11'
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
@@ -177,38 +218,58 @@ jobs:
         run: |
           mv -fT doc/api build/web/docs
           cp -ar assets build/web/docs/assets
+
+          # Create a zip archive for artifact, deploy and release
+          cd build/web
+          find . -maxdepth 1 | tail -n+2 | xargs zip -9 -r tide-web.zip
+          cd ../..
+      - name: Upload web archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: Tide (web archive)
+          path: build/web/tide-web.zip
+          if-no-files-found: error
+          retention-days: 30
+
+  deploy-web:
+    runs-on: ubuntu-20.04
+    name: Deploy the Web app on GitHub Pages
+    needs: [build-web]
+    if: github.event_name == 'push' && contains(github.ref, 'main') || contains(github.ref, 'cicd/')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Download action artifacts
+        id: download_artifacts
+        uses: actions/download-artifact@v2.0.10
+        with:
+          name: Tide (web archive)
+          path: /tmp/artifacts
+      - name: Unzip
+        run: |
+          # Unzip the archive
+          mkdir -p /tmp/web
+          unzip -d /tmp/web /tmp/artifacts/tide-web.zip
       - name: Deploy GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
           branch: gh-pages
-          folder: build/web
+          folder: /tmp/web
           single-commit: true
 
   release:
     runs-on: ubuntu-20.04
     name: Create a release
-    needs: [tests, build-android, build-web]
+    needs: [tests, build-android, build-web, build-windows, deploy-web]
     if: github.event_name == 'push' && contains(github.ref, 'main') || contains(github.ref, 'cicd/')
     steps:
       - name: Prepare workspace
-        run: mkdir -p /tmp/android-binaries
+        run: mkdir -p /tmp/artifacts
       - name: Download action artifacts
         id: download_artifacts
         uses: actions/download-artifact@v2.0.10
         with:
-          path: /tmp/android-binaries
-      - name: Treat downloaded artifacts
-        run: |
-          # Save current directory
-          OLD_WD=$(pwd)
-
-          # Move all artifacts to current dirtectory
-          cd /tmp/android-binaries
-          find . -type f -exec mv -v {} . \;
-
-          # Remove all sub-directories
-          find . -empty -type d -delete
-          cd "$OLD_WD"
+          path: /tmp/artifacts
       - name: Checkout
         uses: actions/checkout@v2
       - name: Get SDK Version from config
@@ -236,8 +297,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/android-binaries/app-release.aab
-          asset_name: app-release.aab
+          asset_path: "/tmp/artifacts/Appbundle/app-release.aab"
+          asset_name: tide-release.aab
           asset_content_type: application/octet-stream
       - name: Upload APK (generic)
         uses: actions/upload-release-asset@v1.0.2
@@ -245,8 +306,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/android-binaries/app.apk
-          asset_name: app.apk
+          asset_path: "/tmp/artifacts/APK (generic)/app.apk"
+          asset_name: tide.apk
           asset_content_type: application/octet-stream
       - name: Upload APK (arm64)
         uses: actions/upload-release-asset@v1.0.2
@@ -254,8 +315,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/android-binaries/app-arm64-v8a-release.apk
-          asset_name: app-arm64-v8a-release.apk
+          asset_path: "/tmp/artifacts/APK (arm64)/app-arm64-v8a-release.apk"
+          asset_name: tide-arm64-v8a-release.apk
           asset_content_type: application/octet-stream
       - name: Upload APK (armeabi)
         uses: actions/upload-release-asset@v1.0.2
@@ -263,8 +324,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/android-binaries/app-armeabi-v7a-release.apk
-          asset_name: app-armeabi-v7a-release.apk
+          asset_path: "/tmp/artifacts/APK (armeabi)/app-armeabi-v7a-release.apk"
+          asset_name: tide-armeabi-v7a-release.apk
           asset_content_type: application/octet-stream
       - name: Upload APK (x86_64)
         uses: actions/upload-release-asset@v1.0.2
@@ -272,6 +333,33 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/android-binaries/app-x86_64-release.apk
-          asset_name: app-x86_64-release.apk
+          asset_path: "/tmp/artifacts/APK (x86_64)/app-x86_64-release.apk"
+          asset_name: tide-x86_64-release.apk
+          asset_content_type: application/octet-stream
+      - name: Upload Web archive
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "/tmp/artifacts/Tide (web archive)/tide-web.zip"
+          asset_name: tide-web.zip
+          asset_content_type: application/zip
+      - name: Upload MSIX (x64)
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "/tmp/artifacts/MSI (x64)/tide-windows_x64.msix"
+          asset_name: tide-windows_x64.msix
+          asset_content_type: application/octet-stream
+      - name: Upload MSIX (x86)
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "/tmp/artifacts/MSI (x86)/tide-windows_x86.msix"
+          asset_name: tide-windows_x86.msix
           asset_content_type: application/octet-stream
