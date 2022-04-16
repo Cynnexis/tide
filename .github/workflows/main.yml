@@ -153,7 +153,7 @@ jobs:
 
           # TODO: DEBUG
           # Find executable files
-          find build/ios -type f -executable
+          find build/ios -perm +111 -type f -or -type l
 
           exit 1
 
