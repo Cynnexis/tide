@@ -152,7 +152,7 @@ jobs:
 
           # Move the build structure into a new folder named after the project
           mkdir Tide/
-          mv -fT build/ios/iphoneos/Runner.app ./Tide
+          mv -f build/ios/iphoneos/Runner.app ./Tide
 
           # TODO: DEBUG
           tree -ph ./Tide
@@ -161,6 +161,7 @@ jobs:
           zip -9 -r tide-ios.zip Tide
 
           # Rename the zip archive extension "ipa"
+          # Solution from https://stackoverflow.com/a/68075166 (consulted on April 16th, 2022)
           mv tide-ios.zip tide-ios.ipa
           chmod a+x tide-ios.ipa
 
