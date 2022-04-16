@@ -6,6 +6,8 @@
 
 Tide is an application that helps reduce panic attacks with a simple breathing exercise.
 
+**Official website:** [cynnexis.github.io/tide/][deployed-page]
+
 ## :dart: Goals
 
 Panic attacks can happen anywhere, at anytime.
@@ -15,6 +17,30 @@ Those useful resources should always be available for people traversing those de
 
 Hence, I initiated **Tide**, a very simple app that help the user to calm themselves down by timing the breath in and breath out, and imitating the diaphragm dilatation, while being **free with no advertisements**.
 As a result, anyone can have this application and use it with no stress of being disturbed by one of this awful and distressful ad.
+
+## :inbox_tray: Download built releases
+
+You can download the built executables or installers from the [release page](https://github.com/Cynnexis/tide/releases), or from here to get the latest version:
+
+**Android:**
+
+* [App-bundle (`.aab`)](https://github.com/Cynnexis/tide/releases/latest/download/tide-release.aab)
+* [Generic APK (`.apk`)](https://github.com/Cynnexis/tide/releases/latest/download/tide.apk)
+* [ARM 64 v8a (`.apk`)](https://github.com/Cynnexis/tide/releases/latest/download/tide-arm64-v8a-release.apk)
+* [x86-64 (`.apk`)](https://github.com/Cynnexis/tide/releases/latest/download/tide-x86_64-release.apk)
+* [armeabi v7a (`.apk`)](https://github.com/Cynnexis/tide/releases/latest/download/tide-armeabi-v7a-release.apk)
+
+**Windows:**
+
+* [MSIX for x86 (32 bits)](https://github.com/Cynnexis/tide/releases/latest/download/tide-windows_x86.msix)
+* [MSIX for x64 (64 bits)](https://github.com/Cynnexis/tide/releases/latest/download/tide-windows_x64.msix)
+
+**Web:**
+
+* The web version is released at [cynnexis.github.io/tide/][deployed-page]
+* [Tide web archive (`.zip`)](https://github.com/Cynnexis/tide/releases/latest/download/tide-web.zip)
+
+> The web release is a compressed archive containing the built HTML, CSS and JavaScript files to serve the application.
 
 ## :electric_plug: Getting Started
 
@@ -202,6 +228,7 @@ This project is under the GNU Affero General Public License v3. Please see the [
 
 [flutter-install]: https://flutter.dev/docs/get-started/install
 [tide-zip]: https://github.com/Cynnexis/tide/archive/main.zip
+[deployed-page]: https://cynnexis.github.io/tide/
 [flutter]: https://flutter.dev/
 [dart]: https://dart.dev/
 [android-studio]: https://developer.android.com/studio
