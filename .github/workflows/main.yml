@@ -89,35 +89,30 @@ jobs:
           name: Appbundle
           path: bin/app-release.aab
           if-no-files-found: error
-          retention-days: 30
       - name: Upload APK (generic)
         uses: actions/upload-artifact@v2
         with:
           name: APK (generic)
           path: bin/app.apk
           if-no-files-found: error
-          retention-days: 30
       - name: Upload APK (arm64)
         uses: actions/upload-artifact@v2
         with:
           name: APK (arm64)
           path: bin/app-arm64-v8a-release.apk
           if-no-files-found: error
-          retention-days: 30
       - name: Upload APK (armeabi)
         uses: actions/upload-artifact@v2
         with:
           name: APK (armeabi)
           path: bin/app-armeabi-v7a-release.apk
           if-no-files-found: error
-          retention-days: 30
       - name: Upload APK (x86_64)
         uses: actions/upload-artifact@v2
         with:
           name: APK (x86_64)
           path: bin/app-x86_64-release.apk
           if-no-files-found: error
-          retention-days: 30
 
   build-ios:
     runs-on: macos-11
@@ -155,7 +150,28 @@ jobs:
           # Find executable files
           find build/ios -perm +111 -type f -or -type l
 
-          exit 1
+          # Move the build structure into a new folder named after the project
+          mkdir Tide/
+          mv -fT build/ios/iphoneos/Runner.app ./Tide
+
+          # TODO: DEBUG
+          tree -ph ./Tide
+
+          # Create a zip archive
+          zip -9 -r tide-ios.zip Tide
+
+          # Rename the zip archive extension "ipa"
+          mv tide-ios.zip tide-ios.ipa
+          chmod a+x tide-ios.ipa
+
+          # TODO: DEBUG
+          ls -lha tide-ios.zip
+      - name: Upload iOS binary (ipa)
+        uses: actions/upload-artifact@v2
+        with:
+          name: iOS (ipa)
+          path: tide-ios.ipa
+          if-no-files-found: error
 
   build-windows:
     runs-on: windows-2022
@@ -191,7 +207,6 @@ jobs:
           name: MSI (x64)
           path: build/tide-windows_x64.msix
           if-no-files-found: error
-          retention-days: 30
       # Build and upload x86
       - name: Build MSIX (x86)
         run: flutter pub run msix:create --build-windows false --architecture x86 --output-name tide-windows_x86
@@ -201,7 +216,6 @@ jobs:
           name: MSI (x86)
           path: build/tide-windows_x86.msix
           if-no-files-found: error
-          retention-days: 30
 
   build-web:
     runs-on: ubuntu-20.04
@@ -273,7 +287,6 @@ jobs:
           name: Tide (web archive)
           path: build/web/tide-web.zip
           if-no-files-found: error
-          retention-days: 30
 
   deploy-web:
     runs-on: ubuntu-20.04
@@ -379,6 +392,15 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: "/tmp/artifacts/APK (x86_64)/app-x86_64-release.apk"
           asset_name: tide-x86_64-release.apk
+          asset_content_type: application/octet-stream
+      - name: Upload iOS (ipa)
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "/tmp/artifacts/iOS (ipa)/tide-ios.ipa"
+          asset_name: tide-ios.ipa
           asset_content_type: application/octet-stream
       - name: Upload Web archive
         uses: actions/upload-release-asset@v1.0.2
