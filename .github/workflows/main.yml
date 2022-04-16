@@ -117,7 +117,8 @@ jobs:
   build-ios:
     runs-on: macos-11
     name: Build iOS Binaries
-    needs: [tests]
+    # TODO: DEBUG
+    #needs: [tests]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -136,26 +137,9 @@ jobs:
         run: flutter build ios --release --no-codesign
       - name: Verbose
         run: |
-          # TODO: DEBUG
-          # Log info on built env
-          ls -lha build/
-          ls -lha build/ios/
-
-          # TODO: DEBUG
-          # Try with tree
-          brew install tree
-          tree -ph build/ios
-
-          # TODO: DEBUG
-          # Find executable files
-          find build/ios -perm +111 -type f -or -type l
-
           # Move the build structure into a new folder named after the project
           mkdir Tide/
           mv -f build/ios/iphoneos/Runner.app ./Tide
-
-          # TODO: DEBUG
-          tree -ph ./Tide
 
           # Create a zip archive
           zip -9 -r tide-ios.zip Tide
@@ -164,9 +148,6 @@ jobs:
           # Solution from https://stackoverflow.com/a/68075166 (consulted on April 16th, 2022)
           mv tide-ios.zip tide-ios.ipa
           chmod a+x tide-ios.ipa
-
-          # TODO: DEBUG
-          ls -lha tide-ios.zip
       - name: Upload iOS binary (ipa)
         uses: actions/upload-artifact@v2
         with:
