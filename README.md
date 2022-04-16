@@ -30,6 +30,16 @@ You can download the built executables or installers from the [release page](htt
 * [x86-64 (`.apk`)](https://github.com/Cynnexis/tide/releases/latest/download/tide-x86_64-release.apk)
 * [armeabi v7a (`.apk`)](https://github.com/Cynnexis/tide/releases/latest/download/tide-armeabi-v7a-release.apk)
 
+**iOS:**
+
+* [iOS (`.ipa`)](https://github.com/Cynnexis/tide/releases/latest/download/tide-ios.ipa)
+
+> :warning: This package has not been signed.
+
+> :warning: The developers behind this project do not have a macOS and an iPhone.
+> This package has been compiled through the CI/CD workflow, with the OSX runner.
+> As a result, it has not been tested, and might not work as expected.
+
 **Windows:**
 
 * [MSIX for x86 (32 bits)](https://github.com/Cynnexis/tide/releases/latest/download/tide-windows_x86.msix)

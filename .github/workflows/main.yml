@@ -27,6 +27,8 @@ jobs:
           flutter-version: '2.10.4'
       - name: Configure application
         uses: ./.github/actions/tide-configuration-file/
+        with:
+          args: "--maintainer-email=${{ secrets.MAINTAINER_EMAIL }}"
       - name: Install dependencies
         run: flutter pub get
       - name: Analyze code
@@ -59,6 +61,8 @@ jobs:
           flutter-version: '2.10.4'
       - name: Configure application
         uses: ./.github/actions/tide-configuration-file/
+        with:
+          args: "--maintainer-email=${{ secrets.MAINTAINER_EMAIL }}"
       - name: Install dependencies
         run: flutter pub get
       - name: Write keystore
@@ -85,39 +89,72 @@ jobs:
           name: Appbundle
           path: bin/app-release.aab
           if-no-files-found: error
-          retention-days: 30
       - name: Upload APK (generic)
         uses: actions/upload-artifact@v2
         with:
           name: APK (generic)
           path: bin/app.apk
           if-no-files-found: error
-          retention-days: 30
       - name: Upload APK (arm64)
         uses: actions/upload-artifact@v2
         with:
           name: APK (arm64)
           path: bin/app-arm64-v8a-release.apk
           if-no-files-found: error
-          retention-days: 30
       - name: Upload APK (armeabi)
         uses: actions/upload-artifact@v2
         with:
           name: APK (armeabi)
           path: bin/app-armeabi-v7a-release.apk
           if-no-files-found: error
-          retention-days: 30
       - name: Upload APK (x86_64)
         uses: actions/upload-artifact@v2
         with:
           name: APK (x86_64)
           path: bin/app-x86_64-release.apk
           if-no-files-found: error
-          retention-days: 30
+
+  build-ios:
+    runs-on: macos-11
+    name: Build iOS Binaries
+    needs: [tests]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '2.10.4'
+      - name: Configure application
+        run: |
+          echo -e "webapp:\n  uri:\n    scheme: https\n    host: \"cynnexis.github.io\"\n    port: 443\n    path: \"/tide/\"\nmaintainer_email: \"${{ secrets.MAINTAINER_EMAIL }}\"" > tide.yaml
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Build binary
+        run: flutter build ios --release --no-codesign
+      - name: Verbose
+        run: |
+          # Move the build structure into a new folder named after the project
+          mkdir Tide/
+          mv -f build/ios/iphoneos/Runner.app ./Tide
+
+          # Create a zip archive
+          zip -9 -r tide-ios.zip Tide
+
+          # Rename the zip archive extension "ipa"
+          # Solution from https://stackoverflow.com/a/68075166 (consulted on April 16th, 2022)
+          mv tide-ios.zip tide-ios.ipa
+          chmod a+x tide-ios.ipa
+      - name: Upload iOS binary (ipa)
+        uses: actions/upload-artifact@v2
+        with:
+          name: iOS (ipa)
+          path: tide-ios.ipa
+          if-no-files-found: error
 
   build-windows:
     runs-on: windows-2022
-    name: Build for Windows
+    name: Build Windows Installers
     needs: [tests]
     steps:
       - name: Checkout
@@ -134,7 +171,7 @@ jobs:
           echo     host: "cynnexis.github.io" >> tide.yaml
           echo     port: 443 >> tide.yaml
           echo     path: "/tide/" >> tide.yaml
-          echo maintainer_email: "$maintainer_email" >> tide.yaml
+          echo maintainer_email: "${{ secrets.MAINTAINER_EMAIL }}" >> tide.yaml
       - name: Install dependencies
         run: flutter pub get
       # Build the project
@@ -149,7 +186,6 @@ jobs:
           name: MSI (x64)
           path: build/tide-windows_x64.msix
           if-no-files-found: error
-          retention-days: 30
       # Build and upload x86
       - name: Build MSIX (x86)
         run: flutter pub run msix:create --build-windows false --architecture x86 --output-name tide-windows_x86
@@ -159,7 +195,6 @@ jobs:
           name: MSI (x86)
           path: build/tide-windows_x86.msix
           if-no-files-found: error
-          retention-days: 30
 
   build-web:
     runs-on: ubuntu-20.04
@@ -176,6 +211,8 @@ jobs:
         run: find . -type f \( -name Makefile -o -iname '*.bash' -o -iname '*.sh' \) -exec chmod +x "{}" \;
       - name: Configure application
         uses: ./.github/actions/tide-configuration-file/
+        with:
+          args: "--maintainer-email=${{ secrets.MAINTAINER_EMAIL }}"
       - name: Install dependencies
         run: flutter pub get
       - name: Export documentation
@@ -229,7 +266,6 @@ jobs:
           name: Tide (web archive)
           path: build/web/tide-web.zip
           if-no-files-found: error
-          retention-days: 30
 
   deploy-web:
     runs-on: ubuntu-20.04
@@ -260,7 +296,7 @@ jobs:
   release:
     runs-on: ubuntu-20.04
     name: Create a release
-    needs: [tests, build-android, build-web, build-windows, deploy-web]
+    needs: [tests, build-android, build-ios, build-web, build-windows, deploy-web]
     if: github.event_name == 'push' && contains(github.ref, 'main') || contains(github.ref, 'cicd/')
     steps:
       - name: Prepare workspace
@@ -335,6 +371,15 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: "/tmp/artifacts/APK (x86_64)/app-x86_64-release.apk"
           asset_name: tide-x86_64-release.apk
+          asset_content_type: application/octet-stream
+      - name: Upload iOS (ipa)
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "/tmp/artifacts/iOS (ipa)/tide-ios.ipa"
+          asset_name: tide-ios.ipa
           asset_content_type: application/octet-stream
       - name: Upload Web archive
         uses: actions/upload-release-asset@v1.0.2
