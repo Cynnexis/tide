@@ -27,6 +27,8 @@ jobs:
           flutter-version: '2.10.4'
       - name: Configure application
         uses: ./.github/actions/tide-configuration-file/
+        with:
+          args: "--maintainer-email=${{ secrets.MAINTAINER_EMAIL }}"
       - name: Install dependencies
         run: flutter pub get
       - name: Analyze code
@@ -59,6 +61,8 @@ jobs:
           flutter-version: '2.10.4'
       - name: Configure application
         uses: ./.github/actions/tide-configuration-file/
+        with:
+          args: "--maintainer-email=${{ secrets.MAINTAINER_EMAIL }}"
       - name: Install dependencies
         run: flutter pub get
       - name: Write keystore
@@ -114,6 +118,35 @@ jobs:
           path: bin/app-x86_64-release.apk
           if-no-files-found: error
           retention-days: 30
+
+  build-ios:
+    runs-on: macos-11
+    name: Build iOS Binaries
+    needs: [tests]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '2.10.4'
+      - name: Configure application
+        uses: ./.github/actions/tide-configuration-file/
+        with:
+          args: "--maintainer-email=${{ secrets.MAINTAINER_EMAIL }}"
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Build binary
+        run: flutter build ios --release --no-codesign
+      - name: Verbose
+        run: |
+          # Log info on built env
+          ls -lha build/
+          ls -lha build/ios/
+
+          # Try with tree
+          brew install tree
+          tree build
 
   build-windows:
     runs-on: windows-2022
@@ -176,6 +209,8 @@ jobs:
         run: find . -type f \( -name Makefile -o -iname '*.bash' -o -iname '*.sh' \) -exec chmod +x "{}" \;
       - name: Configure application
         uses: ./.github/actions/tide-configuration-file/
+        with:
+          args: "--maintainer-email=${{ secrets.MAINTAINER_EMAIL }}"
       - name: Install dependencies
         run: flutter pub get
       - name: Export documentation
