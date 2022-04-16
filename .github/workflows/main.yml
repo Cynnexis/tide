@@ -131,26 +131,29 @@ jobs:
           channel: 'stable'
           flutter-version: '2.10.4'
       - name: Configure application
-        uses: ./.github/actions/tide-configuration-file/
-        with:
-          args: "--maintainer-email=${{ secrets.MAINTAINER_EMAIL }}"
+        run: |
+          echo "webapp:\n  uri:\n    scheme: https\n    host: \"cynnexis.github.io\"\n    port: 443\n    path: \"/tide/\"\nmaintainer_email: \"${{ secrets.MAINTAINER_EMAIL }}\"" > tide.yaml
+          # TODO: DEBUG
+          cat tide.yaml
       - name: Install dependencies
         run: flutter pub get
       - name: Build binary
         run: flutter build ios --release --no-codesign
       - name: Verbose
         run: |
+          # TODO: DEBUG
           # Log info on built env
           ls -lha build/
           ls -lha build/ios/
 
+          # TODO: DEBUG
           # Try with tree
           brew install tree
           tree build
 
   build-windows:
     runs-on: windows-2022
-    name: Build for Windows
+    name: Build Windows Installers
     needs: [tests]
     steps:
       - name: Checkout
@@ -167,7 +170,7 @@ jobs:
           echo     host: "cynnexis.github.io" >> tide.yaml
           echo     port: 443 >> tide.yaml
           echo     path: "/tide/" >> tide.yaml
-          echo maintainer_email: "$maintainer_email" >> tide.yaml
+          echo maintainer_email: "${{ secrets.MAINTAINER_EMAIL }}" >> tide.yaml
       - name: Install dependencies
         run: flutter pub get
       # Build the project
@@ -295,7 +298,7 @@ jobs:
   release:
     runs-on: ubuntu-20.04
     name: Create a release
-    needs: [tests, build-android, build-web, build-windows, deploy-web]
+    needs: [tests, build-android, build-ios, build-web, build-windows, deploy-web]
     if: github.event_name == 'push' && contains(github.ref, 'main') || contains(github.ref, 'cicd/')
     steps:
       - name: Prepare workspace
