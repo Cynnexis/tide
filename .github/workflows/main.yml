@@ -351,7 +351,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/artifacts/tide-windows_x64.msix
+          asset_path: "/tmp/artifacts/MSI (x64)/tide-windows_x64.msix"
           asset_name: tide-windows_x64.apk
           asset_content_type: application/octet-stream
       - name: Upload MSIX (x86)
@@ -360,6 +360,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/artifacts/tide-windows_x86.msix
+          asset_path: "/tmp/artifacts/MSI (x86)/tide-windows_x86.msix"
           asset_name: tide-windows_x86.apk
           asset_content_type: application/octet-stream
