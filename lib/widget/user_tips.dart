@@ -42,10 +42,9 @@ class UserTips extends StatelessWidget {
 
   /// The default text style for the tips
   TextStyle? getDefaultTextStyle(BuildContext context) =>
-      (style ??
-      Theme.of(context).textTheme.bodyText1)?.copyWith(
-            fontStyle: FontStyle.italic,
-          );
+      (style ?? Theme.of(context).textTheme.bodyText1)?.copyWith(
+        fontStyle: FontStyle.italic,
+      );
 
   List<Widget> buildTips(BuildContext context) {
     // List of widgets that will be returned
@@ -148,8 +147,12 @@ class UserTips extends StatelessWidget {
             Icons.settings,
             color: TideTheme.homeTextColor,
           ),
-          child: Text(TideLocalizations.of(context)!.settings),
+          child: Text(
+            TideLocalizations.of(context)!.settings,
+            style: defaultTextStyle,
+          ),
           alignment: PlaceholderAlignment.middle,
+          style: defaultTextStyle,
         ),
         key: const Key('breathingDurationTip'),
       );
