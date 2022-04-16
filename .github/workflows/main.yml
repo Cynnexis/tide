@@ -117,8 +117,7 @@ jobs:
   build-ios:
     runs-on: macos-11
     name: Build iOS Binaries
-    # TODO: DEBUG
-    #needs: [tests]
+    needs: [tests]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -129,8 +128,6 @@ jobs:
       - name: Configure application
         run: |
           echo -e "webapp:\n  uri:\n    scheme: https\n    host: \"cynnexis.github.io\"\n    port: 443\n    path: \"/tide/\"\nmaintainer_email: \"${{ secrets.MAINTAINER_EMAIL }}\"" > tide.yaml
-          # TODO: DEBUG
-          cat tide.yaml
       - name: Install dependencies
         run: flutter pub get
       - name: Build binary
