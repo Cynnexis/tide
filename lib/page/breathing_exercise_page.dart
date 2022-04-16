@@ -88,94 +88,103 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
 
         return true;
       },
-      child: SafeArea(
-        child: Scaffold(
-          // Show app bar in web only
-          appBar: !showBottomBar
-              ? TideAppBar(
-                  context: context,
-                  showBackButton: true,
-                  showSettings: false,
-                  backgroundColor: TideTheme.primaryColor,
-                  title: Container(),
-                  actions: <Widget>[
-                    _buildTimerButton(context),
-                  ],
-                )
-              : null,
-          backgroundColor: TideTheme.primaryColor,
-          body: Stack(
-            alignment: AlignmentDirectional.center,
-            children: <Widget>[
-              const BreathingBubble(key: Key('tide_breathing_bubble')),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Builder(builder: (BuildContext context) {
-                    // Display nothing if the timer is not set
-                    if (_countdownTimer == null) return Container();
+      child: DefaultTextStyle(
+        style: TideTheme.homeTextStyle,
+        child: SafeArea(
+          child: Scaffold(
+            // Show app bar in web only
+            appBar: !showBottomBar
+                ? TideAppBar(
+                    context: context,
+                    showBackButton: true,
+                    showSettings: false,
+                    backgroundColor: TideTheme.primaryColor,
+                    title: Container(),
+                    actions: <Widget>[
+                      _buildTimerButton(context),
+                    ],
+                  )
+                : null,
+            backgroundColor: TideTheme.primaryColor,
+            body: Stack(
+              alignment: AlignmentDirectional.center,
+              children: <Widget>[
+                const BreathingBubble(key: Key('tide_breathing_bubble')),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Builder(builder: (BuildContext context) {
+                      // Display nothing if the timer is not set
+                      if (_countdownTimer == null) return Container();
 
-                    // Else, display the timer current value
-                    return StreamBuilder<CountdownTimer>(
-                      stream: _countdownTimer,
-                      builder: (
-                        BuildContext context,
-                        AsyncSnapshot<CountdownTimer> snapshot,
-                      ) {
-                        // Error handling
-                        if (snapshot.hasError) {
-                          // If an error has been caught, throw it in debug mode, else print it and ignore it.
-                          if (kDebugMode) {
-                            throw snapshot.error!;
-                          } else {
-                            dev.log(
-                              "Error: ${snapshot.error!}",
-                              time: DateTime.now(),
-                              level: Level.SEVERE.value,
-                              name: "StreamBuilder<CountdownTimer>",
-                              zone: Zone.current,
-                              error: snapshot.error,
-                              stackTrace: snapshot.error != null &&
-                                      snapshot.error is Error
-                                  ? (snapshot.error! as Error).stackTrace
-                                  : null,
-                            );
-                            return Container();
+                      // Else, display the timer current value
+                      return StreamBuilder<CountdownTimer>(
+                        stream: _countdownTimer,
+                        builder: (
+                          BuildContext context,
+                          AsyncSnapshot<CountdownTimer> snapshot,
+                        ) {
+                          // Error handling
+                          if (snapshot.hasError) {
+                            // If an error has been caught, throw it in debug mode, else print it and ignore it.
+                            if (kDebugMode) {
+                              throw snapshot.error!;
+                            } else {
+                              dev.log(
+                                "Error: ${snapshot.error!}",
+                                time: DateTime.now(),
+                                level: Level.SEVERE.value,
+                                name: "StreamBuilder<CountdownTimer>",
+                                zone: Zone.current,
+                                error: snapshot.error,
+                                stackTrace: snapshot.error != null &&
+                                        snapshot.error is Error
+                                    ? (snapshot.error! as Error).stackTrace
+                                    : null,
+                              );
+                              return Container();
+                            }
                           }
-                        }
 
-                        // No error: check the value
-                        // If no data, don't print anything
-                        if (!snapshot.hasData) return Container();
+                          // No error: check the value
+                          // If no data, don't print anything
+                          if (!snapshot.hasData) return Container();
 
-                        // Else, print the countdown value
-                        return Text(
-                          timerToString(snapshot.data!.remaining),
-                          key: const Key(
-                              'tide_breathing_ex_remaining_time_text'),
-                        );
-                      },
-                    );
-                  }),
-                  if (showBottomBar)
-                    ButtonBar(
-                      key: const Key('tide_breathing_ex_button_bar'),
-                      alignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        IconButton(
-                          key: const Key('tide_breathing_ex_back_button'),
-                          icon: const Icon(Icons.arrow_back),
-                          onPressed: () {
-                            Navigator.of(context).pop<void>();
-                          },
-                        ),
-                        _buildTimerButton(context),
-                      ],
-                    ),
-                ],
-              ),
-            ],
+                          // Else, print the countdown value
+                          return Text(
+                            timerToString(snapshot.data!.remaining),
+                            key: const Key(
+                                'tide_breathing_ex_remaining_time_text'),
+                            style: const TextStyle(
+                              color: TideTheme.homeTextColor,
+                            ),
+                          );
+                        },
+                      );
+                    }),
+                    if (showBottomBar)
+                      ButtonBar(
+                        key: const Key('tide_breathing_ex_button_bar'),
+                        alignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          IconButton(
+                            key: const Key('tide_breathing_ex_back_button'),
+                            icon: const Icon(
+                              Icons.arrow_back,
+                              color: TideTheme.homeTextColor,
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop<void>();
+                            },
+                          ),
+                          _buildTimerButton(context),
+                        ],
+                      ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -189,13 +198,19 @@ class _BreathingExercisePageState extends State<BreathingExercisePage> {
       child: _countdownTimer == null
           ? IconButton(
               key: const Key('tide_breathing_ex_start_timer'),
-              icon: const Icon(Icons.timer),
+              icon: const Icon(
+                Icons.timer,
+                color: TideTheme.homeTextColor,
+              ),
               onPressed: () => _showTimerDialog(context),
               tooltip: TideLocalizations.of(context)!.tapToActivateTimer,
             )
           : IconButton(
               key: const Key('tide_breathing_ex_stop_timer'),
-              icon: const Icon(Icons.stop),
+              icon: const Icon(
+                Icons.stop,
+                color: TideTheme.homeTextColor,
+              ),
               onPressed: clearCountdownTimer,
               tooltip: TideLocalizations.of(context)!.stopTimer,
             ),

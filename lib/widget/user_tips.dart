@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/tide_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:tide/page/settings_page.dart';
+import 'package:tide/theme.dart';
 import 'package:tide/utility/extension/list_extension.dart';
 import 'package:tide/utility/fullscreen/fullscreen.dart';
 import 'package:tide/widget/button_span.dart';
@@ -39,6 +40,12 @@ class UserTips extends StatelessWidget {
     );
   }
 
+  /// The default text style for the tips
+  TextStyle? getDefaultTextStyle(BuildContext context) =>
+      (style ?? Theme.of(context).textTheme.bodyText1)?.copyWith(
+        fontStyle: FontStyle.italic,
+      );
+
   List<Widget> buildTips(BuildContext context) {
     // List of widgets that will be returned
     final List<Widget> widgetTips = <Widget>[];
@@ -50,10 +57,7 @@ class UserTips extends StatelessWidget {
     const String splitPlaceholder = "{{##!PLACEHOLDER!##}}";
 
     // The default text style for the tips
-    final TextStyle? defaultTextStyle = style ??
-        Theme.of(context).textTheme.bodyText1?.copyWith(
-              fontStyle: FontStyle.italic,
-            );
+    final TextStyle? defaultTextStyle = getDefaultTextStyle(context);
 
     /// Add a new tip to the list [widgetTips] from a string and a [widget].
     ///
@@ -83,9 +87,10 @@ class UserTips extends StatelessWidget {
         ),
         softWrap: true,
         overflow: TextOverflow.fade,
+        style: defaultTextStyle,
       );
 
-      widgetTips.add(buildTipTile(tipWidget, key: key));
+      widgetTips.add(buildTipTile(context, tipWidget, key: key));
     }
 
     // Add the fullscreen tip only in web
@@ -97,6 +102,7 @@ class UserTips extends StatelessWidget {
         widgetPlaceholder: WidgetSpan(
           child: Hotkey(
             shortcut: 'F11',
+            style: const TextStyle(color: TideTheme.homeTextColor),
             onPressed: () {
               try {
                 toggleFullscreen();
@@ -137,9 +143,16 @@ class UserTips extends StatelessWidget {
           onTap: () {
             Navigator.of(context).pushNamed<void>(SettingsPage.routeName);
           },
-          leading: const Icon(Icons.settings),
-          child: Text(TideLocalizations.of(context)!.settings),
+          leading: const Icon(
+            Icons.settings,
+            color: TideTheme.homeTextColor,
+          ),
+          child: Text(
+            TideLocalizations.of(context)!.settings,
+            style: defaultTextStyle,
+          ),
           alignment: PlaceholderAlignment.middle,
+          style: defaultTextStyle,
         ),
         key: const Key('breathingDurationTip'),
       );
@@ -147,6 +160,7 @@ class UserTips extends StatelessWidget {
 
     // Add "You'll be okay! 🌺" tip
     widgetTips.add(buildTipTile(
+      context,
       Text(
         TideLocalizations.of(context)!.youWillBeOkayTip,
         style: defaultTextStyle,
@@ -156,6 +170,7 @@ class UserTips extends StatelessWidget {
 
     // Add "You made it there, you can do it! 🌻" tip
     widgetTips.add(buildTipTile(
+      context,
       Text(
         TideLocalizations.of(context)!.youMadeItThereTip,
         style: defaultTextStyle,
@@ -165,6 +180,7 @@ class UserTips extends StatelessWidget {
 
     // Add "Whatever it is, you're strong enough! 💐" tip
     widgetTips.add(buildTipTile(
+      context,
       Text(
         TideLocalizations.of(context)!.youAreStrongEnough,
         style: defaultTextStyle,
@@ -178,7 +194,11 @@ class UserTips extends StatelessWidget {
     return widgetTips;
   }
 
-  Widget buildTipTile(final Widget tipWidget, {final Key? key}) {
+  Widget buildTipTile(
+    final BuildContext context,
+    final Widget tipWidget, {
+    final Key? key,
+  }) {
     return Container(
       key: key,
       decoration: BoxDecoration(
@@ -192,7 +212,10 @@ class UserTips extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            const Icon(Icons.lightbulb_outline_rounded),
+            Icon(
+              Icons.lightbulb_outline_rounded,
+              color: getDefaultTextStyle(context)?.color,
+            ),
             const SizedBox(width: 8),
             Flexible(child: tipWidget),
           ],
