@@ -149,7 +149,13 @@ jobs:
           # TODO: DEBUG
           # Try with tree
           brew install tree
-          tree build
+          tree -ph build/ios
+
+          # TODO: DEBUG
+          # Find executable files
+          find build/ios -type f -executable
+
+          exit 1
 
   build-windows:
     runs-on: windows-2022
