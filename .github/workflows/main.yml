@@ -128,7 +128,7 @@ jobs:
           flutter-version: '2.10.4'
       - name: Configure application
         run: |
-          echo "webapp:\n  uri:\n    scheme: https\n    host: \"cynnexis.github.io\"\n    port: 443\n    path: \"/tide/\"\nmaintainer_email: \"${{ secrets.MAINTAINER_EMAIL }}\"" > tide.yaml
+          echo -e "webapp:\n  uri:\n    scheme: https\n    host: \"cynnexis.github.io\"\n    port: 443\n    path: \"/tide/\"\nmaintainer_email: \"${{ secrets.MAINTAINER_EMAIL }}\"" > tide.yaml
           # TODO: DEBUG
           cat tide.yaml
       - name: Install dependencies
