@@ -10,6 +10,12 @@ class TideTheme {
   static const Color defaultLightBackgroundColor = Color(0xFFFAFAFA);
 
   static const String homeFontFamily = 'Courgette';
+  static const Color homeTextColor = Colors.white;
+
+  static const TextStyle homeTextStyle = TextStyle(
+    fontFamily: homeFontFamily,
+    color: homeTextColor,
+  );
 
   static ThemeData getTheme([Brightness brightness = Brightness.light]) {
     ThemeData themeData = ThemeData(

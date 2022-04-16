@@ -92,119 +92,125 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: FadeTransition(
-          opacity: _pageOpacityAnimation,
-          child: TideAppBar(
-            context: context,
-            backgroundColor: TideTheme.primaryColor,
+    return DefaultTextStyle(
+      style: TideTheme.homeTextStyle,
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: FadeTransition(
+            opacity: _pageOpacityAnimation,
+            child: TideAppBar(
+              context: context,
+              backgroundColor: TideTheme.primaryColor,
+            ),
           ),
         ),
-      ),
-      backgroundColor: TideTheme.primaryColor,
-      body: FadeTransition(
-        opacity: _pageOpacityAnimation,
-        child: SafeArea(
-          minimum: const EdgeInsets.all(16.0),
-          child: Builder(
-            builder: (BuildContext context) {
-              // Check if animations are enabled ; display a warning otherwise
-              Future<void>.delayed(const Duration(microseconds: 1), () {
-                checkAnimationsStatus(context);
-              });
+        backgroundColor: TideTheme.primaryColor,
+        body: FadeTransition(
+          opacity: _pageOpacityAnimation,
+          child: SafeArea(
+            minimum: const EdgeInsets.all(16.0),
+            child: Builder(
+              builder: (BuildContext context) {
+                // Check if animations are enabled ; display a warning otherwise
+                Future<void>.delayed(const Duration(microseconds: 1), () {
+                  checkAnimationsStatus(context);
+                });
 
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Flexible(
-                      key: const Key('tide_home_description'),
-                      child: LayoutBuilder(
-                        builder: (
-                          BuildContext context,
-                          final BoxConstraints constraints,
-                        ) {
-                          return SizedBox.fromSize(
-                            size: constraints.biggest,
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  TideLocalizations.of(context)!
-                                      .homeDescription,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    fontFamily: TideTheme.homeFontFamily,
-                                    fontSize: 24,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    Flexible(
-                      key: const Key('tide_home_start_button_flexible'),
-                      child: AnimatedBreathing(
-                        controller: _startAnimationController,
-                        builder: (
-                          BuildContext context,
-                          final double scale,
-                          final Animation<double> animation,
-                        ) {
-                          return RoundButton(
-                            key: const Key(
-                                'tide_home_start_button_round_button'),
-                            clipOvalKey:
-                                const Key('tide_home_start_button_clip_oval'),
-                            materialKey:
-                                const Key('tide_home_start_button_material'),
-                            inkWellKey:
-                                const Key('tide_home_start_button_ink_well'),
-                            backgroundColor: Colors.white,
-                            splashColor: Colors.white70,
-                            onTap: () => pushBreathingExercisePage(context),
-                            child: SizedBox.square(
-                              key:
-                                  const Key('tide_home_start_button_sized_box'),
-                              dimension: scale,
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Flexible(
+                        key: const Key('tide_home_description'),
+                        child: LayoutBuilder(
+                          builder: (
+                            BuildContext context,
+                            final BoxConstraints constraints,
+                          ) {
+                            return SizedBox.fromSize(
+                              size: constraints.biggest,
                               child: Center(
-                                child: Text(
-                                  TideLocalizations.of(context)!.startButton,
-                                  style: const TextStyle(
-                                    color: TideTheme.primaryColor,
-                                    fontFamily: TideTheme.homeFontFamily,
-                                    fontSize: 26,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    TideLocalizations.of(context)!
+                                        .homeDescription,
+                                    textAlign: TextAlign.center,
+                                    style: TideTheme.homeTextStyle.copyWith(
+                                      fontSize: 24,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                    Flexible(
-                      key: const Key('tide_home_tips_flexible'),
-                      child: LayoutBuilder(
-                        builder: (
-                          BuildContext context,
-                          final BoxConstraints constraints,
-                        ) {
-                          return SizedBox.fromSize(
-                            size: constraints.biggest,
-                            child: const UserTips(key: Key('tide_home_tips')),
-                          );
-                        },
+                      Flexible(
+                        key: const Key('tide_home_start_button_flexible'),
+                        child: AnimatedBreathing(
+                          controller: _startAnimationController,
+                          builder: (
+                            BuildContext context,
+                            final double scale,
+                            final Animation<double> animation,
+                          ) {
+                            return RoundButton(
+                              key: const Key(
+                                  'tide_home_start_button_round_button'),
+                              clipOvalKey:
+                                  const Key('tide_home_start_button_clip_oval'),
+                              materialKey:
+                                  const Key('tide_home_start_button_material'),
+                              inkWellKey:
+                                  const Key('tide_home_start_button_ink_well'),
+                              backgroundColor: Colors.white,
+                              splashColor: Colors.white70,
+                              onTap: () => pushBreathingExercisePage(context),
+                              child: SizedBox.square(
+                                key: const Key(
+                                    'tide_home_start_button_sized_box'),
+                                dimension: scale,
+                                child: Center(
+                                  child: Text(
+                                    TideLocalizations.of(context)!.startButton,
+                                    style: TideTheme.homeTextStyle.copyWith(
+                                      color: TideTheme.primaryColor,
+                                      fontSize: 26,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            },
+                      Flexible(
+                        key: const Key('tide_home_tips_flexible'),
+                        child: LayoutBuilder(
+                          builder: (
+                            BuildContext context,
+                            final BoxConstraints constraints,
+                          ) {
+                            return SizedBox.fromSize(
+                              size: constraints.biggest,
+                              child: const UserTips(
+                                key: Key('tide_home_tips'),
+                                style: TextStyle(
+                                  color: TideTheme.homeTextColor,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ),
