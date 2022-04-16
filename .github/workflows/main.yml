@@ -13,7 +13,7 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-20.04
-    name: Analyze code and generate the documentation
+    name: Analyze & tests
     steps:
       - name: Checkout
         uses: actions/checkout@v2
