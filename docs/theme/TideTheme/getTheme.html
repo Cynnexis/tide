@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the getTheme method from the TideTheme class, for the Dart programming language.">
+  <title>getTheme method - TideTheme class - theme library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">tide</a></li>
+    <li><a href="../../theme/theme-library.html">theme</a></li>
+    <li><a href="../../theme/TideTheme-class.html">TideTheme</a></li>
+    <li class="self-crumb">getTheme method</li>
+  </ol>
+  <div class="self-name">getTheme</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-method">getTheme</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+
+<span class="returntype"><a href="https://api.flutter.dev/flutter/material/ThemeData-class.html">ThemeData</a></span>
+<span class="name ">getTheme</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="getTheme-param-brightness">[<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Brightness.html">Brightness</a></span> <span class="parameter-name">brightness</span> = <span class="default-value">Brightness.light</span>]</span></li>
+</ol>)
+
+      
+
+    </section>
+    
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">static ThemeData getTheme([Brightness brightness = Brightness.light]) {
+  ThemeData themeData = ThemeData(
+    primarySwatch: primarySwatch,
+    primaryColor: primaryColor,
+    brightness: brightness,
+  );
+  themeData = themeData.copyWith(
+      colorScheme: themeData.colorScheme.copyWith(secondary: accentColor));
+  return themeData;
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../../index.html">tide</a></li>
+  <li><a href="../../theme/theme-library.html">theme</a></li>
+  <li><a href="../../theme/TideTheme-class.html">TideTheme</a></li>
+  <li class="self-crumb">getTheme method</li>
+</ol>
+
+
+    <h5>TideTheme class</h5>
+    <ol>
+
+    <li class="section-title"><a href="../../theme/TideTheme-class.html#constructors">Constructors</a></li>
+    <li><a href="../../theme/TideTheme/TideTheme.html">TideTheme</a></li>
+
+
+    <li class="section-title inherited">
+      <a href="../../theme/TideTheme-class.html#instance-properties">Properties</a>
+    </li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+
+    <li class="section-title inherited"><a href="../../theme/TideTheme-class.html#instance-methods">Methods</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+
+    <li class="section-title inherited"><a href="../../theme/TideTheme-class.html#operators">Operators</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+
+
+    <li class="section-title"><a href="../../theme/TideTheme-class.html#static-properties">Static properties</a></li>
+    <li><a href="../../theme/TideTheme/dark.html">dark</a></li>
+    <li><a href="../../theme/TideTheme/light.html">light</a></li>
+    <li><a href="../../theme/TideTheme/logo.html">logo</a></li>
+    <li><a href="../../theme/TideTheme/logoBackground.html">logoBackground</a></li>
+    <li><a href="../../theme/TideTheme/logoForeground.html">logoForeground</a></li>
+
+    <li class="section-title"><a href="../../theme/TideTheme-class.html#static-methods">Static methods</a></li>
+    <li><a href="../../theme/TideTheme/defaultBackgroundColor.html">defaultBackgroundColor</a></li>
+    <li><a href="../../theme/TideTheme/getFontColor.html">getFontColor</a></li>
+    <li><a href="../../theme/TideTheme/getIconThemeData.html">getIconThemeData</a></li>
+    <li><a href="../../theme/TideTheme/getLogoImage.html">getLogoImage</a></li>
+    <li><a href="../../theme/TideTheme/getSystem.html">getSystem</a></li>
+    <li><a href="../../theme/TideTheme/getSystemBrightness.html">getSystemBrightness</a></li>
+    <li><a href="../../theme/TideTheme/getSystemOverlayStyle.html">getSystemOverlayStyle</a></li>
+    <li><a href="../../theme/TideTheme/getTextStyle.html">getTextStyle</a></li>
+    <li><a href="../../theme/TideTheme/getTheme.html">getTheme</a></li>
+    <li><a href="../../theme/TideTheme/setSystemUIOverlayStyle.html">setSystemUIOverlayStyle</a></li>
+
+    <li class="section-title"><a href="../../theme/TideTheme-class.html#constants">Constants</a></li>
+    <li><a href="../../theme/TideTheme/accentColor-constant.html">accentColor</a></li>
+    <li><a href="../../theme/TideTheme/defaultDarkBackgroundColor-constant.html">defaultDarkBackgroundColor</a></li>
+    <li><a href="../../theme/TideTheme/defaultLightBackgroundColor-constant.html">defaultLightBackgroundColor</a></li>
+    <li><a href="../../theme/TideTheme/homeFontFamily-constant.html">homeFontFamily</a></li>
+    <li><a href="../../theme/TideTheme/homeTextColor-constant.html">homeTextColor</a></li>
+    <li><a href="../../theme/TideTheme/homeTextStyle-constant.html">homeTextStyle</a></li>
+    <li><a href="../../theme/TideTheme/primaryColor-constant.html">primaryColor</a></li>
+    <li><a href="../../theme/TideTheme/primarySwatch-constant.html">primarySwatch</a></li>
+</ol>
+
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    tide
+      1.0.0
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/script.js?v1"></script>
+
+
+
+</body>
+
+</html>
+

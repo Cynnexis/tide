@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the TideAppBar constructor from the Class TideAppBar class from the app_bar library, for the Dart programming language.">
+  <title>TideAppBar constructor - TideAppBar class - app_bar library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">tide</a></li>
+    <li><a href="../../widget_app_bar/widget_app_bar-library.html">app_bar</a></li>
+    <li><a href="../../widget_app_bar/TideAppBar-class.html">TideAppBar</a></li>
+    <li class="self-crumb">TideAppBar constructor</li>
+  </ol>
+  <div class="self-name">TideAppBar</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-constructor">TideAppBar</span> constructor 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+</h1></div>
+
+    <section class="multi-line-signature">
+      <span class="name ">TideAppBar</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-key">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/Key-class.html">Key</a>?</span> <span class="parameter-name">key</span>, </span></li>
+<li><span class="parameter" id="-param-context"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span>, </span></li>
+<li><span class="parameter" id="-param-showSettings"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">showSettings</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="-param-showBackButton"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">showBackButton</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-onBackButtonPushed"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/VoidCallback.html">VoidCallback</a>?</span> <span class="parameter-name">onBackButtonPushed</span>, </span></li>
+<li><span class="parameter" id="-param-leading"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a>?</span> <span class="parameter-name">leading</span>, </span></li>
+<li><span class="parameter" id="-param-automaticallyImplyLeading"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">automaticallyImplyLeading</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="-param-title"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a>?</span> <span class="parameter-name">title</span>, </span></li>
+<li><span class="parameter" id="-param-titleOpacity"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">titleOpacity</span> = <span class="default-value">1.0</span>, </span></li>
+<li><span class="parameter" id="-param-actions"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span>&gt;</span>?</span> <span class="parameter-name">actions</span>, </span></li>
+<li><span class="parameter" id="-param-flexibleSpace"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a>?</span> <span class="parameter-name">flexibleSpace</span>, </span></li>
+<li><span class="parameter" id="-param-bottom"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/PreferredSizeWidget-class.html">PreferredSizeWidget</a>?</span> <span class="parameter-name">bottom</span>, </span></li>
+<li><span class="parameter" id="-param-elevation"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">elevation</span> = <span class="default-value">0.0</span>, </span></li>
+<li><span class="parameter" id="-param-shadowColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">shadowColor</span>, </span></li>
+<li><span class="parameter" id="-param-shape"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/ShapeBorder-class.html">ShapeBorder</a>?</span> <span class="parameter-name">shape</span>, </span></li>
+<li><span class="parameter" id="-param-backgroundColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">backgroundColor</span>, </span></li>
+<li><span class="parameter" id="-param-foregroundColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">foregroundColor</span>, </span></li>
+<li><span class="parameter" id="-param-brightness"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Brightness.html">Brightness</a>?</span> <span class="parameter-name">brightness</span>, </span></li>
+<li><span class="parameter" id="-param-iconTheme"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/IconThemeData-class.html">IconThemeData</a>?</span> <span class="parameter-name">iconTheme</span> = <span class="default-value">const IconThemeData(color: Colors.white)</span>, </span></li>
+<li><span class="parameter" id="-param-actionsIconTheme"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/IconThemeData-class.html">IconThemeData</a>?</span> <span class="parameter-name">actionsIconTheme</span>, </span></li>
+<li><span class="parameter" id="-param-toolbarTextStyle"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/TextStyle-class.html">TextStyle</a>?</span> <span class="parameter-name">toolbarTextStyle</span>, </span></li>
+<li><span class="parameter" id="-param-titleTextStyle"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/TextStyle-class.html">TextStyle</a>?</span> <span class="parameter-name">titleTextStyle</span>, </span></li>
+<li><span class="parameter" id="-param-textTheme"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/material/TextTheme-class.html">TextTheme</a>?</span> <span class="parameter-name">textTheme</span>, </span></li>
+<li><span class="parameter" id="-param-primary"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">primary</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="-param-centerTitle"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">centerTitle</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="-param-excludeHeaderSemantics"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">excludeHeaderSemantics</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-titleSpacing"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">titleSpacing</span>, </span></li>
+<li><span class="parameter" id="-param-toolbarOpacity"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">toolbarOpacity</span> = <span class="default-value">1.0</span>, </span></li>
+<li><span class="parameter" id="-param-bottomOpacity"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">bottomOpacity</span> = <span class="default-value">1.0</span>, </span></li>
+<li><span class="parameter" id="-param-toolbarHeight"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">toolbarHeight</span>, </span></li>
+<li><span class="parameter" id="-param-leadingWidth"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">leadingWidth</span>, </span></li>
+<li><span class="parameter" id="-param-backwardsCompatibility"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">backwardsCompatibility</span>, </span></li>
+<li><span class="parameter" id="-param-systemOverlayStyle"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/services/SystemUiOverlayStyle-class.html">SystemUiOverlayStyle</a>?</span> <span class="parameter-name">systemOverlayStyle</span>}</span></li>
+</ol>)
+    </section>
+
+    
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">TideAppBar({
+  Key? key,
+  required BuildContext context,
+  bool showSettings = true,
+  bool showBackButton = false,
+  VoidCallback? onBackButtonPushed,
+  Widget? leading,
+  bool automaticallyImplyLeading = true,
+  Widget? title,
+  double titleOpacity = 1.0,
+  List&lt;Widget&gt;? actions,
+  Widget? flexibleSpace,
+  PreferredSizeWidget? bottom,
+  double? elevation = 0.0,
+  Color? shadowColor,
+  ShapeBorder? shape,
+  Color? backgroundColor,
+  Color? foregroundColor,
+  Brightness? brightness,
+  IconThemeData? iconTheme = const IconThemeData(color: Colors.white),
+  IconThemeData? actionsIconTheme,
+  TextStyle? toolbarTextStyle,
+  TextStyle? titleTextStyle,
+  TextTheme? textTheme,
+  bool primary = true,
+  bool? centerTitle = true,
+  bool excludeHeaderSemantics = false,
+  double? titleSpacing,
+  double toolbarOpacity = 1.0,
+  double bottomOpacity = 1.0,
+  double? toolbarHeight,
+  double? leadingWidth,
+  bool? backwardsCompatibility,
+  SystemUiOverlayStyle? systemOverlayStyle,
+}) : super(
+        key: key,
+        leading: leading ??
+            _buildLeading(
+              context: context,
+              showBackButton: showBackButton,
+              onBackButtonPushed: onBackButtonPushed,
+            ),
+        automaticallyImplyLeading: automaticallyImplyLeading,
+        title: title ??
+            Opacity(
+              opacity: titleOpacity,
+              child: Text(
+                TideLocalizations.of(context)!.appName,
+                style: const TextStyle(
+                  fontFamily: TideTheme.homeFontFamily,
+                  fontSize: 26,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+        actions: actions ??
+            (showSettings
+                ? &lt;Widget&gt;[
+                    IconButton(
+                      key: const Key(&#39;tide_app_bar_settings_button&#39;),
+                      onPressed: () =&gt; pushSettings(context),
+                      icon: const Icon(Icons.settings),
+                    ),
+                  ]
+                : null),
+        flexibleSpace: flexibleSpace,
+        bottom: bottom,
+        elevation: elevation,
+        shadowColor: shadowColor,
+        shape: shape,
+        backgroundColor: backgroundColor,
+        foregroundColor: foregroundColor,
+        systemOverlayStyle:
+            systemOverlayStyle ?? TideTheme.getSystemOverlayStyle(),
+        iconTheme: iconTheme,
+        actionsIconTheme: actionsIconTheme,
+        titleTextStyle: titleTextStyle ??
+            textTheme?.titleMedium?.apply(color: Colors.white),
+        toolbarTextStyle: toolbarTextStyle ??
+            textTheme?.labelMedium?.apply(color: Colors.white),
+        primary: primary,
+        centerTitle: centerTitle,
+        excludeHeaderSemantics: excludeHeaderSemantics,
+        titleSpacing: titleSpacing,
+        toolbarOpacity: toolbarOpacity,
+        bottomOpacity: bottomOpacity,
+        toolbarHeight: toolbarHeight,
+        leadingWidth: leadingWidth,
+      );</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../../index.html">tide</a></li>
+  <li><a href="../../widget_app_bar/widget_app_bar-library.html">app_bar</a></li>
+  <li><a href="../../widget_app_bar/TideAppBar-class.html">TideAppBar</a></li>
+  <li class="self-crumb">TideAppBar constructor</li>
+</ol>
+
+
+    <h5>TideAppBar class</h5>
+    <ol>
+
+    <li class="section-title"><a href="../../widget_app_bar/TideAppBar-class.html#constructors">Constructors</a></li>
+    <li><a href="../../widget_app_bar/TideAppBar/TideAppBar.html">TideAppBar</a></li>
+
+
+    <li class="section-title inherited">
+      <a href="../../widget_app_bar/TideAppBar-class.html#instance-properties">Properties</a>
+    </li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/actions.html">actions</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/actionsIconTheme.html">actionsIconTheme</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/automaticallyImplyLeading.html">automaticallyImplyLeading</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/backgroundColor.html">backgroundColor</a></li>
+    <li class="inherited"><a class="deprecated" href="https://api.flutter.dev/flutter/material/AppBar/backwardsCompatibility.html">backwardsCompatibility</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/bottom.html">bottom</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/bottomOpacity.html">bottomOpacity</a></li>
+    <li class="inherited"><a class="deprecated" href="https://api.flutter.dev/flutter/material/AppBar/brightness.html">brightness</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/centerTitle.html">centerTitle</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/elevation.html">elevation</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/excludeHeaderSemantics.html">excludeHeaderSemantics</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/flexibleSpace.html">flexibleSpace</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/foregroundColor.html">foregroundColor</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/iconTheme.html">iconTheme</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/key.html">key</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/leading.html">leading</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/leadingWidth.html">leadingWidth</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/preferredSize.html">preferredSize</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/primary.html">primary</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/shadowColor.html">shadowColor</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/shape.html">shape</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/systemOverlayStyle.html">systemOverlayStyle</a></li>
+    <li class="inherited"><a class="deprecated" href="https://api.flutter.dev/flutter/material/AppBar/textTheme.html">textTheme</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/title.html">title</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/titleSpacing.html">titleSpacing</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/titleTextStyle.html">titleTextStyle</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/toolbarHeight.html">toolbarHeight</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/toolbarOpacity.html">toolbarOpacity</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/toolbarTextStyle.html">toolbarTextStyle</a></li>
+
+    <li class="section-title inherited"><a href="../../widget_app_bar/TideAppBar-class.html#instance-methods">Methods</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/StatefulWidget/createElement.html">createElement</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/material/AppBar/createState.html">createState</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/debugDescribeChildren.html">debugDescribeChildren</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/debugFillProperties.html">debugFillProperties</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toDiagnosticsNode.html">toDiagnosticsNode</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/Diagnosticable/toString.html">toString</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toStringDeep.html">toStringDeep</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toStringShallow.html">toStringShallow</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/toStringShort.html">toStringShort</a></li>
+
+    <li class="section-title inherited"><a href="../../widget_app_bar/TideAppBar-class.html#operators">Operators</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/operator_equals.html">operator ==</a></li>
+
+
+
+    <li class="section-title"><a href="../../widget_app_bar/TideAppBar-class.html#static-methods">Static methods</a></li>
+    <li><a href="../../widget_app_bar/TideAppBar/pushSettings.html">pushSettings</a></li>
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-left-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    tide
+      1.0.0
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/script.js?v1"></script>
+
+
+
+</body>
+
+</html>
+

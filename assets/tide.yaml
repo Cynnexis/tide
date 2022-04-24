@@ -1,0 +1,8 @@
+webapp:
+  uri:
+    scheme: "https"
+    host: "cynnexis.github.io"
+    port: 443
+    path: "/tide/"
+
+maintainer_email: "Valentin.berger38@gmail.com"

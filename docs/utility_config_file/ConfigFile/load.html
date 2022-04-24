@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the load method from the ConfigFile class, for the Dart programming language.">
+  <title>load method - ConfigFile class - config_file library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">tide</a></li>
+    <li><a href="../../utility_config_file/utility_config_file-library.html">config_file</a></li>
+    <li><a href="../../utility_config_file/ConfigFile-class.html">ConfigFile</a></li>
+    <li class="self-crumb">load method</li>
+  </ol>
+  <div class="self-name">load</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-method">load</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../utility_config_file/ConfigFile-class.html">ConfigFile</a></span>&gt;</span></span>
+<span class="name ">load</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="load-param-context">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a>?</span> <span class="parameter-name">context</span>, </span></li>
+<li><span class="parameter" id="load-param-configuration"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">configuration</span>}</span></li>
+</ol>)
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Returns the configuration file as a <code>ConfigFile</code> instance.</p>
+<p>If the configuration has already been loaded, it will be immediately be
+returned. Otherwise, it will be imported.</p>
+<p>If you need to get the instance of this singleton without asynchronous
+operation, and you are sure that the configuration has already been
+loaded, please use <a href="../../utility_config_file/ConfigFile/instance.html">instance</a> instead, but otherwise, this function is
+recommended over the getter.</p>
+<p>To load the configuration, you have two options:</p>
+<ul>
+<li><strong>Load from the assets:</strong> This is the default behavior. If a <code>context</code>
+is passed, it will be used to call <a href="https://api.flutter.dev/flutter/widgets/DefaultAssetBundle-class.html">DefaultAssetBundle</a>. If not,
+<a href="https://api.flutter.dev/flutter/services/rootBundle.html">rootBundle</a> will be used instead.</li>
+<li><strong>Load it from a given configuration:</strong> Use <code>configuration</code> to load a
+Yaml document, or if it is not a Yaml document, a file from the assets.
+In the latter case, you may pass a <code>context</code>.</li>
+</ul>
+<p>Note that this function is thread-safe.</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">static Future&lt;ConfigFile&gt; load(
+    {BuildContext? context, String? configuration}) async {
+  return await _instanceLock.synchronized&lt;ConfigFile&gt;(() async {
+    if (_instance == null) {
+      &#47;&#47; The object that will contain the configuration content, as a mapping
+      dynamic configDynamicYaml;
+      if (configuration == null) {
+        &#47;&#47; Automatically detect the configuration file and load it from the assets
+        final String configContent = await readConfigFile(context: context);
+        configDynamicYaml = loadYaml(configContent);
+      } else {
+        &#47;&#47; Try to parse the given configuration, it it fails, assume it is a path
+        try {
+          configDynamicYaml = loadYaml(configuration);
+        } catch (err) {
+          &#47;&#47; Only capture [YamlException] and [ArgumentError]
+          if (err is! YamlException &amp;&amp; err is! ArgumentError) {
+            rethrow;
+          }
+
+          &#47;&#47; Assume [configuration] is a path
+          final String configContent = await readConfigFile(
+              configAssetPath: configuration, context: context);
+          configDynamicYaml = loadYaml(configContent);
+        }
+      }
+
+      &#47;&#47; Check that the [configDynamicYaml] is a mapping
+      if (configDynamicYaml! is Map&lt;String, dynamic&gt;) {
+        throw StateError(
+            &#39;Expected the YAML configuration to be a mapping, got &quot;${configDynamicYaml.runtimeType}&quot;.&#39;);
+      }
+
+      final YamlMap configYaml = configDynamicYaml as YamlMap;
+
+      final YamlMap mapWebUri = configYaml[&#39;webapp&#39;][&#39;uri&#39;];
+
+      final Uri webAppUri = Uri(
+        &#47;* String? *&#47; scheme: mapWebUri[&#39;scheme&#39;],
+        &#47;* String? *&#47; userInfo: mapWebUri[&#39;userInfo&#39;],
+        &#47;* String? *&#47; host: mapWebUri[&#39;host&#39;],
+        &#47;* int? *&#47; port: mapWebUri[&#39;port&#39;],
+        &#47;* String? *&#47; path: mapWebUri[&#39;path&#39;],
+        &#47;* Iterable&lt;String&gt;? *&#47; pathSegments:
+            mapWebUri[&#39;pathSegments&#39;] != null
+                ? &lt;String&gt;[
+                    for (final dynamic p
+                        in (mapWebUri[&#39;pathSegments&#39;] as Iterable&lt;dynamic&gt;))
+                      p.toString(),
+                  ]
+                : null,
+        &#47;* String? *&#47; query: mapWebUri[&#39;query&#39;],
+        &#47;* Map&lt;String, dynamic &#47;*String|Iterable&lt;String&gt;*&#47; &gt;? *&#47; queryParameters:
+            mapWebUri[&#39;queryParameters&#39;] != null
+                ? &lt;String, dynamic&gt;{
+                    for (final MapEntry&lt;dynamic, dynamic&gt; entry
+                        in (mapWebUri[&#39;queryParameters&#39;] as YamlMap).entries)
+                      entry.key as String: entry.value is Iterable&lt;dynamic&gt;
+                          ? entry.value
+                              .cast&lt;String&gt;((dynamic e) =&gt; e.toString())
+                              .toList(growable: false)
+                          : entry.value.toString(),
+                  }
+                : null,
+        &#47;* String? *&#47; fragment: mapWebUri[&#39;fragment&#39;],
+      );
+
+      _instance = ConfigFile._internal(
+        web: ConfigWeb(
+          uri: webAppUri,
+        ),
+        maintainerEmail: configYaml[&#39;maintainer_email&#39;],
+      );
+    }
+
+    return _instance!;
+  });
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../../index.html">tide</a></li>
+  <li><a href="../../utility_config_file/utility_config_file-library.html">config_file</a></li>
+  <li><a href="../../utility_config_file/ConfigFile-class.html">ConfigFile</a></li>
+  <li class="self-crumb">load method</li>
+</ol>
+
+
+    <h5>ConfigFile class</h5>
+    <ol>
+
+
+
+    <li class="section-title">
+      <a href="../../utility_config_file/ConfigFile-class.html#instance-properties">Properties</a>
+    </li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li><a href="../../utility_config_file/ConfigFile/maintainerEmail.html">maintainerEmail</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li><a href="../../utility_config_file/ConfigFile/web.html">web</a></li>
+
+    <li class="section-title inherited"><a href="../../utility_config_file/ConfigFile-class.html#instance-methods">Methods</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+
+    <li class="section-title inherited"><a href="../../utility_config_file/ConfigFile-class.html#operators">Operators</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+
+
+    <li class="section-title"><a href="../../utility_config_file/ConfigFile-class.html#static-properties">Static properties</a></li>
+    <li><a href="../../utility_config_file/ConfigFile/instance.html">instance</a></li>
+
+    <li class="section-title"><a href="../../utility_config_file/ConfigFile-class.html#static-methods">Static methods</a></li>
+    <li><a href="../../utility_config_file/ConfigFile/detectConfigFilePath.html">detectConfigFilePath</a></li>
+    <li><a href="../../utility_config_file/ConfigFile/load.html">load</a></li>
+    <li><a href="../../utility_config_file/ConfigFile/readConfigFile.html">readConfigFile</a></li>
+    <li><a href="../../utility_config_file/ConfigFile/removeInstance.html">removeInstance</a></li>
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    tide
+      1.0.0
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/script.js?v1"></script>
+
+
+
+</body>
+
+</html>
+

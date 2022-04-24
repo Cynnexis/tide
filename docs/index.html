@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="generator" content="made with love by dartdoc 5.0.1">
+  <meta name="description" content="tide API docs, for the Dart programming language.">
+  <title>tide - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href=""
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="https://github.com/Cynnexis/tide">tide package</a></li>
+  </ol>
+  <div class="self-name">tide</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="ocean-tide---breathing-exercise-to-calm-yourself-down">🌊  Tide - Breathing Exercise to Calm Yourself Down</h1>
+<p><a href="https://github.com/Cynnexis/tide/actions/workflows/main.yml"><img src="https://github.com/Cynnexis/tide/actions/workflows/main.yml/badge.svg" alt="Tide CI/CD"></a>
+<a href="https://cynnexis.github.io/tide/"><img src="https://img.shields.io/website?url=https%3A%2F%2Fcynnexis.github.io%2Ftide%2F" alt="website status"></a>
+<a href="https://github.com/Cynnexis/tide/releases"><img src="https://img.shields.io/github/release/Cynnexis/tide.svg?logo=github" alt="Tide Release"></a>
+<a href="https://github.com/Cynnexis/tide/releases"><img src="https://img.shields.io/github/repo-size/Cynnexis/tide" alt="repo size"></a>
+<a href="https://github.com/Cynnexis/tide/releases"><img src="https://img.shields.io/github/downloads/Cynnexis/tide/total" alt="total release download"></a>
+<a href="LICENSE"><img src="https://img.shields.io/github/license/Cynnexis/tide" alt="license"></a></p>
+<p><img src="assets/images/cover.png" alt="Tide Cover"></p>
+<p>Tide is an application that helps reduce panic attacks with a simple breathing exercise.</p>
+<p><strong>Official website:</strong> <a href="https://cynnexis.github.io/tide/">cynnexis.github.io/tide/</a></p><a href="https://play.google.com/store/apps/details?id=org.tide.app&amp;pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+<img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" width="25%">
+</a>
+<br>
+<a href="https://cynnexis.github.io/tide/">
+<img alt="Go to the Webapp" src="https://img.shields.io/badge/webapp-%2387A6D4.svg?style=for-the-badge&amp;?labelColor=black&amp;logoColor=black&amp;logo=data:image/png;base64,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" width="25%">
+</a>
+<h2 id="dart-goals">🎯  Goals</h2>
+<p>Panic attacks can happen anywhere, at anytime.
+In a world where we have access to a limitless number of digital resources at the tip of our fingers, we can reduce those attacks through different ways (apps, videos, etc.).
+However, as I experienced multiple times, most of those resources are placed behind advertisements, which can be irritating or even aggravating depending on the content.
+Those useful resources should always be available for people traversing those delicate moments, and have an ads-free experience.</p>
+<p>Hence, I initiated <strong>Tide</strong>, a very simple app that help the user to calm themselves down by timing the breath in and breath out, and imitating the diaphragm dilatation, while being <strong>free with no advertisements</strong>.
+As a result, anyone can have this application and use it with no stress of being disturbed by one of this awful and distressful ad.</p>
+<h2 id="inbox_tray-download-built-releases">📥  Download built releases</h2>
+<p>You can download the built executables or installers from the <a href="https://github.com/Cynnexis/tide/releases">release page</a>, or from here to get the latest version:</p>
+<p><strong>Android:</strong></p>
+<ul>
+<li><a href="https://github.com/Cynnexis/tide/releases/latest/download/tide-release.aab">App-bundle (<code>.aab</code>)</a></li>
+<li><a href="https://github.com/Cynnexis/tide/releases/latest/download/tide.apk">Generic APK (<code>.apk</code>)</a></li>
+<li><a href="https://github.com/Cynnexis/tide/releases/latest/download/tide-arm64-v8a-release.apk">ARM 64 v8a (<code>.apk</code>)</a></li>
+<li><a href="https://github.com/Cynnexis/tide/releases/latest/download/tide-x86_64-release.apk">x86-64 (<code>.apk</code>)</a></li>
+<li><a href="https://github.com/Cynnexis/tide/releases/latest/download/tide-armeabi-v7a-release.apk">armeabi v7a (<code>.apk</code>)</a></li>
+</ul>
+<p><strong>iOS:</strong></p>
+<ul>
+<li><a href="https://github.com/Cynnexis/tide/releases/latest/download/tide-ios.ipa">iOS (<code>.ipa</code>)</a></li>
+</ul>
+<blockquote>
+<p>⚠️  This package has not been signed.</p>
+</blockquote>
+<blockquote>
+<p>⚠️  The developers behind this project do not have a macOS and an iPhone.
+This package has been compiled through the CI/CD workflow, with the OSX runner.
+As a result, it has not been tested, and might not work as expected.</p>
+</blockquote>
+<p><strong>Windows:</strong></p>
+<ul>
+<li><a href="https://github.com/Cynnexis/tide/releases/latest/download/tide-windows_x86.msix">MSIX for x86 (32 bits)</a></li>
+<li><a href="https://github.com/Cynnexis/tide/releases/latest/download/tide-windows_x64.msix">MSIX for x64 (64 bits)</a></li>
+</ul>
+<p><strong>Web:</strong></p>
+<ul>
+<li>The web version is released at <a href="https://cynnexis.github.io/tide/">cynnexis.github.io/tide/</a></li>
+<li><a href="https://github.com/Cynnexis/tide/releases/latest/download/tide-web.zip">Tide web archive (<code>.zip</code>)</a></li>
+</ul>
+<blockquote>
+<p>The web release is a compressed archive containing the built HTML, CSS and JavaScript files to serve the application.</p>
+</blockquote>
+<h2 id="electric_plug-getting-started">🔌  Getting Started</h2>
+<p>The following instructions will get you a copy of the source code, and help you execute it.</p>
+<h3 id="package-requirements">📦  Requirements</h3>
+<p>This project requires <a href="https://flutter.dev/docs/get-started/install">Flutter</a>, SDK version: minimum 2.3.0.</p>
+<h3 id="hammer_and_pick-installation">⚒️  Installation</h3>
+<p>The first thing to do is to download the project, either by <a href="https://github.com/Cynnexis/tide/archive/main.zip">downloading the ZIP file</a> and extract it somewhere in your machine, or by cloning the project with <code>git clone https://github.com/Cynnexis/tide.git tide</code>.</p>
+<p>Then, you need to configure the project by creating <code>tide.yaml</code> at the root of the project.
+You can copy it from <code>tide.sample.yaml</code> to have the structure of the configuration.
+Then, edit it to configure the Tide project and customize it.</p>
+<blockquote>
+<p>Note that you can rename this file <code>tide.yml</code> (and not <code>.yaml</code>), but you will need to change the asset name in <code>pubspec.yaml</code>.</p>
+</blockquote>
+<p>The following steps will assume that the current directory is the project root.</p>
+<ol>
+<li><code>flutter create --no-overwrite .</code></li>
+<li><code>flutter pub get</code></li>
+<li><code>flutter run</code></li>
+</ol>
+<p>The app should be running now.</p>
+<h3 id="whale-using-docker">🐳  Using Docker</h3>
+<p>You can build a Docker image to serve the web application of Tide.
+All Docker files are stored under the <code>docker/</code> folder, but you can use the <code>Makefile</code> commands to build it.</p>
+<p>To build them, enter the following command:</p>
+<pre class="language-bash"><code class="language-bash">make build-docker
+</code></pre>
+<p>This command will call <code>docker/build.bash</code>, a bash script that uses <code>tide.yaml</code> to build the Dockerfiles.
+At the end of the process, you should have the Docker image <code>cynnexis/tide:web</code>, that you can use to serve the application:</p>
+<p>With the Makefile:</p>
+<pre class="language-bash"><code class="language-bash">make docker-server
+</code></pre>
+<p>... or with the docker command:</p>
+<pre class="language-bash"><code class="language-bash">docker run -d \
+	--name=tide-web \
+	--hostname="tide-web" \
+	--publish 80:80 \
+	-v "/etc/timezone:/etc/timezone:ro" \
+	-v "/etc/localtime:/etc/localtime:ro" \
+	-e TZ \
+	"cynnexis/tide:web"
+</code></pre>
+<p>And connect to <a href="http://localhost:80/">http://localhost:80/</a></p>
+<h2 id="white_check_mark-tests">✅  Tests</h2>
+<p>Tide has units, widgets and integration tests.
+This section will help you understand how tests are structured, and how to execute them.</p>
+<h3 id="unit-and-widget-tests">Unit and Widget Tests</h3>
+<p>Unit and widget test files are stored under the <code>test/</code> directory.
+All files that ends with <code>_test.dart</code> are considered test files.</p>
+<p>Most widget tests uses <a href="https://api.flutter.dev/flutter/flutter_test/matchesGoldenFile.html">golden files</a> to assert that they render as expected.
+However, according to the Flutter <a href="https://github.com/flutter/flutter/issues/36667">issue #36667</a>, golden images might change from one platform to another.
+That is why all golden images stored in <code>test/golden-images/</code> are separated in sub-folders representing the platform.
+However, not all golden images might have been created, as the platforms might not be accessible by the developer(s).
+If you notice that the golden files are missing for your platform, please execute the following command at the root of the project:</p>
+<pre class="language-bash"><code class="language-bash">make update-goldens
+</code></pre>
+<p>... or:</p>
+<pre class="language-bash"><code class="language-bash">flutter test --update-goldens --dart-define=FLUTTER_TEST=true
+</code></pre>
+<p>This will generate all golden images for your platform.
+We encourage you to <a href="https://github.com/Cynnexis/tide/compare">create a pull-request</a> with the new golden images to contribute to the project!</p>
+<p>Once the golden files are ready, you can execute the tests with:</p>
+<pre class="language-bash"><code class="language-bash">make test
+</code></pre>
+<p>... or:</p>
+<pre class="language-bash"><code class="language-bash">flutter test --dart-define=FLUTTER_TEST=true
+</code></pre>
+<p>You can also execute the test in a Docker container.
+To do so, first build the <code>cynnexis/tide:sdk</code> Docker image:</p>
+<pre class="language-bash"><code class="language-bash">./docker/build.bash --only=sdk
+</code></pre>
+<p>Then, execute:</p>
+<pre class="language-bash"><code class="language-bash">make docker-test
+</code></pre>
+<p>... or:</p>
+<pre class="language-bash"><code class="language-bash">docker run -it --rm --name=tide-tests cynnexis/tide:sdk test --concurrency=1 --dart-define=FLUTTER_TEST=true
+</code></pre>
+<h3 id="integration-tests">Integration Tests</h3>
+<p>Only one integration test workflow has been created, and is stored under <code>integration_test/tide_test.dart</code>.</p>
+<h4 id="desktop-and-mobile-devices">Desktop and mobile devices</h4>
+<p>To launch it for desktop or mobile devices, use:</p>
+<pre class="language-bash"><code class="language-bash">make test-integration
+</code></pre>
+<p>... or:</p>
+<pre class="language-bash"><code class="language-bash">flutter test --dart-define=FLUTTER_TEST=true integration_test/tide_test.dart
+</code></pre>
+<h4 id="web">Web</h4>
+<p>To launch it for web, you first need to download the <a href="https://docs.flutter.dev/cookbook/testing/integration/introduction#5b-web">ChromeDriver</a> and launch it:</p>
+<pre class="language-bash"><code class="language-bash">chromedriver --port=4444
+</code></pre>
+<p>In another terminal, execute the following command at the root of the Tide project:</p>
+<pre class="language-bash"><code class="language-bash">make test-integration-web
+</code></pre>
+<p>... or:</p>
+<pre class="language-bash"><code class="language-bash">flutter drive \
+  --driver=test_driver/integration_test.dart \
+  --target=integration_test/tide_test.dart \
+  --dart-define=FLUTTER_TEST=true \
+  -d web-server
+</code></pre>
+<h2 id="building_construction-build-with">🏗️  Build With</h2>
+<p><a href="https://dart.dev/"><img src="https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&amp;logo=dart&amp;logoColor=white" alt="Dart"></a>
+<a href="https://flutter.dev/"><img src="https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&amp;logo=Flutter&amp;logoColor=white" alt="Flutter"></a>
+<a href="https://developer.android.com/studio"><img src="https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&amp;logo=android-studio&amp;logoColor=white" alt="Android Studio"></a>
+<a href="https://git-scm.com/"><img src="https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&amp;logo=git&amp;logoColor=white" alt="Git"></a>
+<a href="https://github.com/"><img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="GitHub"></a>
+<a href="https://github.com/features/actions"><img src="https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&amp;logo=githubactions&amp;logoColor=white" alt="GitHub Actions"></a>
+<a href="https://www.docker.com/"><img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&amp;logo=docker&amp;logoColor=white" alt="Docker"></a>
+<a href="https://httpd.apache.org/"><img src="https://img.shields.io/badge/apache-%23D42029.svg?style=for-the-badge&amp;logo=apache&amp;logoColor=white" alt="Apache"></a>
+<a href="https://inkscape.org/"><img src="https://img.shields.io/badge/Inkscape-e0e0e0?style=for-the-badge&amp;logo=inkscape&amp;logoColor=080A13" alt="Inkscape"></a></p>
+<h2 id="handshake-contributing">🤝  Contributing</h2>
+<p>To contribute to this project, please read our <a href="CONTRIBUTING.md"><code>CONTRIBUTING.md</code></a> file.</p>
+<p>We also have a <a href="CODE_OF_CONDUCT.md">code of conduct</a> to help create a welcoming and friendly
+environment.</p>
+<h2 id="writing_hand-authors">✍️  Authors</h2>
+<p>Please see the <a href="CONTRIBUTORS.md"><code>CONTRIBUTORS.md</code></a> file.</p>
+<h2 id="page_facing_up-license">📄  License</h2>
+<p>This project is under the GNU Affero General Public License v3. Please see the <a href="LICENSE">LICENSE</a> file for more detail (it's a really fascinating story written in there!).</p>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="about_app_dialog">
+  <span class="name"><a href="utility_about_app_dialog/utility_about_app_dialog-library.html">about_app_dialog</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="animated_breathing">
+  <span class="name"><a href="widget_animated_breathing/widget_animated_breathing-library.html">animated_breathing</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="app_bar">
+  <span class="name"><a href="widget_app_bar/widget_app_bar-library.html">app_bar</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="assets">
+  <span class="name"><a href="utility_assets/utility_assets-library.html">assets</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="breathing_bubble">
+  <span class="name"><a href="widget_breathing_bubble/widget_breathing_bubble-library.html">breathing_bubble</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="breathing_exercise_page">
+  <span class="name"><a href="page_breathing_exercise_page/page_breathing_exercise_page-library.html">breathing_exercise_page</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="button_span">
+  <span class="name"><a href="widget_button_span/widget_button_span-library.html">button_span</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="config_file">
+  <span class="name"><a href="utility_config_file/utility_config_file-library.html">config_file</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="constants">
+  <span class="name"><a href="constants/constants-library.html">constants</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="error_tile">
+  <span class="name"><a href="widget_error_tile/widget_error_tile-library.html">error_tile</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="fullscreen">
+  <span class="name"><a href="utility_fullscreen_fullscreen/utility_fullscreen_fullscreen-library.html">fullscreen</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="fullscreen_io">
+  <span class="name"><a href="utility_fullscreen_fullscreen_io/utility_fullscreen_fullscreen_io-library.html">fullscreen_io</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="fullscreen_stub">
+  <span class="name"><a href="utility_fullscreen_fullscreen_stub/utility_fullscreen_fullscreen_stub-library.html">fullscreen_stub</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="fullscreen_web">
+  <span class="name"><a href="utility_fullscreen_fullscreen_web/utility_fullscreen_fullscreen_web-library.html">fullscreen_web</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="generated_plugin_registrant">
+  <span class="name"><a href="generated_plugin_registrant/generated_plugin_registrant-library.html">generated_plugin_registrant</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="home_page">
+  <span class="name"><a href="page_home_page/page_home_page-library.html">home_page</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="hotkey">
+  <span class="name"><a href="widget_hotkey/widget_hotkey-library.html">hotkey</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="iso_lang_mapping">
+  <span class="name"><a href="utility_iso_lang_mapping/utility_iso_lang_mapping-library.html">iso_lang_mapping</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="list_extension">
+  <span class="name"><a href="utility_extension_list_extension/utility_extension_list_extension-library.html">list_extension</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="locale_parser">
+  <span class="name"><a href="utility_extension_locale_parser/utility_extension_locale_parser-library.html">locale_parser</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="main">
+  <span class="name"><a href="main/main-library.html">main</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="round_button">
+  <span class="name"><a href="widget_round_button/widget_round_button-library.html">round_button</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="rounded_material">
+  <span class="name"><a href="widget_rounded_material/widget_rounded_material-library.html">rounded_material</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="settings">
+  <span class="name"><a href="settings/settings-library.html">settings</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="settings_page">
+  <span class="name"><a href="page_settings_page/page_settings_page-library.html">settings_page</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="slideshow">
+  <span class="name"><a href="widget_slideshow/widget_slideshow-library.html">slideshow</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="theme">
+  <span class="name"><a href="theme/theme-library.html">theme</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="timer_form">
+  <span class="name"><a href="widget_timer_form/widget_timer_form-library.html">timer_form</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="user_tips">
+  <span class="name"><a href="widget_user_tips/widget_user_tips-library.html">user_tips</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+        </dl>
+      </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="https://github.com/Cynnexis/tide">tide package</a></li>
+</ol>
+
+
+    <h5 class="hidden-xs"><span class="package-name">tide</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="utility_about_app_dialog/utility_about_app_dialog-library.html">about_app_dialog</a></li>
+      <li><a href="widget_animated_breathing/widget_animated_breathing-library.html">animated_breathing</a></li>
+      <li><a href="widget_app_bar/widget_app_bar-library.html">app_bar</a></li>
+      <li><a href="utility_assets/utility_assets-library.html">assets</a></li>
+      <li><a href="widget_breathing_bubble/widget_breathing_bubble-library.html">breathing_bubble</a></li>
+      <li><a href="page_breathing_exercise_page/page_breathing_exercise_page-library.html">breathing_exercise_page</a></li>
+      <li><a href="widget_button_span/widget_button_span-library.html">button_span</a></li>
+      <li><a href="utility_config_file/utility_config_file-library.html">config_file</a></li>
+      <li><a href="constants/constants-library.html">constants</a></li>
+      <li><a href="widget_error_tile/widget_error_tile-library.html">error_tile</a></li>
+      <li><a href="utility_fullscreen_fullscreen/utility_fullscreen_fullscreen-library.html">fullscreen</a></li>
+      <li><a href="utility_fullscreen_fullscreen_io/utility_fullscreen_fullscreen_io-library.html">fullscreen_io</a></li>
+      <li><a href="utility_fullscreen_fullscreen_stub/utility_fullscreen_fullscreen_stub-library.html">fullscreen_stub</a></li>
+      <li><a href="utility_fullscreen_fullscreen_web/utility_fullscreen_fullscreen_web-library.html">fullscreen_web</a></li>
+      <li><a href="generated_plugin_registrant/generated_plugin_registrant-library.html">generated_plugin_registrant</a></li>
+      <li><a href="page_home_page/page_home_page-library.html">home_page</a></li>
+      <li><a href="widget_hotkey/widget_hotkey-library.html">hotkey</a></li>
+      <li><a href="utility_iso_lang_mapping/utility_iso_lang_mapping-library.html">iso_lang_mapping</a></li>
+      <li><a href="utility_extension_list_extension/utility_extension_list_extension-library.html">list_extension</a></li>
+      <li><a href="utility_extension_locale_parser/utility_extension_locale_parser-library.html">locale_parser</a></li>
+      <li><a href="main/main-library.html">main</a></li>
+      <li><a href="widget_round_button/widget_round_button-library.html">round_button</a></li>
+      <li><a href="widget_rounded_material/widget_rounded_material-library.html">rounded_material</a></li>
+      <li><a href="settings/settings-library.html">settings</a></li>
+      <li><a href="page_settings_page/page_settings_page-library.html">settings_page</a></li>
+      <li><a href="widget_slideshow/widget_slideshow-library.html">slideshow</a></li>
+      <li><a href="theme/theme-library.html">theme</a></li>
+      <li><a href="widget_timer_form/widget_timer_form-library.html">timer_form</a></li>
+      <li><a href="widget_user_tips/widget_user_tips-library.html">user_tips</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+
+</main>
+
+<footer>
+  <span class="no-break">
+    tide
+      1.0.0
+  </span>
+
+  
+</footer>
+
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/script.js?v1"></script>
+
+
+
+</body>
+
+</html>
+

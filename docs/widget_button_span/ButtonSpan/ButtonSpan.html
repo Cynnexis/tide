@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the ButtonSpan constructor from the Class ButtonSpan class from the button_span library, for the Dart programming language.">
+  <title>ButtonSpan constructor - ButtonSpan class - button_span library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">tide</a></li>
+    <li><a href="../../widget_button_span/widget_button_span-library.html">button_span</a></li>
+    <li><a href="../../widget_button_span/ButtonSpan-class.html">ButtonSpan</a></li>
+    <li class="self-crumb">ButtonSpan constructor</li>
+  </ol>
+  <div class="self-name">ButtonSpan</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-constructor">ButtonSpan</span> constructor 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+</h1></div>
+
+    <section class="multi-line-signature">
+      <span class="name ">ButtonSpan</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-key">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/Key-class.html">Key</a>?</span> <span class="parameter-name">key</span>, </span></li>
+<li><span class="parameter" id="-param-child"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span> <span class="parameter-name">child</span>, </span></li>
+<li><span class="parameter" id="-param-onTap"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/VoidCallback.html">VoidCallback</a>?</span> <span class="parameter-name">onTap</span>, </span></li>
+<li><span class="parameter" id="-param-leading"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a>?</span> <span class="parameter-name">leading</span>, </span></li>
+<li><span class="parameter" id="-param-backgroundColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">backgroundColor</span>, </span></li>
+<li><span class="parameter" id="-param-alignment"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/PlaceholderAlignment.html">PlaceholderAlignment</a></span> <span class="parameter-name">alignment</span> = <span class="default-value">PlaceholderAlignment.bottom</span>, </span></li>
+<li><span class="parameter" id="-param-baseline"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/TextBaseline.html">TextBaseline</a>?</span> <span class="parameter-name">baseline</span>, </span></li>
+<li><span class="parameter" id="-param-style"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/TextStyle-class.html">TextStyle</a>?</span> <span class="parameter-name">style</span>}</span></li>
+</ol>)
+    </section>
+
+    
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">ButtonSpan({
+  Key? key,
+  required final Widget child,
+  final VoidCallback? onTap,
+  final Widget? leading,
+  final Color? backgroundColor,
+  final PlaceholderAlignment alignment = PlaceholderAlignment.bottom,
+  final TextBaseline? baseline,
+  final TextStyle? style,
+}) : super(
+        child: RoundedMaterial(
+          key: key,
+          onTap: onTap,
+          backgroundColor: backgroundColor,
+          child: Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: leading != null
+                ? Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: &lt;Widget&gt;[
+                      leading,
+                      child,
+                    ],
+                  )
+                : child,
+          ),
+        ),
+        alignment: PlaceholderAlignment.middle,
+      );</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../../index.html">tide</a></li>
+  <li><a href="../../widget_button_span/widget_button_span-library.html">button_span</a></li>
+  <li><a href="../../widget_button_span/ButtonSpan-class.html">ButtonSpan</a></li>
+  <li class="self-crumb">ButtonSpan constructor</li>
+</ol>
+
+
+    <h5>ButtonSpan class</h5>
+    <ol>
+
+    <li class="section-title"><a href="../../widget_button_span/ButtonSpan-class.html#constructors">Constructors</a></li>
+    <li><a href="../../widget_button_span/ButtonSpan/ButtonSpan.html">ButtonSpan</a></li>
+
+
+    <li class="section-title inherited">
+      <a href="../../widget_button_span/ButtonSpan-class.html#instance-properties">Properties</a>
+    </li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/painting/PlaceholderSpan/alignment.html">alignment</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/painting/PlaceholderSpan/baseline.html">baseline</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/WidgetSpan/child.html">child</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/WidgetSpan/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/painting/InlineSpan/style.html">style</a></li>
+
+    <li class="section-title inherited"><a href="../../widget_button_span/ButtonSpan-class.html#instance-methods">Methods</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/WidgetSpan/build.html">build</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/painting/InlineSpan/codeUnitAt.html">codeUnitAt</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/WidgetSpan/codeUnitAtVisitor.html">codeUnitAtVisitor</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/WidgetSpan/compareTo.html">compareTo</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/painting/PlaceholderSpan/computeSemanticsInformation.html">computeSemanticsInformation</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/painting/PlaceholderSpan/computeToPlainText.html">computeToPlainText</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/WidgetSpan/debugAssertIsValid.html">debugAssertIsValid</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/debugDescribeChildren.html">debugDescribeChildren</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/painting/PlaceholderSpan/debugFillProperties.html">debugFillProperties</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/painting/PlaceholderSpan/describeSemantics.html">describeSemantics</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/painting/InlineSpan/getSemanticsInformation.html">getSemanticsInformation</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/WidgetSpan/getSpanForPosition.html">getSpanForPosition</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/WidgetSpan/getSpanForPositionVisitor.html">getSpanForPositionVisitor</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toDiagnosticsNode.html">toDiagnosticsNode</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/painting/InlineSpan/toPlainText.html">toPlainText</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/Diagnosticable/toString.html">toString</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toStringDeep.html">toStringDeep</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toStringShallow.html">toStringShallow</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toStringShort.html">toStringShort</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/WidgetSpan/visitChildren.html">visitChildren</a></li>
+
+    <li class="section-title inherited"><a href="../../widget_button_span/ButtonSpan-class.html#operators">Operators</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/WidgetSpan/operator_equals.html">operator ==</a></li>
+
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-left-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    tide
+      1.0.0
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/script.js?v1"></script>
+
+
+
+</body>
+
+</html>
+
