@@ -1,12 +1,25 @@
 # :ocean: Tide - Breathing Exercise to Calm Yourself Down
 
 [![Tide CI/CD](https://github.com/Cynnexis/tide/actions/workflows/main.yml/badge.svg)](https://github.com/Cynnexis/tide/actions/workflows/main.yml)
+[![website status](https://img.shields.io/website?url=https%3A%2F%2Fcynnexis.github.io%2Ftide%2F)][deployed-page]
+[![Tide Release](https://img.shields.io/github/release/Cynnexis/tide.svg?logo=github)][tide-release]
+[![repo size](https://img.shields.io/github/repo-size/Cynnexis/tide)][tide-release]
+[![total release download](https://img.shields.io/github/downloads/Cynnexis/tide/total)][tide-release]
+[![license](https://img.shields.io/github/license/Cynnexis/tide)](LICENSE)
 
 ![Tide Cover](assets/images/cover.png)
 
 Tide is an application that helps reduce panic attacks with a simple breathing exercise.
 
 **Official website:** [cynnexis.github.io/tide/][deployed-page]
+
+<a href='https://play.google.com/store/apps/details?id=org.tide.app&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
+    <img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width='25%'/>
+</a>
+<br/>
+<a href='https://cynnexis.github.io/tide/'>
+    <img alt='Go to the Webapp' src='https://img.shields.io/badge/webapp-%2387A6D4.svg?style=for-the-badge&?labelColor=black&logoColor=black&logo=data:image/png;base64,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' width='25%'/>
+</a>
 
 ## :dart: Goals
 
@@ -20,7 +33,7 @@ As a result, anyone can have this application and use it with no stress of being
 
 ## :inbox_tray: Download built releases
 
-You can download the built executables or installers from the [release page](https://github.com/Cynnexis/tide/releases), or from here to get the latest version:
+You can download the built executables or installers from the [release page][tide-release], or from here to get the latest version:
 
 **Android:**
 
@@ -217,9 +230,15 @@ flutter drive \
 
 ## :building_construction: Build With
 
-* [Dart][dart]
-* [Flutter][flutter]
-* [Android Studio][android-studio]
+[![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)][dart]
+[![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)][flutter]
+[![Android Studio](https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&logo=android-studio&logoColor=white)][android-studio]
+[![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/)
+[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/)
+[![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)](https://github.com/features/actions)
+[![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Apache](https://img.shields.io/badge/apache-%23D42029.svg?style=for-the-badge&logo=apache&logoColor=white)](https://httpd.apache.org/)
+[![Inkscape](https://img.shields.io/badge/Inkscape-e0e0e0?style=for-the-badge&logo=inkscape&logoColor=080A13)](https://inkscape.org/)
 
 ## :handshake: Contributing
 
@@ -237,6 +256,7 @@ Please see the [`CONTRIBUTORS.md`][contributors] file.
 This project is under the GNU Affero General Public License v3. Please see the [LICENSE][license] file for more detail (it's a really fascinating story written in there!).
 
 [flutter-install]: https://flutter.dev/docs/get-started/install
+[tide-release]: https://github.com/Cynnexis/tide/releases
 [tide-zip]: https://github.com/Cynnexis/tide/archive/main.zip
 [deployed-page]: https://cynnexis.github.io/tide/
 [flutter]: https://flutter.dev/
