@@ -8,6 +8,9 @@ Tide is an application that helps reduce panic attacks with a simple breathing e
 
 **Official website:** [cynnexis.github.io/tide/][deployed-page]
 
+<a href='https://play.google.com/store/apps/details?id=org.tide.app&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
+    <img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width='25%'/>
+</a>
 ## :dart: Goals
 
 Panic attacks can happen anywhere, at anytime.
@@ -20,7 +23,7 @@ As a result, anyone can have this application and use it with no stress of being
 
 ## :inbox_tray: Download built releases
 
-You can download the built executables or installers from the [release page](https://github.com/Cynnexis/tide/releases), or from here to get the latest version:
+You can download the built executables or installers from the [release page][tide-release], or from here to get the latest version:
 
 **Android:**
 
@@ -237,6 +240,7 @@ Please see the [`CONTRIBUTORS.md`][contributors] file.
 This project is under the GNU Affero General Public License v3. Please see the [LICENSE][license] file for more detail (it's a really fascinating story written in there!).
 
 [flutter-install]: https://flutter.dev/docs/get-started/install
+[tide-release]: https://github.com/Cynnexis/tide/releases
 [tide-zip]: https://github.com/Cynnexis/tide/archive/main.zip
 [deployed-page]: https://cynnexis.github.io/tide/
 [flutter]: https://flutter.dev/
