@@ -132,7 +132,7 @@ jobs:
         run: flutter pub get
       - name: Build binary
         run: flutter build ios --release --no-codesign
-      - name: Verbose
+      - name: Organize built files
         run: |
           # Move the build structure into a new folder named after the project
           mkdir Tide/

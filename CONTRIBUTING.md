@@ -16,6 +16,7 @@ Please send a [bug report][tide-issue-bug] via the GitHub issue interface, as de
 
 1. Update the `README.md` with details of changes to the interface, this includes new environment 
    variables, exposed ports, useful file locations and container parameters.
+   If you changed the logo of the application, please update the "webapp" button in the `README.md` by adding the base64 encoding as a button logo.
 2. Update the `CHANGELOG.md` with full details of the Pull Request.
 3. Increase the version numbers in `pubspec.yaml`, `lib/constants.dart` and
    `android/app/src/main/AndroidManifest.xml` to the new version that this Pull Request would
